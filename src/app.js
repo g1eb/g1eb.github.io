@@ -15,22 +15,13 @@ function init () {
   renderer = new THREE.WebGLRenderer( { antialias: true } );
   renderer.setPixelRatio( window.devicePixelRatio );
   renderer.setSize( window.innerWidth, window.innerHeight );
-  //renderer.setClearColor( 0x000000, 1 );
+  renderer.setClearColor( 0x000000, 1 );
   document.body.appendChild( renderer.domElement );
 
   scene = new THREE.Scene();
-  //scene.fog = new THREE.Fog( 0x000000, 3500, 15000 );
-  //scene.fog.color.setHSL( 0.51, 0.4, 0.01 );
+  scene.fog = new THREE.Fog( 0xf5f5f5, 1, 25000 );
 
-  //target = new THREE.Vector3(0, 0, 0);
-  //lon = 245;
-  //lat = 0;
-  //phi = 550;
-  //theta = 0;
-
-  camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 1, 5000000 );
-  //camera.position.y = 550;
-  //camera.eulerOrder = "YXZ";
+  camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 5000000 );
 
   cameraSettings = {
     positionX: 0,
@@ -48,10 +39,10 @@ function init () {
   camera.rotation.y = cameraSettings.rotationY;
   camera.rotation.z = cameraSettings.rotationZ;
 
-  var helper = new THREE.GridHelper( 15000, 10, 0xffffff, 0xffffff );
-  scene.add( helper );
+  //var helper = new THREE.GridHelper( 15000, 10, 0xffffff, 0xffffff );
+  //scene.add( helper );
 
-  ambientLight = new THREE.AmbientLight( 0x000000 );
+  ambientLight = new THREE.AmbientLight( 0xffffff );
   scene.add(ambientLight);
 
   initSky();
@@ -155,16 +146,16 @@ function initFrames () {
     segments: 1,
     slices: 1,
     ambientColor: 0xffffff,
-    diffuseColor: 0xff4500,
+    diffuseColor: 0xf5f5f5,
     transparent: true,
-    opacity: 0.5,
+    opacity: 0.25,
     positionX: 0,
     positionY: 5000,
     positionZ: 0,
     rotationX: 0,
     rotationY: 0,
     rotationZ: 0,
-    numFrames: 30,
+    numFrames: 25,
     distance: 10000,
     variance: 1000,
   };
@@ -255,6 +246,5 @@ function onKeyDown ( event ) {
 }
 
 function render () {
-  //requestAnimationFrame( render );
   renderer.render( scene, camera );
 };
