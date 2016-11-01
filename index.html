@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<title>Frames</title>
-		<style>
+  <head>
+    <meta charset="utf-8">
+    <title>Frames</title>
+    <style>
       body { margin: 0; overflow: hidden }
-			canvas { width: 100%; height: 100% }
-		</style>
-	</head>
-	<body>
+      canvas { width: 100%; height: 100% }
+    </style>
+  </head>
+  <body>
 
-		<script src="lib/three.min.js"></script>
+    <script src="lib/three.min.js"></script>
     <script src="lib/Detector.js"></script>
     <script src="lib/SkyShader.js"></script>
-		<script src='lib/dat.gui.min.js'></script>
-		<script src="lib/OrbitControls.js"></script>
+    <script src='lib/dat.gui.min.js'></script>
+    <script src="lib/OrbitControls.js"></script>
 
-		<script>
+    <script>
 
       if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
@@ -27,20 +27,20 @@
       var skySetting, sky, sunSphere;
 
       init();
-			render();
+      render();
 
       function init () {
 
-			  renderer = new THREE.WebGLRenderer( { antialias: true } );
-			  renderer.setPixelRatio( window.devicePixelRatio );
-			  renderer.setSize( window.innerWidth, window.innerHeight );
-			  //renderer.setClearColor( 0x000000, 1 );
-			  document.body.appendChild( renderer.domElement );
+        renderer = new THREE.WebGLRenderer( { antialias: true } );
+        renderer.setPixelRatio( window.devicePixelRatio );
+        renderer.setSize( window.innerWidth, window.innerHeight );
+        //renderer.setClearColor( 0x000000, 1 );
+        document.body.appendChild( renderer.domElement );
 
-			  camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 100, 5000000 );
-			  camera.position.x = 250;
-			  camera.position.y = 150;
-			  camera.position.z = 500;
+        camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 100, 5000000 );
+        camera.position.x = 250;
+        camera.position.y = 150;
+        camera.position.z = 500;
 
         //camera.setLens(20);
 
@@ -50,17 +50,17 @@
         controls.enableZoom = true;
         controls.enablePan = false;
 
-			  scene = new THREE.Scene();
+        scene = new THREE.Scene();
 
         var helper = new THREE.GridHelper( 1000, 100, 0xffffff, 0xffffff );
         scene.add( helper );
 
-			  ambientLight = new THREE.AmbientLight( 0x000000 );
-			  scene.add(ambientLight);
+        ambientLight = new THREE.AmbientLight( 0x000000 );
+        scene.add(ambientLight);
 
-			  guiControls = new dat.GUI();
-	      guiControlsSky = guiControls.addFolder('Sky');
-	      guiControlsFrames = guiControls.addFolder('Frames');
+        guiControls = new dat.GUI();
+        guiControlsSky = guiControls.addFolder('Sky');
+        guiControlsFrames = guiControls.addFolder('Frames');
 
         initSky();
         initFrames();
@@ -130,56 +130,56 @@
       }
 
       function initFrames () {
-	      frameSettings = {
-	      	width: 100,
-	      	height: 100,
-	      	segments: 1,
-	      	slices: 1,
+        frameSettings = {
+          width: 100,
+          height: 100,
+          segments: 1,
+          slices: 1,
           ambientColor: 0xffffff,
           diffuseColor: 0xff4500,
           rotationX: 0,
           rotationY: 0,
           rotationZ: 0,
-	      };
+        };
 
-		    frameGeometry = new THREE.PlaneGeometry(
+        frameGeometry = new THREE.PlaneGeometry(
           frameSettings.width,
           frameSettings.height,
           frameSettings.segments,
           frameSettings.slices
         );
 
-		    frameMaterial = new THREE.MeshPhongMaterial({
-			    color: frameSettings.ambientColor,
-			    emissive: frameSettings.diffuseColor,
-			    side: THREE.DoubleSide,
-			    shading: THREE.FlatShading,
-			  });
+        frameMaterial = new THREE.MeshPhongMaterial({
+          color: frameSettings.ambientColor,
+          emissive: frameSettings.diffuseColor,
+          side: THREE.DoubleSide,
+          shading: THREE.FlatShading,
+        });
 
-			  frame = new THREE.Mesh(frameGeometry, frameMaterial);
-			  scene.add( frame );
+        frame = new THREE.Mesh(frameGeometry, frameMaterial);
+        scene.add( frame );
       }
 
       function initGuiControls () {
-	      guiControlsFrames.add(frameSettings, 'rotationX', 0, 1);
-	      guiControlsFrames.add(frameSettings, 'rotationY', 0, 1);
-	      guiControlsFrames.add(frameSettings, 'rotationZ', 0, 1);
+        guiControlsFrames.add(frameSettings, 'rotationX', 0, 1);
+        guiControlsFrames.add(frameSettings, 'rotationY', 0, 1);
+        guiControlsFrames.add(frameSettings, 'rotationZ', 0, 1);
       }
 
-			function render () {
+      function render () {
         console.log(camera.position.x, camera.position.y, camera.position.z);
 
-				//requestAnimationFrame( render );
-				renderer.render( scene, camera );
-			};
+        //requestAnimationFrame( render );
+        renderer.render( scene, camera );
+      };
 
-			function onWindowResize () {
-				camera.aspect = window.innerWidth / window.innerHeight;
-				camera.updateProjectionMatrix();
-				renderer.setSize( window.innerWidth, window.innerHeight );
+      function onWindowResize () {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize( window.innerWidth, window.innerHeight );
         render();
-			}
+      }
 
-		</script>
-	</body>
+    </script>
+  </body>
 </html>
