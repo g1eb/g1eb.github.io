@@ -275,6 +275,12 @@ function onWindowResize () {
 }
 
 function onKeyDown ( event ) {
+  if ( event.keyCode == 37 ) {
+    camera.rotation.y += 0.05;
+  } else if ( event.keyCode == 39 ) {
+    camera.rotation.y -= 0.05;
+  }
+  render();
 }
 
 function render () {
