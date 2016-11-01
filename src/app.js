@@ -3,7 +3,7 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 var controls, scene, renderer;
 var ambientLight;
 var camera, cameraSettings;
-var target, lon, lat, phi, theta, touchX, touchY;
+var touchX, touchY;
 var guiControls, guiControlsSky, guiControlsFrames, guiControlsCamera;
 var frameSettings, skySetting, sky, sunSphere, sunDistance;
 
@@ -39,7 +39,7 @@ function init () {
   camera.rotation.y = cameraSettings.rotationY;
   camera.rotation.z = cameraSettings.rotationZ;
 
-  //var helper = new THREE.GridHelper( 15000, 10, 0xffffff, 0xffffff );
+  //var helper = new THREE.GridHelper( 25000, 10, 0xffffff, 0xffffff );
   //scene.add( helper );
 
   ambientLight = new THREE.AmbientLight( 0xffffff );
@@ -49,10 +49,10 @@ function init () {
   initFrames();
   initGuiControls();
 
-  //document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+  document.addEventListener( 'mousedown', onDocumentMouseDown, false );
   document.addEventListener( 'wheel', onDocumentMouseWheel, false );
-  //document.addEventListener( 'touchstart', onDocumentTouchStart, false );
-  //document.addEventListener( 'touchmove', onDocumentTouchMove, false );
+  document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+  document.addEventListener( 'touchmove', onDocumentTouchMove, false );
 
   document.addEventListener('keydown', onKeyDown, false)
 
@@ -230,7 +230,38 @@ function initGuiControls () {
   guiControlsCamera.add(cameraSettings, 'rotationZ', 0, Math.PI * 2).onChange(updateCamera);
 }
 
-function onDocumentMouseWheel( event ) {
+function onDocumentMouseDown ( event ) {
+  event.preventDefault();
+  document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+  document.addEventListener( 'mouseup', onDocumentMouseUp, false );
+}
+
+function onDocumentMouseUp ( event ) {
+  document.removeEventListener( 'mousemove', onDocumentMouseMove );
+  document.removeEventListener( 'mouseup', onDocumentMouseUp );
+}
+
+function onDocumentMouseMove ( event ) {
+  var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
+  camera.rotation.y += movementX * 0.01;
+  render();
+}
+
+function onDocumentTouchStart ( event ) {
+  event.preventDefault();
+  var touch = event.touches[0];
+  touchX = touch.screenX;
+}
+
+function onDocumentTouchMove ( event ) {
+  event.preventDefault();
+  var touch = event.touches[0];
+  camera.rotation.y += (touch.screenX - touchX) * 0.01;
+  touchX = touch.screenX;
+  render();
+}
+
+function onDocumentMouseWheel ( event ) {
   camera.rotation.y += event.deltaY * 0.01;
   render();
 }
