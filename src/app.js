@@ -3,6 +3,7 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 var controls, scene, renderer;
 var ambientLight;
 var camera, cameraSettings;
+var target, lon, lat, phi, theta, touchX, touchY;
 var guiControls, guiControlsSky, guiControlsFrames, guiControlsCamera;
 var frameSettings, frameGeometry, frameMaterial;
 var skySetting, sky, sunSphere, sunDistance;
@@ -22,14 +23,21 @@ function init () {
   //scene.fog = new THREE.Fog( 0x000000, 3500, 15000 );
   //scene.fog.color.setHSL( 0.51, 0.4, 0.01 );
 
+  target = new THREE.Vector3();
+  lon = 90;
+  lat = 60;
+  phi = 0;
+  theta = 0;
+
   camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 5000000 );
+  camera.eulerOrder = "YXZ"
 
   cameraSettings = {
-    positionX: 0,
+    positionX: 1250,
     positionY: 550,
-    positionZ: 0,
-    rotationX: 0,
-    rotationY: 0,
+    positionZ: 3000,
+    rotationX: 1,
+    rotationY: 1,
     rotationZ: 0,
   }
 
@@ -42,12 +50,12 @@ function init () {
 
   //camera.setLens(20);
 
-  controls = new THREE.OrbitControls( camera, renderer.domElement );
-  controls.addEventListener('change', render);
-  controls.enableDamping = true;
-  controls.dampingFactor = 0.25;
-  controls.enableZoom = true;
-  controls.enablePan = true;
+  //controls = new THREE.OrbitControls( camera, renderer.domElement );
+  //controls.addEventListener('change', render);
+  //controls.enableDamping = true;
+  //controls.dampingFactor = 0.25;
+  //controls.enableZoom = true;
+  //controls.enablePan = true;
   //controls.maxPolarAngle = Math.PI / 2;
 
   var helper = new THREE.GridHelper( 5000, 100, 0xffffff, 0xffffff );
@@ -59,6 +67,11 @@ function init () {
   initSky();
   initFrames();
   initGuiControls();
+
+  document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+  document.addEventListener( 'wheel', onDocumentMouseWheel, false );
+  document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+  document.addEventListener( 'touchmove', onDocumentTouchMove, false );
 
   window.addEventListener( 'resize', onWindowResize, false ); 
 }
@@ -231,7 +244,71 @@ function initGuiControls () {
   guiControlsCamera.add(cameraSettings, 'rotationZ', 0, Math.PI * 2).onChange(updateCamera);
 }
 
+function onDocumentMouseDown( event ) {
+  event.preventDefault();
+
+  document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+  document.addEventListener( 'mouseup', onDocumentMouseUp, false );
+}
+
+function onDocumentMouseUp( event ) {
+  document.removeEventListener( 'mousemove', onDocumentMouseMove );
+  document.removeEventListener( 'mouseup', onDocumentMouseUp );
+}
+
+function onDocumentMouseMove( event ) {
+  var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
+  var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
+
+  lon -= movementX;
+  lat += movementY;
+
+  render();
+}
+
+function onDocumentMouseWheel( event ) {
+  camera.fov += event.deltaY * 0.05;
+  camera.updateProjectionMatrix();
+
+  render();
+}
+
+function onDocumentTouchStart( event ) {
+  event.preventDefault();
+
+  var touch = event.touches[ 0 ];
+
+  touchX = touch.screenX;
+  touchY = touch.screenY;
+
+  render();
+}
+
+function onDocumentTouchMove( event ) {
+  event.preventDefault();
+
+  var touch = event.touches[ 0 ];
+
+  lon -= ( touch.screenX - touchX ) * 0.1;
+  lat += ( touch.screenY - touchY ) * 0.1;
+
+  touchX = touch.screenX;
+  touchY = touch.screenY;
+
+  render();
+}
+
 function render () {
+  lat = Math.max( - 85, Math.min( 85, lat ) );
+  phi = THREE.Math.degToRad( 90 - lat );
+  theta = THREE.Math.degToRad( lon );
+
+  target.x = Math.sin( phi ) * Math.cos( theta );
+  target.y = Math.cos( phi );
+  target.z = Math.sin( phi ) * Math.sin( theta );
+
+  camera.lookAt( target );
+
   //requestAnimationFrame( render );
   renderer.render( scene, camera );
 };
