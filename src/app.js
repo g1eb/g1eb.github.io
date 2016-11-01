@@ -23,15 +23,33 @@ function init () {
   //scene.fog = new THREE.Fog( 0x000000, 3500, 15000 );
   //scene.fog.color.setHSL( 0.51, 0.4, 0.01 );
 
-  target = new THREE.Vector3(0, 0, 0);
-  lon = 245;
-  lat = 0;
-  phi = 550;
-  theta = 0;
+  //target = new THREE.Vector3(0, 0, 0);
+  //lon = 245;
+  //lat = 0;
+  //phi = 550;
+  //theta = 0;
 
   camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 1, 5000000 );
+  //camera.position.y = 550;
+  //camera.eulerOrder = "YXZ";
 
-  var helper = new THREE.GridHelper( 5000, 100, 0xffffff, 0xffffff );
+  cameraSettings = {
+    positionX: 0,
+    positionY: 5000,
+    positionZ: 0,
+    rotationX: 0,
+    rotationY: 0.5,
+    rotationZ: 0,
+  }
+
+  camera.position.x = cameraSettings.positionX;
+  camera.position.y = cameraSettings.positionY;
+  camera.position.z = cameraSettings.positionZ;
+  camera.rotation.x = cameraSettings.rotationX;
+  camera.rotation.y = cameraSettings.rotationY;
+  camera.rotation.z = cameraSettings.rotationZ;
+
+  var helper = new THREE.GridHelper( 15000, 10, 0xffffff, 0xffffff );
   scene.add( helper );
 
   ambientLight = new THREE.AmbientLight( 0x000000 );
@@ -41,12 +59,27 @@ function init () {
   initFrames();
   initGuiControls();
 
-  document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+  //document.addEventListener( 'mousedown', onDocumentMouseDown, false );
   document.addEventListener( 'wheel', onDocumentMouseWheel, false );
-  document.addEventListener( 'touchstart', onDocumentTouchStart, false );
-  document.addEventListener( 'touchmove', onDocumentTouchMove, false );
+  //document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+  //document.addEventListener( 'touchmove', onDocumentTouchMove, false );
+
+  document.addEventListener('keydown', onKeyDown, false)
 
   window.addEventListener( 'resize', onWindowResize, false ); 
+}
+
+function updateCamera () {
+  camera.position.x = cameraSettings.positionX;
+  camera.position.y = cameraSettings.positionY;
+  camera.position.z = cameraSettings.positionZ;
+  camera.rotation.x = cameraSettings.rotationX;
+  camera.rotation.y = cameraSettings.rotationY;
+  camera.rotation.z = cameraSettings.rotationZ;
+
+  camera.updateProjectionMatrix();
+
+  render();
 }
 
 function initSky () {
@@ -174,7 +207,6 @@ function updateFrames () {
       frame.material.opacity = frameSettings.opacity;
     }
   }
-
   render();
 }
 
@@ -194,75 +226,20 @@ function initGuiControls () {
   guiControlsFrames = guiControls.addFolder('Frames');
   guiControlsFrames.add(frameSettings, 'transparent').onChange(updateFrames);
   guiControlsFrames.add(frameSettings, 'opacity', 0, 1).onChange(updateFrames);
-}
 
-function onDocumentMouseDown( event ) {
-  event.preventDefault();
-
-  document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-  document.addEventListener( 'mouseup', onDocumentMouseUp, false );
-}
-
-function onDocumentMouseUp( event ) {
-  document.removeEventListener( 'mousemove', onDocumentMouseMove );
-  document.removeEventListener( 'mouseup', onDocumentMouseUp );
-}
-
-function onDocumentMouseMove( event ) {
-  var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
-  var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
-
-  lon -= movementX * 0.1;
-  lat += movementY * 0.1;
-
-  render();
+  guiControlsCamera = guiControls.addFolder('Camera');
+  guiControlsCamera.add(cameraSettings, 'positionX', 0, 50000).onChange(updateCamera);
+  guiControlsCamera.add(cameraSettings, 'positionY', 0, 50000).onChange(updateCamera);
+  guiControlsCamera.add(cameraSettings, 'positionZ', 0, 50000).onChange(updateCamera);
+  guiControlsCamera.add(cameraSettings, 'rotationX', 0, Math.PI * 2).onChange(updateCamera);
+  guiControlsCamera.add(cameraSettings, 'rotationY', 0, Math.PI * 2).onChange(updateCamera);
+  guiControlsCamera.add(cameraSettings, 'rotationZ', 0, Math.PI * 2).onChange(updateCamera);
 }
 
 function onDocumentMouseWheel( event ) {
-  camera.fov = Math.min(Math.abs(camera.fov + event.deltaY * 0.05), 179);
-  camera.updateProjectionMatrix();
+  camera.rotation.y += event.deltaY * 0.01;
   render();
 }
-
-function onDocumentTouchStart( event ) {
-  event.preventDefault();
-
-  var touch = event.touches[ 0 ];
-
-  touchX = touch.screenX;
-  touchY = touch.screenY;
-
-  render();
-}
-
-function onDocumentTouchMove( event ) {
-  event.preventDefault();
-
-  var touch = event.touches[ 0 ];
-
-  lon -= ( touch.screenX - touchX ) * 0.1;
-  lat += ( touch.screenY - touchY ) * 0.1;
-
-  touchX = touch.screenX;
-  touchY = touch.screenY;
-
-  render();
-}
-
-function render () {
-  lat = Math.max( - 85, Math.min( 85, lat ) );
-  phi = THREE.Math.degToRad( 90 - lat );
-  theta = THREE.Math.degToRad( lon );
-
-  target.x = Math.sin( phi ) * Math.cos( theta );
-  target.y = Math.cos( phi );
-  target.z = Math.sin( phi ) * Math.sin( theta );
-
-  camera.lookAt( target );
-
-  //requestAnimationFrame( render );
-  renderer.render( scene, camera );
-};
 
 function onWindowResize () {
   camera.aspect = window.innerWidth / window.innerHeight;
@@ -270,3 +247,11 @@ function onWindowResize () {
   renderer.setSize( window.innerWidth, window.innerHeight );
   render();
 }
+
+function onKeyDown ( event ) {
+}
+
+function render () {
+  //requestAnimationFrame( render );
+  renderer.render( scene, camera );
+};
