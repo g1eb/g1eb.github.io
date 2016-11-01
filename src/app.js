@@ -5,8 +5,7 @@ var ambientLight;
 var camera, cameraSettings;
 var target, lon, lat, phi, theta, touchX, touchY;
 var guiControls, guiControlsSky, guiControlsFrames, guiControlsCamera;
-var frameSettings, frameGeometry, frameMaterial;
-var skySetting, sky, sunSphere, sunDistance;
+var frameSettings, skySetting, sky, sunSphere, sunDistance;
 
 init();
 render();
@@ -151,50 +150,54 @@ function updateSky() {
 
 function initFrames () {
   frameSettings = {
-    width: 250,
-    height: 250,
+    width: 1000,
+    height: 1000,
     segments: 1,
     slices: 1,
     ambientColor: 0xffffff,
     diffuseColor: 0xff4500,
     transparent: true,
     opacity: 0.5,
-    positionY: 500,
+    positionX: 0,
+    positionY: 5000,
+    positionZ: 0,
     rotationX: 0,
     rotationY: 0,
     rotationZ: 0,
-    numFrames: 20,
-    distance: 1000,
+    numFrames: 30,
+    distance: 10000,
+    variance: 1000,
   };
-
-  frameGeometry = new THREE.PlaneGeometry(
-    frameSettings.width,
-    frameSettings.height,
-    frameSettings.segments,
-    frameSettings.slices
-  );
-
-  frameMaterial = new THREE.MeshPhongMaterial({
-    color: frameSettings.ambientColor,
-    emissive: frameSettings.diffuseColor,
-    side: THREE.DoubleSide,
-    shading: THREE.FlatShading,
-    transparent: frameSettings.transparent,
-    opacity: frameSettings.opacity,
-  });
 
   addFrames();
 }
 
 function addFrames () {
+  var frameGeometry, frameMaterial, frame;
   var angle = THREE.Math.degToRad(360 / frameSettings.numFrames);
   for ( var i = 0; i < frameSettings.numFrames; i++ ) {
-    var mesh = new THREE.Mesh(frameGeometry, frameMaterial);
-    mesh.position.x = frameSettings.distance * Math.cos(angle * i);
-    mesh.position.y = frameSettings.positionY;
-    mesh.position.z = frameSettings.distance * Math.sin(angle * i);
-    mesh.rotation.y = (angle * i + 90) * -1;
-    scene.add( mesh );
+    frameGeometry = new THREE.PlaneGeometry(
+      frameSettings.width + Math.floor(Math.random() * frameSettings.variance),
+      frameSettings.height + Math.floor(Math.random() * frameSettings.variance),
+      frameSettings.segments,
+      frameSettings.slices
+    );
+
+    frameMaterial = new THREE.MeshPhongMaterial({
+      color: frameSettings.ambientColor,
+      emissive: frameSettings.diffuseColor,
+      side: THREE.DoubleSide,
+      shading: THREE.FlatShading,
+      transparent: frameSettings.transparent,
+      opacity: frameSettings.opacity,
+    });
+
+    frame = new THREE.Mesh(frameGeometry, frameMaterial);
+    frame.position.x = frameSettings.distance * Math.cos(angle * i) + Math.floor(Math.random() * frameSettings.variance);
+    frame.position.y = frameSettings.positionY + Math.floor(Math.random() * frameSettings.variance);
+    frame.position.z = frameSettings.distance * Math.sin(angle * i);
+    frame.rotation.y = Math.PI / 2 - angle * i;
+    scene.add(frame);
   }
 }
 
