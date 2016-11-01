@@ -206,6 +206,7 @@ function updateFrames () {
 
 function initGuiControls () {
   guiControls = new dat.GUI();
+  guiControls.close();
 
   guiControlsSky = guiControls.addFolder('Sky');
   guiControlsSky.add( skySettings, 'turbidity', 1.0, 20.0, 0.1 ).onChange( updateSky );
