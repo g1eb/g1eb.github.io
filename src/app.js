@@ -25,7 +25,7 @@ function init () {
 
   cameraSettings = {
     positionX: 0,
-    positionY: 5000,
+    positionY: 52000,
     positionZ: 0,
     rotationX: 0,
     rotationY: 0.5,
@@ -150,7 +150,7 @@ function initFrames () {
     transparent: true,
     opacity: 0.25,
     positionX: 0,
-    positionY: 5000,
+    positionY: 50000,
     positionZ: 0,
     rotationX: 0,
     rotationY: 0,
@@ -222,9 +222,9 @@ function initGuiControls () {
   guiControlsFrames.add(frameSettings, 'opacity', 0, 1).onChange(updateFrames);
 
   guiControlsCamera = guiControls.addFolder('Camera');
-  guiControlsCamera.add(cameraSettings, 'positionX', 0, 50000).onChange(updateCamera);
-  guiControlsCamera.add(cameraSettings, 'positionY', 0, 50000).onChange(updateCamera);
-  guiControlsCamera.add(cameraSettings, 'positionZ', 0, 50000).onChange(updateCamera);
+  guiControlsCamera.add(cameraSettings, 'positionX', 0, 100000).onChange(updateCamera);
+  guiControlsCamera.add(cameraSettings, 'positionY', 0, 100000).onChange(updateCamera);
+  guiControlsCamera.add(cameraSettings, 'positionZ', 0, 100000).onChange(updateCamera);
   guiControlsCamera.add(cameraSettings, 'rotationX', 0, Math.PI * 2).onChange(updateCamera);
   guiControlsCamera.add(cameraSettings, 'rotationY', 0, Math.PI * 2).onChange(updateCamera);
   guiControlsCamera.add(cameraSettings, 'rotationZ', 0, Math.PI * 2).onChange(updateCamera);
