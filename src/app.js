@@ -165,9 +165,15 @@ function addFrames () {
   }
 }
 
-function updateFrames() {
-  frame.material.transparent = frameSettings.transparent;
-  frame.material.opacity = frameSettings.opacity;
+function updateFrames () {
+  var frame;
+  for ( var i = 0; i < scene.children.length; i++ ) {
+    frame = scene.children[i];
+    if ( frame.type === 'Mesh' ) {
+      frame.material.transparent = frameSettings.transparent;
+      frame.material.opacity = frameSettings.opacity;
+    }
+  }
 
   render();
 }
