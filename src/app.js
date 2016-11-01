@@ -23,40 +23,13 @@ function init () {
   //scene.fog = new THREE.Fog( 0x000000, 3500, 15000 );
   //scene.fog.color.setHSL( 0.51, 0.4, 0.01 );
 
-  target = new THREE.Vector3();
-  lon = 90;
-  lat = 60;
-  phi = 0;
+  target = new THREE.Vector3(0, 0, 0);
+  lon = 245;
+  lat = 0;
+  phi = 550;
   theta = 0;
 
-  camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 5000000 );
-  camera.eulerOrder = "YXZ"
-
-  cameraSettings = {
-    positionX: 1250,
-    positionY: 550,
-    positionZ: 3000,
-    rotationX: 1,
-    rotationY: 1,
-    rotationZ: 0,
-  }
-
-  camera.position.x = cameraSettings.positionX;
-  camera.position.y = cameraSettings.positionY;
-  camera.position.z = cameraSettings.positionZ;
-  camera.rotation.x = cameraSettings.rotationX;
-  camera.rotation.y = cameraSettings.rotationY;
-  camera.rotation.z = cameraSettings.rotationZ;
-
-  //camera.setLens(20);
-
-  //controls = new THREE.OrbitControls( camera, renderer.domElement );
-  //controls.addEventListener('change', render);
-  //controls.enableDamping = true;
-  //controls.dampingFactor = 0.25;
-  //controls.enableZoom = true;
-  //controls.enablePan = true;
-  //controls.maxPolarAngle = Math.PI / 2;
+  camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 1, 5000000 );
 
   var helper = new THREE.GridHelper( 5000, 100, 0xffffff, 0xffffff );
   scene.add( helper );
@@ -205,19 +178,6 @@ function updateFrames () {
   render();
 }
 
-function updateCamera () {
-  camera.position.x = cameraSettings.positionX;
-  camera.position.y = cameraSettings.positionY;
-  camera.position.z = cameraSettings.positionZ;
-  camera.rotation.x = cameraSettings.rotationX;
-  camera.rotation.y = cameraSettings.rotationY;
-  camera.rotation.z = cameraSettings.rotationZ;
-
-  camera.updateProjectionMatrix();
-
-  render();
-}
-
 function initGuiControls () {
   guiControls = new dat.GUI();
 
@@ -234,14 +194,6 @@ function initGuiControls () {
   guiControlsFrames = guiControls.addFolder('Frames');
   guiControlsFrames.add(frameSettings, 'transparent').onChange(updateFrames);
   guiControlsFrames.add(frameSettings, 'opacity', 0, 1).onChange(updateFrames);
-
-  guiControlsCamera = guiControls.addFolder('Camera');
-  guiControlsCamera.add(cameraSettings, 'positionX', 0, 10000).onChange(updateCamera);
-  guiControlsCamera.add(cameraSettings, 'positionY', 0, 10000).onChange(updateCamera);
-  guiControlsCamera.add(cameraSettings, 'positionZ', 0, 10000).onChange(updateCamera);
-  guiControlsCamera.add(cameraSettings, 'rotationX', 0, Math.PI * 2).onChange(updateCamera);
-  guiControlsCamera.add(cameraSettings, 'rotationY', 0, Math.PI * 2).onChange(updateCamera);
-  guiControlsCamera.add(cameraSettings, 'rotationZ', 0, Math.PI * 2).onChange(updateCamera);
 }
 
 function onDocumentMouseDown( event ) {
@@ -260,16 +212,15 @@ function onDocumentMouseMove( event ) {
   var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
   var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
 
-  lon -= movementX;
-  lat += movementY;
+  lon -= movementX * 0.1;
+  lat += movementY * 0.1;
 
   render();
 }
 
 function onDocumentMouseWheel( event ) {
-  camera.fov += event.deltaY * 0.05;
+  camera.fov = Math.min(Math.abs(camera.fov + event.deltaY * 0.05), 179);
   camera.updateProjectionMatrix();
-
   render();
 }
 
