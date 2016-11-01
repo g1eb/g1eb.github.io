@@ -1,9 +1,10 @@
 if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
-var guiControls, guiControlsSky, guiControlsFrames;
+var controls, scene, renderer;
 var ambientLight;
-var camera, controls, scene, renderer;
-var frameSettings, frameGeometry, frameMaterial, frame;
+var camera, cameraSettings;
+var guiControls, guiControlsSky, guiControlsFrames, guiControlsCamera;
+var frameSettings, frameGeometry, frameMaterial;
 var skySetting, sky, sunSphere, sunDistance;
 
 init();
@@ -17,30 +18,43 @@ function init () {
   //renderer.setClearColor( 0x000000, 1 );
   document.body.appendChild( renderer.domElement );
 
-  camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 100, 5000000 );
-  camera.position.x = 250;
-  camera.position.y = 150;
-  camera.position.z = 500;
+  scene = new THREE.Scene();
+  //scene.fog = new THREE.Fog( 0x000000, 3500, 15000 );
+  //scene.fog.color.setHSL( 0.51, 0.4, 0.01 );
+
+  camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 5000000 );
+
+  cameraSettings = {
+    positionX: 0,
+    positionY: 550,
+    positionZ: 0,
+    rotationX: 0,
+    rotationY: 0,
+    rotationZ: 0,
+  }
+
+  camera.position.x = cameraSettings.positionX;
+  camera.position.y = cameraSettings.positionY;
+  camera.position.z = cameraSettings.positionZ;
+  camera.rotation.x = cameraSettings.rotationX;
+  camera.rotation.y = cameraSettings.rotationY;
+  camera.rotation.z = cameraSettings.rotationZ;
 
   //camera.setLens(20);
 
   controls = new THREE.OrbitControls( camera, renderer.domElement );
   controls.addEventListener('change', render);
-  //controls.maxPolarAngle = Math.PI / 2;
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.25;
   controls.enableZoom = true;
-  controls.enablePan = false;
-
-  scene = new THREE.Scene();
+  controls.enablePan = true;
+  //controls.maxPolarAngle = Math.PI / 2;
 
   var helper = new THREE.GridHelper( 5000, 100, 0xffffff, 0xffffff );
   scene.add( helper );
 
   ambientLight = new THREE.AmbientLight( 0x000000 );
   scene.add(ambientLight);
-
-  guiControls = new dat.GUI();
-  guiControlsSky = guiControls.addFolder('Sky');
-  guiControlsFrames = guiControls.addFolder('Frames');
 
   initSky();
   initFrames();
@@ -178,7 +192,23 @@ function updateFrames () {
   render();
 }
 
+function updateCamera () {
+  camera.position.x = cameraSettings.positionX;
+  camera.position.y = cameraSettings.positionY;
+  camera.position.z = cameraSettings.positionZ;
+  camera.rotation.x = cameraSettings.rotationX;
+  camera.rotation.y = cameraSettings.rotationY;
+  camera.rotation.z = cameraSettings.rotationZ;
+
+  camera.updateProjectionMatrix();
+
+  render();
+}
+
 function initGuiControls () {
+  guiControls = new dat.GUI();
+
+  guiControlsSky = guiControls.addFolder('Sky');
   guiControlsSky.add( skySettings, 'turbidity', 1.0, 20.0, 0.1 ).onChange( updateSky );
   guiControlsSky.add( skySettings, 'reileigh', 0.0, 4, 0.001 ).onChange( updateSky );
   guiControlsSky.add( skySettings, 'mieCoefficient', 0.0, 0.1, 0.001 ).onChange( updateSky );
@@ -188,8 +218,17 @@ function initGuiControls () {
   guiControlsSky.add( skySettings, 'azimuth', 0, 1, 0.0001 ).onChange( updateSky );
   guiControlsSky.add( skySettings, 'sun' ).onChange( updateSky );
 
+  guiControlsFrames = guiControls.addFolder('Frames');
   guiControlsFrames.add(frameSettings, 'transparent').onChange(updateFrames);
   guiControlsFrames.add(frameSettings, 'opacity', 0, 1).onChange(updateFrames);
+
+  guiControlsCamera = guiControls.addFolder('Camera');
+  guiControlsCamera.add(cameraSettings, 'positionX', 0, 10000).onChange(updateCamera);
+  guiControlsCamera.add(cameraSettings, 'positionY', 0, 10000).onChange(updateCamera);
+  guiControlsCamera.add(cameraSettings, 'positionZ', 0, 10000).onChange(updateCamera);
+  guiControlsCamera.add(cameraSettings, 'rotationX', 0, Math.PI * 2).onChange(updateCamera);
+  guiControlsCamera.add(cameraSettings, 'rotationY', 0, Math.PI * 2).onChange(updateCamera);
+  guiControlsCamera.add(cameraSettings, 'rotationZ', 0, Math.PI * 2).onChange(updateCamera);
 }
 
 function render () {
