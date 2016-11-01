@@ -118,17 +118,20 @@ function updateSky() {
 
 function initFrames () {
   frameSettings = {
-    width: 100,
-    height: 100,
+    width: 250,
+    height: 250,
     segments: 1,
     slices: 1,
     ambientColor: 0xffffff,
     diffuseColor: 0xff4500,
     transparent: true,
     opacity: 0.5,
+    positionY: 500,
     rotationX: 0,
     rotationY: 0,
     rotationZ: 0,
+    numFrames: 20,
+    distance: 1000,
   };
 
   frameGeometry = new THREE.PlaneGeometry(
@@ -147,16 +150,24 @@ function initFrames () {
     opacity: frameSettings.opacity,
   });
 
-  frame = new THREE.Mesh(frameGeometry, frameMaterial);
-  scene.add( frame );
+  addFrames();
+}
+
+function addFrames () {
+  var angle = THREE.Math.degToRad(360 / frameSettings.numFrames);
+  for ( var i = 0; i < frameSettings.numFrames; i++ ) {
+    var mesh = new THREE.Mesh(frameGeometry, frameMaterial);
+    mesh.position.x = frameSettings.distance * Math.cos(angle * i);
+    mesh.position.y = frameSettings.positionY;
+    mesh.position.z = frameSettings.distance * Math.sin(angle * i);
+    mesh.rotation.y = (angle * i + 90) * -1;
+    scene.add( mesh );
+  }
 }
 
 function updateFrames() {
   frame.material.transparent = frameSettings.transparent;
   frame.material.opacity = frameSettings.opacity;
-  frame.rotation.x = frameSettings.rotationX;
-  frame.rotation.y = frameSettings.rotationY;
-  frame.rotation.z = frameSettings.rotationZ;
 
   render();
 }
@@ -173,14 +184,9 @@ function initGuiControls () {
 
   guiControlsFrames.add(frameSettings, 'transparent').onChange(updateFrames);
   guiControlsFrames.add(frameSettings, 'opacity', 0, 1).onChange(updateFrames);
-  guiControlsFrames.add(frameSettings, 'rotationX', 0, 10).onChange(updateFrames);
-  guiControlsFrames.add(frameSettings, 'rotationY', 0, 10).onChange(updateFrames);
-  guiControlsFrames.add(frameSettings, 'rotationZ', 0, 10).onChange(updateFrames);
 }
 
 function render () {
-  console.log(camera.position.x, camera.position.y, camera.position.z);
-
   //requestAnimationFrame( render );
   renderer.render( scene, camera );
 };
