@@ -4,7 +4,7 @@ var guiControls, guiControlsSky, guiControlsFrames;
 var ambientLight;
 var camera, controls, scene, renderer;
 var frameSettings, frameGeometry, frameMaterial, frame;
-var skySetting, sky, sunSphere;
+var skySetting, sky, sunSphere, sunDistance;
 
 init();
 render();
@@ -32,7 +32,7 @@ function init () {
 
   scene = new THREE.Scene();
 
-  var helper = new THREE.GridHelper( 1000, 100, 0xffffff, 0xffffff );
+  var helper = new THREE.GridHelper( 5000, 100, 0xffffff, 0xffffff );
   scene.add( helper );
 
   ambientLight = new THREE.AmbientLight( 0x000000 );
@@ -73,40 +73,47 @@ function initSky () {
     sun: ! true
   };
 
-  var distance = 400000;
+  sunDistance = 400000;
 
-  function guiChanged() {
-    var uniforms = sky.uniforms;
-    uniforms.turbidity.value = skySettings.turbidity;
-    uniforms.reileigh.value = skySettings.reileigh;
-    uniforms.luminance.value = skySettings.luminance;
-    uniforms.mieCoefficient.value = skySettings.mieCoefficient;
-    uniforms.mieDirectionalG.value = skySettings.mieDirectionalG;
+  var uniforms = sky.uniforms;
+  uniforms.turbidity.value = skySettings.turbidity;
+  uniforms.reileigh.value = skySettings.reileigh;
+  uniforms.luminance.value = skySettings.luminance;
+  uniforms.mieCoefficient.value = skySettings.mieCoefficient;
+  uniforms.mieDirectionalG.value = skySettings.mieDirectionalG;
 
-    var theta = Math.PI * ( skySettings.inclination - 0.5 );
-    var phi = 2 * Math.PI * ( skySettings.azimuth - 0.5 );
+  var theta = Math.PI * ( skySettings.inclination - 0.5 );
+  var phi = 2 * Math.PI * ( skySettings.azimuth - 0.5 );
 
-    sunSphere.position.x = distance * Math.cos( phi );
-    sunSphere.position.y = distance * Math.sin( phi ) * Math.sin( theta );
-    sunSphere.position.z = distance * Math.sin( phi ) * Math.cos( theta );
+  sunSphere.position.x = sunDistance * Math.cos( phi );
+  sunSphere.position.y = sunDistance * Math.sin( phi ) * Math.sin( theta );
+  sunSphere.position.z = sunDistance * Math.sin( phi ) * Math.cos( theta );
 
-    sunSphere.visible = skySettings.sun;
+  sunSphere.visible = skySettings.sun;
 
-    sky.uniforms.sunPosition.value.copy( sunSphere.position );
+  sky.uniforms.sunPosition.value.copy( sunSphere.position );
+}
 
-    render();
-  }
+function updateSky() {
+  var uniforms = sky.uniforms;
+  uniforms.turbidity.value = skySettings.turbidity;
+  uniforms.reileigh.value = skySettings.reileigh;
+  uniforms.luminance.value = skySettings.luminance;
+  uniforms.mieCoefficient.value = skySettings.mieCoefficient;
+  uniforms.mieDirectionalG.value = skySettings.mieDirectionalG;
 
-  guiControlsSky.add( skySettings, 'turbidity', 1.0, 20.0, 0.1 ).onChange( guiChanged );
-  guiControlsSky.add( skySettings, 'reileigh', 0.0, 4, 0.001 ).onChange( guiChanged );
-  guiControlsSky.add( skySettings, 'mieCoefficient', 0.0, 0.1, 0.001 ).onChange( guiChanged );
-  guiControlsSky.add( skySettings, 'mieDirectionalG', 0.0, 1, 0.001 ).onChange( guiChanged );
-  guiControlsSky.add( skySettings, 'luminance', 0.0, 2 ).onChange( guiChanged );
-  guiControlsSky.add( skySettings, 'inclination', 0, 1, 0.0001 ).onChange( guiChanged );
-  guiControlsSky.add( skySettings, 'azimuth', 0, 1, 0.0001 ).onChange( guiChanged );
-  guiControlsSky.add( skySettings, 'sun' ).onChange( guiChanged );
+  var theta = Math.PI * ( skySettings.inclination - 0.5 );
+  var phi = 2 * Math.PI * ( skySettings.azimuth - 0.5 );
 
-  guiChanged();
+  sunSphere.position.x = sunDistance * Math.cos( phi );
+  sunSphere.position.y = sunDistance * Math.sin( phi ) * Math.sin( theta );
+  sunSphere.position.z = sunDistance * Math.sin( phi ) * Math.cos( theta );
+
+  sunSphere.visible = skySettings.sun;
+
+  sky.uniforms.sunPosition.value.copy( sunSphere.position );
+
+  render();
 }
 
 function initFrames () {
@@ -117,6 +124,8 @@ function initFrames () {
     slices: 1,
     ambientColor: 0xffffff,
     diffuseColor: 0xff4500,
+    transparent: true,
+    opacity: 0.5,
     rotationX: 0,
     rotationY: 0,
     rotationZ: 0,
@@ -134,16 +143,39 @@ function initFrames () {
     emissive: frameSettings.diffuseColor,
     side: THREE.DoubleSide,
     shading: THREE.FlatShading,
+    transparent: frameSettings.transparent,
+    opacity: frameSettings.opacity,
   });
 
   frame = new THREE.Mesh(frameGeometry, frameMaterial);
   scene.add( frame );
 }
 
+function updateFrames() {
+  frame.material.transparent = frameSettings.transparent;
+  frame.material.opacity = frameSettings.opacity;
+  frame.rotation.x = frameSettings.rotationX;
+  frame.rotation.y = frameSettings.rotationY;
+  frame.rotation.z = frameSettings.rotationZ;
+
+  render();
+}
+
 function initGuiControls () {
-  guiControlsFrames.add(frameSettings, 'rotationX', 0, 1);
-  guiControlsFrames.add(frameSettings, 'rotationY', 0, 1);
-  guiControlsFrames.add(frameSettings, 'rotationZ', 0, 1);
+  guiControlsSky.add( skySettings, 'turbidity', 1.0, 20.0, 0.1 ).onChange( updateSky );
+  guiControlsSky.add( skySettings, 'reileigh', 0.0, 4, 0.001 ).onChange( updateSky );
+  guiControlsSky.add( skySettings, 'mieCoefficient', 0.0, 0.1, 0.001 ).onChange( updateSky );
+  guiControlsSky.add( skySettings, 'mieDirectionalG', 0.0, 1, 0.001 ).onChange( updateSky );
+  guiControlsSky.add( skySettings, 'luminance', 0.0, 2 ).onChange( updateSky );
+  guiControlsSky.add( skySettings, 'inclination', 0, 1, 0.0001 ).onChange( updateSky );
+  guiControlsSky.add( skySettings, 'azimuth', 0, 1, 0.0001 ).onChange( updateSky );
+  guiControlsSky.add( skySettings, 'sun' ).onChange( updateSky );
+
+  guiControlsFrames.add(frameSettings, 'transparent').onChange(updateFrames);
+  guiControlsFrames.add(frameSettings, 'opacity', 0, 1).onChange(updateFrames);
+  guiControlsFrames.add(frameSettings, 'rotationX', 0, 10).onChange(updateFrames);
+  guiControlsFrames.add(frameSettings, 'rotationY', 0, 10).onChange(updateFrames);
+  guiControlsFrames.add(frameSettings, 'rotationZ', 0, 10).onChange(updateFrames);
 }
 
 function render () {
