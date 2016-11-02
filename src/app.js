@@ -210,8 +210,8 @@ function initFrames () {
   frames = [];
 
   frameSettings = {
-    width: 1000,
-    height: 1000,
+    width: 1024,
+    height: 1024,
     segments: 1,
     slices: 1,
     ambientColor: 0xffffff,
