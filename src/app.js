@@ -6,7 +6,7 @@ var camera, cameraSettings;
 var touchX, touchY;
 var stats;
 var guiControls, guiControlsSky, guiControlsFrames, guiControlsCamera;
-var frames, frameSettings, skySetting, sky, sunSphere, sunDistance, lensFlare, flareSettings;
+var frames, selectedFrame, frameSettings, skySetting, sky, sunSphere, sunDistance, lensFlare, flareSettings;
 var raycaster, mouse;
 var idleTimeoutId, idleIntervalId;
 
@@ -346,6 +346,12 @@ function initIdleAnimation () {
   }, 1000 * 60);
 }
 
+function highlightSelectedFrame () {
+  selectedFrame.material.transparent = true;
+  selectedFrame.material.opacity = 0.75;
+  render();
+}
+
 function selectFrame ( event ) {
   mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
   mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
@@ -355,9 +361,12 @@ function selectFrame ( event ) {
 
   updateFrames();
   if ( !!intersects.length ) {
-    intersects[0].object.material.transparent = true;
-    intersects[0].object.material.opacity = 0.75;
-    render();
+    if ( intersects[0].object === selectedFrame ) {
+      selectedFrame = undefined;
+    } else {
+      selectedFrame = intersects[0].object;
+      highlightSelectedFrame();
+    }
   }
 }
 
