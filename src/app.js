@@ -27,7 +27,7 @@ function init () {
 
   cameraSettings = {
     positionX: 0,
-    positionY: 52000,
+    positionY: 50000,
     positionZ: 0,
     rotationX: 0,
     rotationY: 0.5,
@@ -223,7 +223,7 @@ function initFrames () {
     rotationY: 0,
     rotationZ: 0,
     numFrames: 25,
-    distance: 10000,
+    distance: 5000,
     variance: 1000,
   };
 
@@ -267,7 +267,7 @@ function updateFrames () {
   for ( var i = 0; i < frames.length; i++ ) {
     frames[i].material.transparent = frameSettings.transparent;
     frames[i].material.opacity = frameSettings.opacity;
-    frames[i].position.y = frameSettings.positionY + Math.floor(Math.random() * frameSettings.variance);
+    frames[i].position.y = frameSettings.positionY;
     frames[i].rotation.y = frameSettings.rotationY + Math.PI / 2 - angle * i;
   }
   render();
