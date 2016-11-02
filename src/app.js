@@ -5,7 +5,7 @@ var ambientLight;
 var camera, cameraSettings;
 var touchX, touchY;
 var guiControls, guiControlsSky, guiControlsFrames, guiControlsCamera;
-var frameSettings, skySetting, sky, sunSphere, sunDistance;
+var frameSettings, skySetting, sky, sunSphere, sunDistance, lensFlare, flareSettings;
 
 init();
 render();
@@ -141,6 +141,10 @@ function updateSky() {
 }
 
 function initFlare () {
+  flareSettings = {
+    lensflare: false,
+  }
+
   var textureLoader = new THREE.TextureLoader();
   var textureFlare0 = textureLoader.load( "src/textures/lensflare0.png" );
   var textureFlare2 = textureLoader.load( "src/textures/lensflare2.png" );
@@ -148,7 +152,7 @@ function initFlare () {
 
   var flareColor = new THREE.Color( 0xffffff );
   flareColor.setHSL( 0.55, 0.9, 0.5 + 0.5 );
-  var lensFlare = new THREE.LensFlare( textureFlare0, 700, 0.0, THREE.AdditiveBlending, flareColor );
+  lensFlare = new THREE.LensFlare( textureFlare0, 700, 0.0, THREE.AdditiveBlending, flareColor );
 
   lensFlare.add( textureFlare2, 512, 0.0, THREE.AdditiveBlending );
   lensFlare.add( textureFlare2, 512, 0.0, THREE.AdditiveBlending );
@@ -161,6 +165,7 @@ function initFlare () {
 
   lensFlare.customUpdateCallback = lensFlareUpdateCallback;
   lensFlare.position.copy( sunSphere.position );
+  lensFlare.visible = false;
 
   scene.add( lensFlare );
 
@@ -184,6 +189,11 @@ function lensFlareUpdateCallback( object ) {
 
   object.lensFlares[ 2 ].y += 0.025;
   object.lensFlares[ 3 ].rotation = object.positionScreen.x * 0.5 + THREE.Math.degToRad( 45 );
+}
+
+function updateFlare () {
+  lensFlare.visible = flareSettings.lensflare;
+  render();
 }
 
 function initFrames () {
@@ -264,6 +274,9 @@ function initGuiControls () {
   guiControlsSky.add( skySettings, 'inclination', 0, 1, 0.0001 ).onChange( updateSky );
   guiControlsSky.add( skySettings, 'azimuth', 0, 1, 0.0001 ).onChange( updateSky );
   guiControlsSky.add( skySettings, 'sun' ).onChange( updateSky );
+
+  guiControlsFlare = guiControls.addFolder('Lensflare');
+  guiControlsFlare.add( flareSettings, 'lensflare' ).onChange( updateFlare );
 
   guiControlsFrames = guiControls.addFolder('Frames');
   guiControlsFrames.add(frameSettings, 'transparent').onChange(updateFrames);
