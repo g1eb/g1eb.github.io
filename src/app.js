@@ -6,7 +6,7 @@ var camera, cameraSettings;
 var touchX, touchY;
 var stats;
 var guiControls, guiControlsSky, guiControlsFrames, guiControlsCamera;
-var frameSettings, skySetting, sky, sunSphere, sunDistance, lensFlare, flareSettings;
+var frames, frameSettings, skySetting, sky, sunSphere, sunDistance, lensFlare, flareSettings;
 
 init();
 render();
@@ -201,6 +201,8 @@ function updateFlare () {
 }
 
 function initFrames () {
+  frames = [];
+
   frameSettings = {
     width: 1000,
     height: 1000,
@@ -229,8 +231,8 @@ function addFrames () {
   var angle = THREE.Math.degToRad(360 / frameSettings.numFrames);
   for ( var i = 0; i < frameSettings.numFrames; i++ ) {
     frameGeometry = new THREE.PlaneGeometry(
-      frameSettings.width + Math.floor(Math.random() * frameSettings.variance),
-      frameSettings.height + Math.floor(Math.random() * frameSettings.variance),
+      frameSettings.width,
+      frameSettings.height,
       frameSettings.segments,
       frameSettings.slices
     );
@@ -245,22 +247,24 @@ function addFrames () {
     });
 
     frame = new THREE.Mesh(frameGeometry, frameMaterial);
-    frame.position.x = frameSettings.distance * Math.cos(angle * i) + Math.floor(Math.random() * frameSettings.variance);
-    frame.position.y = frameSettings.positionY + Math.floor(Math.random() * frameSettings.variance);
+    frame.position.x = frameSettings.distance * Math.cos(angle * i);
+    frame.position.y = frameSettings.positionY;
     frame.position.z = frameSettings.distance * Math.sin(angle * i);
     frame.rotation.y = Math.PI / 2 - angle * i;
+
+    frames.push(frame);
     scene.add(frame);
   }
 }
 
 function updateFrames () {
   var frame;
-  for ( var i = 0; i < scene.children.length; i++ ) {
-    frame = scene.children[i];
-    if ( frame.type === 'Mesh' ) {
-      frame.material.transparent = frameSettings.transparent;
-      frame.material.opacity = frameSettings.opacity;
-    }
+  var angle = THREE.Math.degToRad(360 / frameSettings.numFrames);
+  for ( var i = 0; i < frames.length; i++ ) {
+    frames[i].material.transparent = frameSettings.transparent;
+    frames[i].material.opacity = frameSettings.opacity;
+    frames[i].position.y = frameSettings.positionY + Math.floor(Math.random() * frameSettings.variance);
+    frames[i].rotation.y = frameSettings.rotationY + Math.PI / 2 - angle * i;
   }
   render();
 }
@@ -285,6 +289,8 @@ function initGuiControls () {
   guiControlsFrames = guiControls.addFolder('Frames');
   guiControlsFrames.add(frameSettings, 'transparent').onChange(updateFrames);
   guiControlsFrames.add(frameSettings, 'opacity', 0, 1).onChange(updateFrames);
+  guiControlsFrames.add(frameSettings, 'positionY', 0, 100000).onChange(updateFrames);
+  guiControlsFrames.add(frameSettings, 'rotationY', 0, Math.PI * 2).onChange(updateFrames);
 
   guiControlsCamera = guiControls.addFolder('Camera');
   guiControlsCamera.add(cameraSettings, 'positionX', 0, 100000).onChange(updateCamera);
