@@ -311,10 +311,11 @@ function initIdleAnimation () {
   window.clearTimeout(idleTimeoutId);
   window.clearInterval(idleIntervalId);
   idleTimeoutId = window.setTimeout(function () {
+    updateFrames();
     idleIntervalId = window.setInterval(function () {
       camera.rotation.y -= 0.0025;
       render();
-    }, 100);
+    }, 50);
   }, 1000 * 60);
 }
 
@@ -369,6 +370,7 @@ function onDocumentTouchMove ( event ) {
 }
 
 function onDocumentMouseWheel ( event ) {
+  initIdleAnimation();
   camera.rotation.y += event.deltaY * 0.01;
   render();
 }
