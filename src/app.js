@@ -29,10 +29,10 @@ function init () {
 
   cameraSettings = {
     positionX: 0,
-    positionY: 50000,
+    positionY: 100000,
     positionZ: 0,
     rotationX: 0,
-    rotationY: 0.5,
+    rotationY: Math.PI,
     rotationZ: 0,
   }
 
@@ -58,6 +58,7 @@ function init () {
   initSky();
   initFlare();
   initFrames();
+  initCamera();
   initGuiControls();
   initIdleAnimation();
 
@@ -69,6 +70,25 @@ function init () {
   document.addEventListener('keydown', onKeyDown, false)
 
   window.addEventListener( 'resize', onWindowResize, false ); 
+}
+
+function initCamera () {
+  new TWEEN.Tween( camera.position ).to( {
+    y: 50000,
+  }, 3000 ).easing( TWEEN.Easing.Quadratic.Out).start();
+
+  new TWEEN.Tween( camera.rotation ).to( {
+    y: 0.5
+  }, 3000 ).easing( TWEEN.Easing.Quadratic.Out).start();
+
+  var initCameraInterval = window.setInterval(function () {
+    TWEEN.update();
+    render();
+  }, 50);
+
+  window.setTimeout(function () {
+    window.clearInterval(initCameraInterval);
+  }, 3000);
 }
 
 function updateCamera () {
