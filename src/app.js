@@ -153,7 +153,7 @@ function updateSky() {
 
 function initFlare () {
   flareSettings = {
-    lensflare: false,
+    lensflare: true,
   }
 
   var textureLoader = new THREE.TextureLoader();
@@ -176,7 +176,7 @@ function initFlare () {
 
   lensFlare.customUpdateCallback = lensFlareUpdateCallback;
   lensFlare.position.copy( sunSphere.position );
-  lensFlare.visible = false;
+  lensFlare.visible = true;
 
   scene.add( lensFlare );
 
