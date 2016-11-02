@@ -7,6 +7,7 @@ var touchX, touchY;
 var stats;
 var guiControls, guiControlsSky, guiControlsFrames, guiControlsCamera;
 var frames, frameSettings, skySetting, sky, sunSphere, sunDistance, lensFlare, flareSettings;
+var raycaster, mouse;
 
 init();
 render();
@@ -45,6 +46,9 @@ function init () {
 
   ambientLight = new THREE.AmbientLight( 0xffffff );
   scene.add(ambientLight);
+
+  raycaster = new THREE.Raycaster();
+  mouse = new THREE.Vector2();
 
   stats = new Stats();
   document.body.appendChild(stats.dom);
@@ -301,10 +305,27 @@ function initGuiControls () {
   guiControlsCamera.add(cameraSettings, 'rotationZ', 0, Math.PI * 2).onChange(updateCamera);
 }
 
+function selectFrame ( event ) {
+  mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+  mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+
+  raycaster.setFromCamera( mouse, camera );
+  var intersects = raycaster.intersectObjects( frames );
+
+  updateFrames();
+  if ( !!intersects.length ) {
+    intersects[0].object.material.transparent = true;
+    intersects[0].object.material.opacity = 0.75;
+    render();
+  }
+}
+
 function onDocumentMouseDown ( event ) {
   event.preventDefault();
   document.addEventListener( 'mousemove', onDocumentMouseMove, false );
   document.addEventListener( 'mouseup', onDocumentMouseUp, false );
+
+  selectFrame(event);
 }
 
 function onDocumentMouseUp ( event ) {
