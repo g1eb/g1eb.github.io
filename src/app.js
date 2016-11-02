@@ -6,7 +6,8 @@ var camera, cameraSettings;
 var touchX, touchY;
 var stats;
 var guiControls, guiControlsSky, guiControlsFrames, guiControlsCamera;
-var frames, selectedFrame, frameSettings, skySetting, sky, sunSphere, sunDistance, lensFlare, flareSettings;
+var frames, selectedFrame, openFrame, frameSettings;
+var skySetting, sky, sunSphere, sunDistance, lensFlare, flareSettings;
 var raycaster, mouse;
 var idleTimeoutId, idleIntervalId;
 
@@ -340,11 +341,60 @@ function initIdleAnimation () {
   window.clearInterval(idleIntervalId);
   idleTimeoutId = window.setTimeout(function () {
     updateFrames();
+    closeSelectedFrame();
     idleIntervalId = window.setInterval(function () {
       camera.rotation.y -= 0.0025;
       render();
     }, 50);
   }, 1000 * 60);
+}
+
+function openSelectedFrame () {
+  openFrame = selectedFrame.clone()
+  openFrame.position.x = camera.position.x - 1000;
+  openFrame.position.y = camera.position.y;
+  openFrame.position.z = camera.position.z - 1500;
+  openFrame.rotation.y = camera.rotation.y;
+
+  openFrame.material.transparent = frameSettings.transparent;
+  openFrame.material.opacity = frameSettings.activeOpacity;
+
+  var openFrameTextCanvas = document.createElement('canvas');
+  openFrameTextCanvas.width = frameSettings.width;
+  openFrameTextCanvas.height = frameSettings.height;
+  openFrameTextContext = openFrameTextCanvas.getContext('2d');
+  openFrameTextContext.font = 'Normal 75px Arial';
+  openFrameTextContext.textAlign = 'left';
+  openFrameTextContext.fillStyle = 'rgba(50, 50, 50, 0.75)';
+
+  var frameIndex = frames.indexOf(selectedFrame);
+  for ( var j = 0; j < 9; j++ ) {
+    openFrameTextContext.fillText('Frame '+frameIndex+', line '+(j+1), 100, (150 + 100*j));
+  }
+
+  openFrameTextTexture = new THREE.Texture(openFrameTextCanvas);
+  openFrameTextTexture.needsUpdate = true;
+  openFrameTextMaterial = new THREE.MeshBasicMaterial({
+    map: openFrameTextTexture,
+    side: THREE.DoubleSide,
+  });
+  openFrameTextMaterial.transparent = true;
+  openFrameTextMaterial.opacity = 1;
+  openFrameTextGeometry = new THREE.PlaneGeometry( frameSettings.width, frameSettings.height );
+  openFrameText = new THREE.Mesh( openFrameTextGeometry, openFrameTextMaterial );
+  openFrameText.position.copy( openFrame.position );
+  openFrameText.rotation.y = camera.rotation.y;
+
+  scene.add(openFrame);
+  scene.add(openFrameText);
+  render();
+}
+
+function closeSelectedFrame () {
+  if ( !openFrame || !openFrameText ) { return; }
+  scene.remove(openFrame);
+  scene.remove(openFrameText);
+  render();
 }
 
 function highlightSelectedFrame () {
@@ -360,13 +410,15 @@ function selectFrame ( event ) {
   raycaster.setFromCamera( mouse, camera );
   var intersects = raycaster.intersectObjects( frames );
 
-  updateFrames();
   if ( !!intersects.length ) {
+    updateFrames();
+    closeSelectedFrame();
     if ( intersects[0].object === selectedFrame ) {
       selectedFrame = undefined;
     } else {
       selectedFrame = intersects[0].object;
       highlightSelectedFrame();
+      openSelectedFrame();
     }
   }
 }
