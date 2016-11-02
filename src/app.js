@@ -264,9 +264,12 @@ function addFrames () {
     frameTextCanvas.height = frameSettings.height;
     frameTextContext = frameTextCanvas.getContext('2d');
     frameTextContext.font = 'Normal 75px Arial';
-    frameTextContext.textAlign = 'center';
+    frameTextContext.textAlign = 'left';
     frameTextContext.fillStyle = 'rgba(50, 50, 50, 0.75)';
-    frameTextContext.fillText('Frame '+i, frameSettings.width / 2, frameSettings.height / 2);
+
+    for ( var j = 0; j < 9; j++ ) {
+      frameTextContext.fillText('Frame '+i+', line '+(j+1), 100, (150 + 100*j));
+    }
 
     frameTextTexture = new THREE.Texture(frameTextCanvas);
     frameTextTexture.needsUpdate = true;
