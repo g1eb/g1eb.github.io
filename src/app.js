@@ -4,6 +4,7 @@ var controls, scene, renderer;
 var ambientLight;
 var camera, cameraSettings;
 var touchX, touchY;
+var stats;
 var guiControls, guiControlsSky, guiControlsFrames, guiControlsCamera;
 var frameSettings, skySetting, sky, sunSphere, sunDistance, lensFlare, flareSettings;
 
@@ -44,6 +45,9 @@ function init () {
 
   ambientLight = new THREE.AmbientLight( 0xffffff );
   scene.add(ambientLight);
+
+  stats = new Stats();
+  document.body.appendChild(stats.dom);
 
   initSky();
   initFlare();
@@ -344,5 +348,6 @@ function onKeyDown ( event ) {
 }
 
 function render () {
-  renderer.render( scene, camera );
+  renderer.render(scene, camera);
+  stats.update();
 };
