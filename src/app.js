@@ -8,6 +8,7 @@ var stats;
 var guiControls, guiControlsSky, guiControlsFrames, guiControlsCamera;
 var frames, frameSettings, skySetting, sky, sunSphere, sunDistance, lensFlare, flareSettings;
 var raycaster, mouse;
+var idleTimeoutId, idleIntervalId;
 
 init();
 render();
@@ -57,6 +58,7 @@ function init () {
   initFlare();
   initFrames();
   initGuiControls();
+  initIdleAnimation();
 
   document.addEventListener( 'mousedown', onDocumentMouseDown, false );
   document.addEventListener( 'wheel', onDocumentMouseWheel, false );
@@ -305,6 +307,17 @@ function initGuiControls () {
   guiControlsCamera.add(cameraSettings, 'rotationZ', 0, Math.PI * 2).onChange(updateCamera);
 }
 
+function initIdleAnimation () {
+  window.clearTimeout(idleTimeoutId);
+  window.clearInterval(idleIntervalId);
+  idleTimeoutId = window.setTimeout(function () {
+    idleIntervalId = window.setInterval(function () {
+      camera.rotation.y -= 0.0025;
+      render();
+    }, 100);
+  }, 1000 * 60);
+}
+
 function selectFrame ( event ) {
   mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
   mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
@@ -322,6 +335,7 @@ function selectFrame ( event ) {
 
 function onDocumentMouseDown ( event ) {
   event.preventDefault();
+  initIdleAnimation();
   document.addEventListener( 'mousemove', onDocumentMouseMove, false );
   document.addEventListener( 'mouseup', onDocumentMouseUp, false );
 
@@ -341,6 +355,7 @@ function onDocumentMouseMove ( event ) {
 
 function onDocumentTouchStart ( event ) {
   event.preventDefault();
+  initIdleAnimation();
   var touch = event.touches[0];
   touchX = touch.screenX;
 }
