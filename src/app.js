@@ -257,7 +257,7 @@ function addFrames () {
     frame.position.x = frameSettings.distance * Math.cos(angle * i);
     frame.position.y = frameSettings.positionY;
     frame.position.z = frameSettings.distance * Math.sin(angle * i);
-    frame.rotation.y = Math.PI / 2 - angle * i;
+    frame.rotation.y = Math.PI / 2 * 3 - angle * i;
 
     frameTextCanvas = document.createElement('canvas');
     frameTextCanvas.width = frameSettings.width;
@@ -279,7 +279,7 @@ function addFrames () {
     frameTextGeometry = new THREE.PlaneGeometry( frameSettings.width, frameSettings.height );
     frameText = new THREE.Mesh( frameGeometry, frameTextMaterial );
     frameText.position.copy( frame.position );
-    frameText.rotation.y = Math.PI / 2 - angle * i;
+    frameText.rotation.y = Math.PI / 2 * 3 - angle * i;
 
     scene.add(frame);
     scene.add(frameText);
@@ -294,7 +294,7 @@ function updateFrames () {
     frames[i].material.transparent = frameSettings.transparent;
     frames[i].material.opacity = frameSettings.opacity;
     frames[i].position.y = frameSettings.positionY;
-    frames[i].rotation.y = frameSettings.rotationY + Math.PI / 2 - angle * i;
+    frames[i].rotation.y = frameSettings.rotationY + Math.PI / 2 * 3 - angle * i;
   }
   render();
 }
