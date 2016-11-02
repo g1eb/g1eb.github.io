@@ -218,6 +218,7 @@ function initFrames () {
     diffuseColor: 0xf5f5f5,
     transparent: true,
     opacity: 0.25,
+    activeOpacity: 0.75,
     positionX: 0,
     positionY: 50000,
     positionZ: 0,
@@ -347,8 +348,8 @@ function initIdleAnimation () {
 }
 
 function highlightSelectedFrame () {
-  selectedFrame.material.transparent = true;
-  selectedFrame.material.opacity = 0.75;
+  selectedFrame.material.transparent = frameSettings.transparent;
+  selectedFrame.material.opacity = frameSettings.activeOpacity;
   render();
 }
 
