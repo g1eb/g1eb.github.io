@@ -263,10 +263,10 @@ function addFrames () {
     frameTextCanvas.width = frameSettings.width;
     frameTextCanvas.height = frameSettings.height;
     frameTextContext = frameTextCanvas.getContext('2d');
-    frameTextContext.font = 'Normal 100px Arial';
+    frameTextContext.font = 'Normal 75px Arial';
     frameTextContext.textAlign = 'center';
-    frameTextContext.fillStyle = 'rgba(245, 245, 245, 0.75)';
-    frameTextContext.fillText('frame '+i, frameSettings.width / 2, frameSettings.height / 2);
+    frameTextContext.fillStyle = 'rgba(50, 50, 50, 0.75)';
+    frameTextContext.fillText('Frame '+i, frameSettings.width / 2, frameSettings.height / 2);
 
     frameTextTexture = new THREE.Texture(frameTextCanvas);
     frameTextTexture.needsUpdate = true;
@@ -274,8 +274,8 @@ function addFrames () {
       map: frameTextTexture,
       side: THREE.DoubleSide,
     });
-
     frameTextMaterial.transparent = true;
+    frameTextMaterial.opacity = 1;
     frameTextGeometry = new THREE.PlaneGeometry( frameSettings.width, frameSettings.height );
     frameText = new THREE.Mesh( frameGeometry, frameTextMaterial );
     frameText.position.copy( frame.position );
