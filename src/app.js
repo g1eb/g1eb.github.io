@@ -55,7 +55,7 @@ function init () {
   stats = new Stats();
   document.body.appendChild(stats.dom);
 
-  initSky();
+  initSkyBox();
   initFlare();
   initFrames();
   initCamera();
@@ -104,71 +104,55 @@ function updateCamera () {
   render();
 }
 
-function initSky () {
-  sky = new THREE.Sky();
-  scene.add( sky.mesh );
+function initSkyBox () {
+  var cubeMap = new THREE.CubeTexture( [] );
+  cubeMap.format = THREE.RGBFormat;
 
-  // Add Sun Helper
-  sunSphere = new THREE.Mesh(
-    new THREE.SphereBufferGeometry( 20000, 16, 8 ),
-    new THREE.MeshBasicMaterial( { color: 0xffffff } )
+  var loader = new THREE.ImageLoader();
+  loader.load( 'src/textures/skybox.png', function ( image ) {
+
+    var getSide = function ( x, y ) {
+
+      var size = 1024;
+
+      var canvas = document.createElement( 'canvas' );
+      canvas.width = size;
+      canvas.height = size;
+
+      var context = canvas.getContext( '2d' );
+      context.drawImage( image, - x * size, - y * size );
+
+      return canvas;
+
+    };
+
+    cubeMap.images[ 0 ] = getSide( 2, 1 ); // px
+    cubeMap.images[ 1 ] = getSide( 0, 1 ); // nx
+    cubeMap.images[ 2 ] = getSide( 1, 0 ); // py
+    cubeMap.images[ 3 ] = getSide( 1, 2 ); // ny
+    cubeMap.images[ 4 ] = getSide( 1, 1 ); // pz
+    cubeMap.images[ 5 ] = getSide( 3, 1 ); // nz
+    cubeMap.needsUpdate = true;
+
+  } );
+
+  var cubeShader = THREE.ShaderLib[ 'cube' ];
+  cubeShader.uniforms[ 'tCube' ].value = cubeMap;
+
+  var skyBoxMaterial = new THREE.ShaderMaterial( {
+    fragmentShader: cubeShader.fragmentShader,
+    vertexShader: cubeShader.vertexShader,
+    uniforms: cubeShader.uniforms,
+    depthWrite: false,
+    side: THREE.BackSide
+  } );
+
+  var skyBox = new THREE.Mesh(
+    new THREE.BoxGeometry( 1000000, 1000000, 1000000 ),
+    skyBoxMaterial
   );
-  sunSphere.position.y = -700000;
-  sunSphere.visible = false;
-  scene.add(sunSphere);
 
-  skySettings  = {
-    turbidity: 10,
-    reileigh: 2,
-    mieCoefficient: 0.005,
-    mieDirectionalG: 0.7,
-    luminance: 0.7,
-    inclination: 0.49, // elevation / inclination
-    azimuth: 0.25, // Facing front,
-    sun: ! true
-  };
-
-  sunDistance = 400000;
-
-  var uniforms = sky.uniforms;
-  uniforms.turbidity.value = skySettings.turbidity;
-  uniforms.reileigh.value = skySettings.reileigh;
-  uniforms.luminance.value = skySettings.luminance;
-  uniforms.mieCoefficient.value = skySettings.mieCoefficient;
-  uniforms.mieDirectionalG.value = skySettings.mieDirectionalG;
-
-  var theta = Math.PI * ( skySettings.inclination - 0.5 );
-  var phi = 2 * Math.PI * ( skySettings.azimuth - 0.5 );
-
-  sunSphere.position.x = sunDistance * Math.cos( phi );
-  sunSphere.position.y = sunDistance * Math.sin( phi ) * Math.sin( theta );
-  sunSphere.position.z = sunDistance * Math.sin( phi ) * Math.cos( theta );
-
-  sunSphere.visible = skySettings.sun;
-
-  sky.uniforms.sunPosition.value.copy( sunSphere.position );
-}
-
-function updateSky() {
-  var uniforms = sky.uniforms;
-  uniforms.turbidity.value = skySettings.turbidity;
-  uniforms.reileigh.value = skySettings.reileigh;
-  uniforms.luminance.value = skySettings.luminance;
-  uniforms.mieCoefficient.value = skySettings.mieCoefficient;
-  uniforms.mieDirectionalG.value = skySettings.mieDirectionalG;
-
-  var theta = Math.PI * ( skySettings.inclination - 0.5 );
-  var phi = 2 * Math.PI * ( skySettings.azimuth - 0.5 );
-
-  sunSphere.position.x = sunDistance * Math.cos( phi );
-  sunSphere.position.y = sunDistance * Math.sin( phi ) * Math.sin( theta );
-  sunSphere.position.z = sunDistance * Math.sin( phi ) * Math.cos( theta );
-
-  sunSphere.visible = skySettings.sun;
-
-  sky.uniforms.sunPosition.value.copy( sunSphere.position );
-
-  render();
+  scene.add( skyBox );
 }
 
 function initFlare () {
