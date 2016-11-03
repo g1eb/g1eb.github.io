@@ -29,7 +29,7 @@ function init () {
 
   cameraSettings = {
     positionX: 0,
-    positionY: 100000,
+    positionY: 75000,
     positionZ: 0,
     rotationX: 0,
     rotationY: Math.PI,
@@ -73,22 +73,25 @@ function init () {
 }
 
 function initCamera () {
+  var duration = 3000; //ms
+  var interval = 100; //ms
+
   new TWEEN.Tween( camera.position ).to( {
     y: 50000,
-  }, 3000 ).easing( TWEEN.Easing.Quadratic.Out).start();
+  }, duration ).easing( TWEEN.Easing.Quadratic.Out).start();
 
   new TWEEN.Tween( camera.rotation ).to( {
     y: 0.5
-  }, 3000 ).easing( TWEEN.Easing.Quadratic.Out).start();
+  }, duration ).easing( TWEEN.Easing.Quadratic.Out).start();
 
   var initCameraInterval = window.setInterval(function () {
     TWEEN.update();
     render();
-  }, 50);
+  }, interval);
 
   window.setTimeout(function () {
     window.clearInterval(initCameraInterval);
-  }, 3000);
+  }, duration);
 }
 
 function updateCamera () {
@@ -351,7 +354,7 @@ function initIdleAnimation () {
     idleIntervalId = window.setInterval(function () {
       camera.rotation.y -= 0.0025;
       render();
-    }, 50);
+    }, 100);
   }, 1000 * 60);
 }
 
