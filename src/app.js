@@ -476,10 +476,11 @@ function onDocumentMouseMove ( event ) {
 }
 
 function onDocumentTouchStart ( event ) {
-  event.preventDefault();
   initIdleAnimation();
   var touch = event.touches[0];
   touchX = touch.screenX;
+
+  selectFrame(event);
 }
 
 function onDocumentTouchMove ( event ) {
