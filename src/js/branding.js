@@ -24,9 +24,11 @@ var branding = {
     'gainsboro', 'lightgray', 'silver', 'darkgray', 'gray', 'dimgray', 'lightslategray', 'slategray', 'darkslategray', 'black',
   ],
 
+  intervalId: undefined,
+
   init: function () {
     var brandingContainer = document.getElementById('branding');
-    window.setInterval(function () {
+    branding.intervalId = window.setInterval(function () {
       for ( var i = 0; i < Math.floor(Math.random() * 5); i++ ) {
         var element = document.createElement('span');
         brandingContainer.appendChild(element);
@@ -42,6 +44,10 @@ var branding = {
         }, duration * 1000, element);
       }
     }, 250);
+  },
+
+  cancel: function () {
+    window.clearInterval(branding.intervalId);
   },
 
 };

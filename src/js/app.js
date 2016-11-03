@@ -366,11 +366,13 @@ function initGuiControls () {
 }
 
 function initIdleAnimation () {
+  branding.cancel();
   window.clearTimeout(idleTimeoutId);
   window.clearInterval(idleIntervalId);
   idleTimeoutId = window.setTimeout(function () {
     updateFrames();
     closeSelectedFrame();
+    branding.init();
     idleIntervalId = window.setInterval(function () {
       camera.rotation.y -= 0.0015;
       render();
@@ -479,5 +481,3 @@ function render () {
   renderer.render(scene, camera);
   stats.update();
 };
-
-document.addEventListener('DOMContentLoaded', branding.init);
