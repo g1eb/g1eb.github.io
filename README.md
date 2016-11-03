@@ -1,10 +1,11 @@
 # Frames
 
-> **Thematic arrangement of conceptual data**
+> **Spacial arrangement of thematically related conceptual data**
 
 
-Create and manage textual information in a virtual environment.  
-General purpose is to aid memory consolidation and retrieval for everyday use.  
+Write and manage textual information in a virtual environment.  
+General purpose is to help memory consolidation and retrieval.  
+Data is displayed around your pov and can be grouped spacially or thematically.  
 Add locations to thematical arrangements to view them in augmented reality at that location.  
 
 [Click here for a live demo](https://rawgit.com/g1eb/g1b-frames/master/)
