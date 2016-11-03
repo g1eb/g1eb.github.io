@@ -8,6 +8,7 @@ var stats;
 var guiControls, guiControlsSky, guiControlsFrames, guiControlsCamera;
 var frames, selectedFrame, openFrame, frameSettings;
 var lensFlare, flareSettings;
+var skyBox, skyBoxSettings;
 var raycaster, mouse;
 var idleTimeoutId, idleIntervalId;
 
@@ -108,25 +109,32 @@ function updateCamera () {
 }
 
 function initSkyBox () {
+  skyBoxSettings = {
+    texture: 'src/textures/skybox_desert.png',
+    textures: {
+      desert: 'src/textures/skybox_desert.png',
+      office: 'src/textures/skybox_office.png',
+      beach: 'src/textures/skybox_beach.png',
+    }
+  }
+  loadSkyBox();
+}
+
+function loadSkyBox (cb) {
   var cubeMap = new THREE.CubeTexture( [] );
   cubeMap.format = THREE.RGBFormat;
 
   var loader = new THREE.ImageLoader();
-  loader.load( 'src/textures/skybox.png', function ( image ) {
+  loader.load(skyBoxSettings.texture, function ( image ) {
 
     var getSide = function ( x, y ) {
-
       var size = 1024;
-
       var canvas = document.createElement( 'canvas' );
       canvas.width = size;
       canvas.height = size;
-
       var context = canvas.getContext( '2d' );
       context.drawImage( image, - x * size, - y * size );
-
       return canvas;
-
     };
 
     cubeMap.images[ 0 ] = getSide( 2, 1 ); // px
@@ -136,26 +144,38 @@ function initSkyBox () {
     cubeMap.images[ 4 ] = getSide( 1, 1 ); // pz
     cubeMap.images[ 5 ] = getSide( 3, 1 ); // nz
     cubeMap.needsUpdate = true;
-
-  } );
+  });
 
   var cubeShader = THREE.ShaderLib[ 'cube' ];
   cubeShader.uniforms[ 'tCube' ].value = cubeMap;
 
-  var skyBoxMaterial = new THREE.ShaderMaterial( {
+  var skyBoxMaterial = new THREE.ShaderMaterial({
     fragmentShader: cubeShader.fragmentShader,
     vertexShader: cubeShader.vertexShader,
     uniforms: cubeShader.uniforms,
+    side: THREE.BackSide,
     depthWrite: false,
-    side: THREE.BackSide
-  } );
+  });
 
-  var skyBox = new THREE.Mesh(
+  skyBox = new THREE.Mesh(
     new THREE.BoxGeometry( 1000000, 1000000, 1000000 ),
     skyBoxMaterial
   );
 
   scene.add( skyBox );
+
+  if ( !!cb && typeof cb === 'function' ) {
+    cb();
+  }
+}
+
+function updateSkyBox () {
+  if ( !!skyBox ) {
+    scene.remove(skyBox);
+  }
+  loadSkyBox(function () {
+    render();
+  });
 }
 
 function initFlare () {
@@ -324,6 +344,9 @@ function initGuiControls () {
   guiControls = new dat.GUI();
   guiControls.close();
 
+  guiControlsSkyBox = guiControls.addFolder('SkyBox');
+  guiControlsSkyBox.add( skyBoxSettings, 'texture', skyBoxSettings.textures).onChange( updateSkyBox );
+
   guiControlsFlare = guiControls.addFolder('Lensflare');
   guiControlsFlare.add( flareSettings, 'visible' ).onChange( updateFlare );
   guiControlsFlare.add( flareSettings, 'positionX', -1000000, 1000000).onChange( updateFlare );
@@ -433,7 +456,6 @@ function selectFrame ( event ) {
 }
 
 function onDocumentMouseDown ( event ) {
-  event.preventDefault();
   initIdleAnimation();
   document.addEventListener( 'mousemove', onDocumentMouseMove, false );
   document.addEventListener( 'mouseup', onDocumentMouseUp, false );
