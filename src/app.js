@@ -262,87 +262,81 @@ function initFrames () {
     diffuseColor: 0xf5f5f5,
     transparent: true,
     opacity: 0.25,
-    activeOpacity: 0.75,
+    activeOpacity: 0.5,
     positionX: 0,
     positionY: 50000,
     positionZ: 0,
     rotationX: 0,
     rotationY: 0,
     rotationZ: 0,
-    numFrames: 25,
     distance: 5000,
     variance: 1000,
   };
-
-  addFrames();
 }
 
-function addFrames () {
+function addFrame (event) {
   var frame, frameGeometry, frameMaterial;
   var frameText, frameTextCanvas, frameTextContext, frameTextTexture, frameTextMaterial;
-  var angle = THREE.Math.degToRad(360 / frameSettings.numFrames);
-  for ( var i = 0; i < frameSettings.numFrames; i++ ) {
-    frameGeometry = new THREE.PlaneGeometry(
-      frameSettings.width,
-      frameSettings.height,
-      frameSettings.segments,
-      frameSettings.slices
-    );
 
-    frameMaterial = new THREE.MeshPhongMaterial({
-      color: frameSettings.ambientColor,
-      emissive: frameSettings.diffuseColor,
-      side: THREE.DoubleSide,
-      shading: THREE.FlatShading,
-      transparent: frameSettings.transparent,
-      opacity: frameSettings.opacity,
-    });
+  frameGeometry = new THREE.PlaneGeometry(
+    frameSettings.width,
+    frameSettings.height,
+    frameSettings.segments,
+    frameSettings.slices
+  );
 
-    frame = new THREE.Mesh(frameGeometry, frameMaterial);
-    frame.position.x = frameSettings.distance * Math.cos(angle * i);
-    frame.position.y = frameSettings.positionY;
-    frame.position.z = frameSettings.distance * Math.sin(angle * i);
-    frame.rotation.y = Math.PI / 2 * 3 - angle * i;
+  frameMaterial = new THREE.MeshPhongMaterial({
+    color: frameSettings.ambientColor,
+    emissive: frameSettings.diffuseColor,
+    side: THREE.DoubleSide,
+    shading: THREE.FlatShading,
+    transparent: frameSettings.transparent,
+    opacity: frameSettings.opacity,
+  });
 
-    frameTextCanvas = document.createElement('canvas');
-    frameTextCanvas.width = frameSettings.width;
-    frameTextCanvas.height = frameSettings.height;
-    frameTextContext = frameTextCanvas.getContext('2d');
-    frameTextContext.font = 'Normal 75px Arial';
-    frameTextContext.textAlign = 'left';
-    frameTextContext.fillStyle = 'rgba(50, 50, 50, 0.75)';
+  var cam = camera.fov / 180 * Math.PI;
+  var angleY = camera.rotation.y - (event.clientX - window.innerWidth / 2) * 1.5 / window.innerWidth * (camera.fov / 180 * Math.PI);
+  var angleX = (event.clientY - window.innerHeight / 2) * 1.5 / window.innerHeight * (camera.fov / 180 * Math.PI) * -1;
 
-    for ( var j = 0; j < 9; j++ ) {
-      frameTextContext.fillText('Frame '+i+', line '+(j+1), 100, (150 + 100*j));
-    }
+  frame = new THREE.Mesh(frameGeometry, frameMaterial);
+  frame.position.x = frameSettings.distance * Math.cos(Math.PI / 2 * 3 - angleY);
+  frame.position.y = frameSettings.positionY + 3000 * angleX;
+  frame.position.z = frameSettings.distance * Math.sin(Math.PI / 2 * 3 - angleY);
+  frame.rotation.y = angleY;
 
-    frameTextTexture = new THREE.Texture(frameTextCanvas);
-    frameTextTexture.needsUpdate = true;
-    frameTextMaterial = new THREE.MeshBasicMaterial({
-      map: frameTextTexture,
-      side: THREE.DoubleSide,
-    });
-    frameTextMaterial.transparent = true;
-    frameTextMaterial.opacity = 1;
-    frameTextGeometry = new THREE.PlaneGeometry( frameSettings.width, frameSettings.height );
-    frameText = new THREE.Mesh( frameGeometry, frameTextMaterial );
-    frameText.position.copy( frame.position );
-    frameText.rotation.y = Math.PI / 2 * 3 - angle * i;
+  frameTextCanvas = document.createElement('canvas');
+  frameTextCanvas.width = frameSettings.width;
+  frameTextCanvas.height = frameSettings.height;
+  frameTextContext = frameTextCanvas.getContext('2d');
+  frameTextContext.font = 'Normal 75px Arial';
+  frameTextContext.textAlign = 'left';
+  frameTextContext.fillStyle = 'rgba(50, 50, 50, 0.75)';
+  frameTextContext.fillText('Frame ' + (frames.length + 1), 100, 150);
 
-    scene.add(frame);
-    scene.add(frameText);
-    frames.push(frame);
-  }
+  frameTextTexture = new THREE.Texture(frameTextCanvas);
+  frameTextTexture.needsUpdate = true;
+  frameTextMaterial = new THREE.MeshBasicMaterial({
+    map: frameTextTexture,
+    side: THREE.DoubleSide,
+  });
+  frameTextMaterial.transparent = true;
+  frameTextMaterial.opacity = 1;
+  frameTextGeometry = new THREE.PlaneGeometry( frameSettings.width, frameSettings.height );
+  frameText = new THREE.Mesh( frameGeometry, frameTextMaterial );
+  frameText.position.copy(frame.position);
+  frameText.rotation.copy(frame.rotation);
+
+  scene.add(frame);
+  scene.add(frameText);
+  frames.push(frame);
+  render();
 }
 
 function updateFrames () {
   var frame;
-  var angle = THREE.Math.degToRad(360 / frameSettings.numFrames);
   for ( var i = 0; i < frames.length; i++ ) {
     frames[i].material.transparent = frameSettings.transparent;
     frames[i].material.opacity = frameSettings.opacity;
-    frames[i].position.y = frameSettings.positionY;
-    frames[i].rotation.y = frameSettings.rotationY + Math.PI / 2 * 3 - angle * i;
   }
   render();
 }
@@ -363,8 +357,6 @@ function initGuiControls () {
   guiControlsFrames = guiControls.addFolder('Frames');
   guiControlsFrames.add(frameSettings, 'transparent').onChange(updateFrames);
   guiControlsFrames.add(frameSettings, 'opacity', 0, 1).onChange(updateFrames);
-  guiControlsFrames.add(frameSettings, 'positionY', 0, 100000).onChange(updateFrames);
-  guiControlsFrames.add(frameSettings, 'rotationY', 0, Math.PI * 2).onChange(updateFrames);
 
   guiControlsCamera = guiControls.addFolder('Camera');
   guiControlsCamera.add(cameraSettings, 'positionX', 0, 100000).onChange(updateCamera);
@@ -459,6 +451,8 @@ function selectFrame ( event ) {
       highlightSelectedFrame();
       openSelectedFrame();
     }
+  } else {
+    addFrame(event);
   }
 }
 
