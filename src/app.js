@@ -114,7 +114,14 @@ function initSkyBox () {
     textures: {
       desert: 'src/textures/skybox_desert.png',
       office: 'src/textures/skybox_office.png',
-      beach: 'src/textures/skybox_beach.png',
+      beach1: 'src/textures/skybox_beach1.png',
+      beach2: 'src/textures/skybox_beach2.png',
+      beach3: 'src/textures/skybox_beach3.png',
+      dunes: 'src/textures/skybox_dunes.png',
+      garden: 'src/textures/skybox_garden.png',
+      park: 'src/textures/skybox_park.png',
+      meadow: 'src/textures/skybox_meadow.png',
+      snow: 'src/textures/skybox_snow.png',
     }
   }
   loadSkyBox();
