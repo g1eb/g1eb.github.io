@@ -11,6 +11,7 @@ var lensFlare, flareSettings;
 var skyBox, skyBoxSettings;
 var raycaster, mouse;
 var idleTimeoutId, idleIntervalId;
+var mouseDownTimeoutId, touchMoveTimeoutId;
 
 init();
 render();
@@ -416,7 +417,9 @@ function onDocumentMouseDown ( event ) {
   document.addEventListener( 'mousemove', onDocumentMouseMove, false );
   document.addEventListener( 'mouseup', onDocumentMouseUp, false );
 
-  selectFrame(event);
+  mouseDownTimeoutId = window.setTimeout(function () {
+    selectFrame(event);
+  }, 150);
 }
 
 function onDocumentMouseUp ( event ) {
@@ -425,6 +428,7 @@ function onDocumentMouseUp ( event ) {
 }
 
 function onDocumentMouseMove ( event ) {
+  window.clearTimeout(mouseDownTimeoutId);
   var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
   camera.rotation.y += movementX * 0.01;
   render();
@@ -435,10 +439,13 @@ function onDocumentTouchStart ( event ) {
   var touch = event.touches[0];
   touchX = touch.screenX;
 
-  selectFrame(event);
+  touchMoveTimeoutId = window.setTimeout(function () {
+    selectFrame(event);
+  }, 150);
 }
 
 function onDocumentTouchMove ( event ) {
+  window.clearTimeout(touchMoveTimeoutId);
   event.preventDefault();
   var touch = event.touches[0];
   camera.rotation.y += (touch.screenX - touchX) * 0.01;
