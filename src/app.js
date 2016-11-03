@@ -44,9 +44,6 @@ function init () {
   camera.rotation.y = cameraSettings.rotationY;
   camera.rotation.z = cameraSettings.rotationZ;
 
-  //var helper = new THREE.GridHelper( 25000, 10, 0xffffff, 0xffffff );
-  //scene.add( helper );
-
   ambientLight = new THREE.AmbientLight( 0xffffff );
   scene.add(ambientLight);
 
