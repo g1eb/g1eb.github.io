@@ -1,0 +1,61 @@
+.branding {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  color: whitesmoke;
+  display: block;
+  font-family: 'Helvetica', sans-serif;
+  text-shadow: 0 0 1px white;
+  font-size: 18px;
+  cursor: default;
+  user-select: none;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100; 
+}
+
+.animation {
+  color: whitesmoke;
+  display: block;
+  font-size: 18px;
+  font-family: 'Helvetica';
+  text-shadow: 0 0 1px white;
+  position: absolute;
+  right: 25px;
+  user-select: none;
+  z-index: 1344000;
+  transform: translateY(100vh);
+  animation-name: move;
+  animation-timing-function: ease-out;
+  will-change: transform;
+  will-change: opacity;
+  cursor: default;
+  pointer-events: none;
+}
+
+@keyframes move {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.75;
+  }
+  50% {
+    opacity: 0.75;
+  }
+  75% {
+    opacity: 0;
+  }
+  100% {
+    transform: none;
+    opacity: 0;
+  }
+}
+
+

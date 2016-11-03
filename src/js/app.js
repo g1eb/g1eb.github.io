@@ -479,3 +479,5 @@ function render () {
   renderer.render(scene, camera);
   stats.update();
 };
+
+document.addEventListener('DOMContentLoaded', branding.init);
