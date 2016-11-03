@@ -7,7 +7,7 @@ var touchX, touchY;
 var stats;
 var guiControls, guiControlsSky, guiControlsFrames, guiControlsCamera;
 var frames, selectedFrame, openFrame, frameSettings;
-var skySetting, sky, sunSphere, sunDistance, lensFlare, flareSettings;
+var lensFlare, flareSettings;
 var raycaster, mouse;
 var idleTimeoutId, idleIntervalId;
 
@@ -157,7 +157,10 @@ function initSkyBox () {
 
 function initFlare () {
   flareSettings = {
-    lensflare: true,
+    visible: false,
+    positionX: -1000000,
+    positionY: 500000,
+    positionZ: -1000000,
   }
 
   var textureLoader = new THREE.TextureLoader();
@@ -179,8 +182,10 @@ function initFlare () {
   lensFlare.add( textureFlare3, 70, 1.0, THREE.AdditiveBlending );
 
   lensFlare.customUpdateCallback = lensFlareUpdateCallback;
-  lensFlare.position.copy( sunSphere.position );
-  lensFlare.visible = true;
+  lensFlare.position.x = flareSettings.positionX;
+  lensFlare.position.y = flareSettings.positionY;
+  lensFlare.position.z = flareSettings.positionZ;
+  lensFlare.visible = flareSettings.visible;
 
   scene.add( lensFlare );
 
@@ -188,8 +193,8 @@ function initFlare () {
 }
 
 function lensFlareUpdateCallback( object ) {
-  var f, fl = object.lensFlares.length;
   var flare;
+  var f, fl = object.lensFlares.length;
   var vecX = -object.positionScreen.x * 2;
   var vecY = -object.positionScreen.y * 2;
 
@@ -207,7 +212,11 @@ function lensFlareUpdateCallback( object ) {
 }
 
 function updateFlare () {
-  lensFlare.visible = flareSettings.lensflare;
+  lensFlare.position.x = flareSettings.positionX;
+  lensFlare.position.y = flareSettings.positionY;
+  lensFlare.position.z = flareSettings.positionZ;
+  lensFlare.visible = flareSettings.visible;
+
   render();
 }
 
@@ -312,18 +321,11 @@ function initGuiControls () {
   guiControls = new dat.GUI();
   guiControls.close();
 
-  guiControlsSky = guiControls.addFolder('Sky');
-  guiControlsSky.add( skySettings, 'turbidity', 1.0, 20.0, 0.1 ).onChange( updateSky );
-  guiControlsSky.add( skySettings, 'reileigh', 0.0, 4, 0.001 ).onChange( updateSky );
-  guiControlsSky.add( skySettings, 'mieCoefficient', 0.0, 0.1, 0.001 ).onChange( updateSky );
-  guiControlsSky.add( skySettings, 'mieDirectionalG', 0.0, 1, 0.001 ).onChange( updateSky );
-  guiControlsSky.add( skySettings, 'luminance', 0.0, 2 ).onChange( updateSky );
-  guiControlsSky.add( skySettings, 'inclination', 0, 1, 0.0001 ).onChange( updateSky );
-  guiControlsSky.add( skySettings, 'azimuth', 0, 1, 0.0001 ).onChange( updateSky );
-  guiControlsSky.add( skySettings, 'sun' ).onChange( updateSky );
-
   guiControlsFlare = guiControls.addFolder('Lensflare');
-  guiControlsFlare.add( flareSettings, 'lensflare' ).onChange( updateFlare );
+  guiControlsFlare.add( flareSettings, 'visible' ).onChange( updateFlare );
+  guiControlsFlare.add( flareSettings, 'positionX', -1000000, 1000000).onChange( updateFlare );
+  guiControlsFlare.add( flareSettings, 'positionY', -1000000, 1000000).onChange( updateFlare );
+  guiControlsFlare.add( flareSettings, 'positionZ', -1000000, 1000000).onChange( updateFlare );
 
   guiControlsFrames = guiControls.addFolder('Frames');
   guiControlsFrames.add(frameSettings, 'transparent').onChange(updateFrames);
