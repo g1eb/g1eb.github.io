@@ -382,7 +382,7 @@ function initIdleAnimation () {
     updateFrames();
     closeSelectedFrame();
     idleIntervalId = window.setInterval(function () {
-      camera.rotation.y -= 0.0025;
+      camera.rotation.y -= 0.0015;
       render();
     }, 100);
   }, 1000 * 60);
