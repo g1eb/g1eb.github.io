@@ -493,7 +493,7 @@ function onDocumentTouchMove ( event ) {
 
 function onDocumentMouseWheel ( event ) {
   initIdleAnimation();
-  camera.rotation.y += event.deltaY * 0.01;
+  camera.rotation.y += event.deltaY * 0.001;
   render();
 }
 
