@@ -20,6 +20,16 @@
   z-index: 100; 
 }
 
+.branding-image {
+  width: auto;
+  height: 50px;
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  opacity: 0.25;
+  z-index: -1;
+}
+
 .animation {
   color: whitesmoke;
   display: block;
@@ -29,7 +39,7 @@
   position: absolute;
   right: 25px;
   user-select: none;
-  z-index: 1344000;
+  z-index: 1;
   transform: translateY(100vh);
   animation-name: move;
   animation-timing-function: ease-out;
