@@ -271,13 +271,18 @@ function addFrame (event) {
     opacity: frameSettings.opacity,
   });
 
-  var cam = camera.fov / 180 * Math.PI;
-  var angleY = camera.rotation.y - (event.clientX - window.innerWidth / 2) * 1.5 / window.innerWidth * (camera.fov / 180 * Math.PI);
-  var angleX = (event.clientY - window.innerHeight / 2) * 1.5 / window.innerHeight * (camera.fov / 180 * Math.PI) * -1;
+  var hsf = 1.75;
+  var vsf = hsf * 1900;
+  var hfov = camera.fov / 180 * Math.PI;
+  var vfov = hfov / window.innerWidth * window.innerHeight;
+  var xoffset = event.clientX - window.innerWidth / 2;
+  var yoffset = event.clientY - window.innerHeight / 2;
+  var angleY = camera.rotation.y - hsf * xoffset / (window.innerWidth * hfov);
+  var angleX = -1 * vsf * yoffset / (window.innerHeight * vfov);
 
   frame = new THREE.Mesh(frameGeometry, frameMaterial);
   frame.position.x = frameSettings.distance * Math.cos(Math.PI / 2 * 3 - angleY);
-  frame.position.y = frameSettings.positionY + 3000 * angleX;
+  frame.position.y = frameSettings.positionY + angleX;
   frame.position.z = frameSettings.distance * Math.sin(Math.PI / 2 * 3 - angleY);
   frame.rotation.y = angleY;
 
