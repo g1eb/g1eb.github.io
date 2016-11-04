@@ -403,9 +403,13 @@ function onDocumentMouseDown ( event ) {
   document.addEventListener( 'mousemove', onDocumentMouseMove, false );
   document.addEventListener( 'mouseup', onDocumentMouseUp, false );
 
-  mouseDownTimeoutId = window.setTimeout(function () {
-    selectFrame(event);
-  }, 150);
+  if ( event.button === 0 ) {
+    mouseDownTimeoutId = window.setTimeout(function () {
+      selectFrame(event);
+    }, 150);
+  } else {
+    event.preventDefault();
+  }
 }
 
 function onDocumentMouseUp ( event ) {
