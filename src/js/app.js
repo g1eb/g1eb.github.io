@@ -17,6 +17,7 @@ var mouseDownTimeoutId, touchMoveTimeoutId;
 
 init();
 render();
+menu.init();
 
 function init () {
 
@@ -407,7 +408,7 @@ function onDocumentMouseUp ( event ) {
   document.removeEventListener( 'mousemove', onDocumentMouseMove );
   document.removeEventListener( 'mouseup', onDocumentMouseUp );
 
-  if ( event.button === 0 ) {
+  if ( event.button === 0 && !menu.isActive() ) {
     mouseDownTimeoutId = window.setTimeout(function () {
       initIdleAnimation();
       selectFrame(event);

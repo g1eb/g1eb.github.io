@@ -9,6 +9,7 @@
   <meta name="theme-color" content="#111111">
   <link rel="shortcut icon" type="text/css" href="src/images/icon.png?">
   <link rel="stylesheet" type="text/css" href="src/css/branding.css">
+  <link rel="stylesheet" type="text/css" href="src/css/menu.css">
   <style>
     body { margin: 0; overflow: hidden }
     canvas { width: 100%; height: 100% }
@@ -24,10 +25,24 @@
   <script src="lib/tween.min.js"></script>
 
   <script src="src/js/branding.js"></script>
+  <script src="src/js/menu.js"></script>
   <script src="src/js/app.js"></script>
 
   <div id="branding" class="branding">
     <img class="branding-image" src="src/images/icon.png" alt="branding image" />
+  </div>
+
+  <div id="menu" class="menu">
+    <div class="menu-container">
+      <div class="menu-column">
+        <div class="menu-item">
+          <span class="menu-item--title">Themes</span>
+        </div>
+        <div class="menu-item">
+          <span class="menu-item--title">Settings</span>
+        </div>
+      </div>
+    </div>
   </div>
 
 </body>
