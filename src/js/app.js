@@ -1,3 +1,5 @@
+'use strict';
+
 if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
 var controls, scene, renderer;
@@ -5,7 +7,7 @@ var ambientLight;
 var camera, cameraSettings;
 var touchX, touchY;
 var stats;
-var guiControls, guiControlsSky, guiControlsFrames, guiControlsCamera;
+var guiControls, guiControlsSkyBox, guiControlsFlare, guiControlsFrames, guiControlsCamera;
 var frames, selectedFrame, openFrame, frameSettings;
 var lensFlare, flareSettings;
 var skyBox, skyBoxSettings;
@@ -251,7 +253,7 @@ function initFrames () {
 
 function addFrame (event) {
   var frame, frameGeometry, frameMaterial;
-  var frameText, frameTextCanvas, frameTextContext, frameTextTexture, frameTextMaterial;
+  var frameText, frameTextCanvas, frameTextContext, frameTextTexture, frameTextMaterial, frameTextGeometry;
 
   frameGeometry = new THREE.PlaneGeometry(
     frameSettings.width,
