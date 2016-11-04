@@ -399,22 +399,22 @@ function selectFrame ( event ) {
 }
 
 function onDocumentMouseDown ( event ) {
-  initIdleAnimation();
   document.addEventListener( 'mousemove', onDocumentMouseMove, false );
   document.addEventListener( 'mouseup', onDocumentMouseUp, false );
-
-  if ( event.button === 0 ) {
-    mouseDownTimeoutId = window.setTimeout(function () {
-      selectFrame(event);
-    }, 150);
-  } else {
-    event.preventDefault();
-  }
 }
 
 function onDocumentMouseUp ( event ) {
   document.removeEventListener( 'mousemove', onDocumentMouseMove );
   document.removeEventListener( 'mouseup', onDocumentMouseUp );
+
+  if ( event.button === 0 ) {
+    mouseDownTimeoutId = window.setTimeout(function () {
+      initIdleAnimation();
+      selectFrame(event);
+    }, 150);
+  } else {
+    event.preventDefault();
+  }
 }
 
 function onDocumentMouseMove ( event ) {
