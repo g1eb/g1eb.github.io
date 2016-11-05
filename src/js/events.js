@@ -4,12 +4,6 @@ var events = {
 
   moving: false,
 
-  longPressTimeoutId: undefined,
-  longPressTimeoutDuration: 500,
-
-  longTouchTimeoutId: undefined,
-  longTouchTimeoutDuration: 500,
-
   dragThresholdTimeoutId: undefined,
   dragThresholdDuration: 150,
 
@@ -31,20 +25,13 @@ var events = {
 
     // Toggle menu on long press, close menu when clicked outside
     if ( event.button === 0 ) {
-      events.longPressTimeoutId = window.setTimeout(function () {
-        if ( !events.moving ) {
-          menu.toggleMenu();
-        }
-      }, events.longPressTimeoutDuration);
-
+      initIdleAnimation();
       if ( menu.isActive() ) {
         if ( !menu.isClicked(event) ) {
           menu.closeMenu();
-          window.clearTimeout(events.longPressTimeoutId);
         }
       } else {
         events.dragThresholdTimeoutId = window.setTimeout(function () {
-          initIdleAnimation();
           selectFrame(event);
         }, events.dragThresholdDuration);
       }
@@ -52,8 +39,6 @@ var events = {
   },
 
   onDocumentMouseUp: function (event) {
-    window.clearTimeout(events.longPressTimeoutId);
-
     document.removeEventListener( 'mousemove', events.onDocumentMouseMove );
     document.removeEventListener( 'mouseup', events.onDocumentMouseUp );
 
@@ -84,28 +69,20 @@ var events = {
     document.addEventListener( 'touchend', events.onDocumentTouchEnd, false );
 
     initIdleAnimation();
-    var touch = event.touches[0];
-    events.touchX = touch.screenX;
-    events.moveThresholdTimeoutId = window.setTimeout(function () {
-      selectFrame(event);
-    }, events.moveThresholdDuration);
-
-    // Toggle menu on long touch, close menu when touch is outside
-    events.longTouchTimeoutId = window.setTimeout(function () {
-      menu.toggleMenu();
-    }, events.longTouchTimeoutDuration);
     if ( menu.isActive() ) {
       if ( !menu.isClicked(event) ) {
         menu.closeMenu();
-        window.clearTimeout(events.longTouchTimeoutId);
       }
+    } else {
+      var touch = event.touches[0];
+      events.touchX = touch.screenX;
+      events.moveThresholdTimeoutId = window.setTimeout(function () {
+        selectFrame(event);
+      }, events.moveThresholdDuration);
     }
-
   },
 
   onDocumentTouchEnd: function (event) {
-    window.clearTimeout(events.longTouchTimeoutId);
-
     document.removeEventListener( 'touchmove', events.onDocumentTouchMove );
     document.removeEventListener( 'touchend', events.onDocumentTouchEnd );
 
