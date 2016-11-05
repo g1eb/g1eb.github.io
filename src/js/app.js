@@ -5,7 +5,6 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 var controls, scene, renderer;
 var ambientLight;
 var camera, cameraSettings;
-var touchX, touchY;
 var stats;
 var guiControls, guiControlsSkyBox, guiControlsFlare, guiControlsFrames, guiControlsCamera;
 var frames, selectedFrame, openFrame, frameSettings;
@@ -17,7 +16,6 @@ var mouseDownTimeoutId, touchMoveTimeoutId;
 
 init();
 render();
-menu.init();
 
 function init () {
 
@@ -64,14 +62,7 @@ function init () {
   initGuiControls();
   initIdleAnimation();
 
-  document.addEventListener( 'mousedown', onDocumentMouseDown, false );
-  document.addEventListener( 'wheel', onDocumentMouseWheel, false );
-  document.addEventListener( 'touchstart', onDocumentTouchStart, false );
-  document.addEventListener( 'touchmove', onDocumentTouchMove, false );
-
-  document.addEventListener('keydown', onKeyDown, false)
-
-  window.addEventListener( 'resize', onWindowResize, false ); 
+  events.init();
 }
 
 function initCamera () {
@@ -420,73 +411,6 @@ function selectFrame ( event ) {
   } else {
     addFrame(event);
   }
-}
-
-function onDocumentMouseDown ( event ) {
-  document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-  document.addEventListener( 'mouseup', onDocumentMouseUp, false );
-}
-
-function onDocumentMouseUp ( event ) {
-  document.removeEventListener( 'mousemove', onDocumentMouseMove );
-  document.removeEventListener( 'mouseup', onDocumentMouseUp );
-
-  if ( event.button === 0 && !menu.isActive() ) {
-    mouseDownTimeoutId = window.setTimeout(function () {
-      initIdleAnimation();
-      selectFrame(event);
-    }, 150);
-  } else {
-    event.preventDefault();
-  }
-}
-
-function onDocumentMouseMove ( event ) {
-  window.clearTimeout(mouseDownTimeoutId);
-  var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
-  camera.rotation.y += movementX * 0.01;
-  render();
-}
-
-function onDocumentTouchStart ( event ) {
-  initIdleAnimation();
-  var touch = event.touches[0];
-  touchX = touch.screenX;
-
-  touchMoveTimeoutId = window.setTimeout(function () {
-    selectFrame(event);
-  }, 150);
-}
-
-function onDocumentTouchMove ( event ) {
-  window.clearTimeout(touchMoveTimeoutId);
-  event.preventDefault();
-  var touch = event.touches[0];
-  camera.rotation.y += (touch.screenX - touchX) * 0.01;
-  touchX = touch.screenX;
-  render();
-}
-
-function onDocumentMouseWheel ( event ) {
-  initIdleAnimation();
-  camera.rotation.y += event.deltaY * 0.001;
-  render();
-}
-
-function onWindowResize () {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize( window.innerWidth, window.innerHeight );
-  render();
-}
-
-function onKeyDown ( event ) {
-  if ( event.keyCode == 37 ) {
-    camera.rotation.y += 0.0125;
-  } else if ( event.keyCode == 39 ) {
-    camera.rotation.y -= 0.0125;
-  }
-  render();
 }
 
 function render () {
