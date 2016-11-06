@@ -38,10 +38,10 @@ var gui = {
   cameraControls: undefined,
   cameraSettings: {
     positionX: 0,
-    positionY: 75000,
+    positionY: 50000,
     positionZ: 0,
     rotationX: 0,
-    rotationY: 0,
+    rotationY: 0.5,
     rotationZ: 0,
   },
 
@@ -84,7 +84,15 @@ var gui = {
   },
 
   updateCamera: function () {
-    updateCamera(gui.cameraSettings);
+    camera.position.x = gui.cameraSettings.positionX;
+    camera.position.y = gui.cameraSettings.positionY;
+    camera.position.z = gui.cameraSettings.positionZ;
+    camera.rotation.x = gui.cameraSettings.rotationX;
+    camera.rotation.y = gui.cameraSettings.rotationY;
+    camera.rotation.z = gui.cameraSettings.rotationZ;
+    camera.updateProjectionMatrix();
+    render();
+
   },
 
 };

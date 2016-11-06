@@ -35,17 +35,6 @@ function init () {
   render();
 }
 
-function updateCamera (settings) {
-  camera.position.x = settings.positionX;
-  camera.position.y = settings.positionY;
-  camera.position.z = settings.positionZ;
-  camera.rotation.x = settings.rotationX;
-  camera.rotation.y = settings.rotationY;
-  camera.rotation.z = settings.rotationZ;
-  camera.updateProjectionMatrix();
-  render();
-}
-
 function render () {
   renderer.render(scene, camera);
   dev.updateStats();
