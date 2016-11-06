@@ -2,13 +2,11 @@
 
 if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
-var scene, renderer;
+var camera, scene, renderer;
 var ambientLight;
-var camera, cameraSettings;
-var guiControls, guiControlsSkyBox, guiControlsFlare, guiControlsFrames, guiControlsCamera;
-var frames, selectedFrame, openFrame, frameSettings;
-var lensFlare, flareSettings;
-var skyBox, skyBoxSettings;
+var skyBox;
+var frames, frameSettings, selectedFrame;
+var lensFlare;
 var raycaster, mouse;
 var idleTimeoutId, idleIntervalId;
 var mouseDownTimeoutId, touchMoveTimeoutId;
@@ -28,22 +26,7 @@ function init () {
   scene.fog = new THREE.Fog( 0xf5f5f5, 1, 25000 );
 
   camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 5000000 );
-
-  cameraSettings = {
-    positionX: 0,
-    positionY: 75000,
-    positionZ: 0,
-    rotationX: 0,
-    rotationY: Math.PI,
-    rotationZ: 0,
-  }
-
-  camera.position.x = cameraSettings.positionX;
-  camera.position.y = cameraSettings.positionY;
-  camera.position.z = cameraSettings.positionZ;
-  camera.rotation.x = cameraSettings.rotationX;
-  camera.rotation.y = cameraSettings.rotationY;
-  camera.rotation.z = cameraSettings.rotationZ;
+  camera.position.y = 50000;
 
   ambientLight = new THREE.AmbientLight( 0xffffff );
   scene.add(ambientLight);
@@ -52,13 +35,13 @@ function init () {
   mouse = new THREE.Vector2();
 
   dev.init();
+  gui.init();
   events.init();
 
-  initSkyBox();
+  loadSkyBox();
   initFlare();
   initFrames();
   initCamera();
-  initGuiControls();
   initIdleAnimation();
 }
 
@@ -84,44 +67,27 @@ function initCamera () {
   }, duration);
 }
 
-function updateCamera () {
-  camera.position.x = cameraSettings.positionX;
-  camera.position.y = cameraSettings.positionY;
-  camera.position.z = cameraSettings.positionZ;
-  camera.rotation.x = cameraSettings.rotationX;
-  camera.rotation.y = cameraSettings.rotationY;
-  camera.rotation.z = cameraSettings.rotationZ;
-
+function updateCamera (settings) {
+  camera.position.x = settings.positionX;
+  camera.position.y = settings.positionY;
+  camera.position.z = settings.positionZ;
+  camera.rotation.x = settings.rotationX;
+  camera.rotation.y = settings.rotationY;
+  camera.rotation.z = settings.rotationZ;
   camera.updateProjectionMatrix();
-
   render();
 }
 
-function initSkyBox () {
-  skyBoxSettings = {
-    texture: 'src/textures/skybox_desert.png',
-    textures: {
-      desert: 'src/textures/skybox_desert.png',
-      office: 'src/textures/skybox_office.png',
-      beach1: 'src/textures/skybox_beach1.png',
-      beach2: 'src/textures/skybox_beach2.png',
-      beach3: 'src/textures/skybox_beach3.png',
-      dunes: 'src/textures/skybox_dunes.png',
-      garden: 'src/textures/skybox_garden.png',
-      park: 'src/textures/skybox_park.png',
-      meadow: 'src/textures/skybox_meadow.png',
-      snow: 'src/textures/skybox_snow.png',
-    }
+function loadSkyBox (texture) {
+  if ( !!skyBox ) {
+    scene.remove(skyBox);
   }
-  loadSkyBox();
-}
 
-function loadSkyBox (cb) {
   var cubeMap = new THREE.CubeTexture( [] );
   cubeMap.format = THREE.RGBFormat;
 
   var loader = new THREE.ImageLoader();
-  loader.load(skyBoxSettings.texture, function ( image ) {
+  loader.load(texture || 'src/textures/skybox_desert.png', function ( image ) {
 
     var getSide = function ( x, y ) {
       var size = 1024;
@@ -159,29 +125,10 @@ function loadSkyBox (cb) {
   );
 
   scene.add( skyBox );
-
-  if ( !!cb && typeof cb === 'function' ) {
-    cb();
-  }
-}
-
-function updateSkyBox () {
-  if ( !!skyBox ) {
-    scene.remove(skyBox);
-  }
-  loadSkyBox(function () {
-    render();
-  });
+  render();
 }
 
 function initFlare () {
-  flareSettings = {
-    visible: false,
-    positionX: -1000000,
-    positionY: 500000,
-    positionZ: -1000000,
-  }
-
   var textureLoader = new THREE.TextureLoader();
   var textureFlare0 = textureLoader.load( "src/textures/lensflare0.png" );
   var textureFlare2 = textureLoader.load( "src/textures/lensflare2.png" );
@@ -201,13 +148,11 @@ function initFlare () {
   lensFlare.add( textureFlare3, 70, 1.0, THREE.AdditiveBlending );
 
   lensFlare.customUpdateCallback = lensFlareUpdateCallback;
-  lensFlare.position.x = flareSettings.positionX;
-  lensFlare.position.y = flareSettings.positionY;
-  lensFlare.position.z = flareSettings.positionZ;
-  lensFlare.visible = flareSettings.visible;
+  lensFlare.position.x = -1000000;
+  lensFlare.position.y = 500000;
+  lensFlare.position.z = -1000000;
 
   scene.add( lensFlare );
-
   render();
 }
 
@@ -230,12 +175,11 @@ function lensFlareUpdateCallback( object ) {
   object.lensFlares[ 3 ].rotation = object.positionScreen.x * 0.5 + THREE.Math.degToRad( 45 );
 }
 
-function updateFlare () {
-  lensFlare.position.x = flareSettings.positionX;
-  lensFlare.position.y = flareSettings.positionY;
-  lensFlare.position.z = flareSettings.positionZ;
-  lensFlare.visible = flareSettings.visible;
-
+function updateFlare (settings) {
+  lensFlare.position.x = settings.positionX;
+  lensFlare.position.y = settings.positionY;
+  lensFlare.position.z = settings.positionZ;
+  lensFlare.visible = settings.visible;
   render();
 }
 
@@ -326,7 +270,7 @@ function addFrame (event) {
   render();
 }
 
-function updateFrames () {
+function resetFrames () {
   var frame;
   for ( var i = 0; i < frames.length; i++ ) {
     frames[i].material.transparent = frameSettings.transparent;
@@ -335,30 +279,13 @@ function updateFrames () {
   render();
 }
 
-function initGuiControls () {
-  guiControls = new dat.GUI();
-  guiControls.close();
-
-  guiControlsSkyBox = guiControls.addFolder('SkyBox');
-  guiControlsSkyBox.add( skyBoxSettings, 'texture', skyBoxSettings.textures).onChange( updateSkyBox );
-
-  guiControlsFlare = guiControls.addFolder('Lensflare');
-  guiControlsFlare.add( flareSettings, 'visible' ).onChange( updateFlare );
-  guiControlsFlare.add( flareSettings, 'positionX', -1000000, 1000000).onChange( updateFlare );
-  guiControlsFlare.add( flareSettings, 'positionY', -1000000, 1000000).onChange( updateFlare );
-  guiControlsFlare.add( flareSettings, 'positionZ', -1000000, 1000000).onChange( updateFlare );
-
-  guiControlsFrames = guiControls.addFolder('Frames');
-  guiControlsFrames.add(frameSettings, 'transparent').onChange(updateFrames);
-  guiControlsFrames.add(frameSettings, 'opacity', 0, 1).onChange(updateFrames);
-
-  guiControlsCamera = guiControls.addFolder('Camera');
-  guiControlsCamera.add(cameraSettings, 'positionX', 0, 100000).onChange(updateCamera);
-  guiControlsCamera.add(cameraSettings, 'positionY', 0, 100000).onChange(updateCamera);
-  guiControlsCamera.add(cameraSettings, 'positionZ', 0, 100000).onChange(updateCamera);
-  guiControlsCamera.add(cameraSettings, 'rotationX', 0, Math.PI * 2).onChange(updateCamera);
-  guiControlsCamera.add(cameraSettings, 'rotationY', 0, Math.PI * 2).onChange(updateCamera);
-  guiControlsCamera.add(cameraSettings, 'rotationZ', 0, Math.PI * 2).onChange(updateCamera);
+function updateFrames (settings) {
+  var frame;
+  for ( var i = 0; i < frames.length; i++ ) {
+    frames[i].material.transparent = settings.transparent;
+    frames[i].material.opacity = settings.opacity;
+  }
+  render();
 }
 
 function initIdleAnimation () {
@@ -366,7 +293,7 @@ function initIdleAnimation () {
   window.clearTimeout(idleTimeoutId);
   window.clearInterval(idleIntervalId);
   idleTimeoutId = window.setTimeout(function () {
-    updateFrames();
+    resetFrames();
     closeSelectedFrame();
     branding.init();
     idleIntervalId = window.setInterval(function () {
@@ -396,7 +323,7 @@ function selectFrame ( event ) {
   var intersects = raycaster.intersectObjects( frames );
 
   if ( !!intersects.length ) {
-    updateFrames();
+    resetFrames();
     closeSelectedFrame();
     if ( intersects[0].object === selectedFrame ) {
       selectedFrame = undefined;

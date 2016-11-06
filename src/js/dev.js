@@ -11,6 +11,8 @@ var dev = {
   },
 
   updateStats: function () {
-    dev.stats.update();
+    if ( !!dev.stats ) {
+      dev.stats.update();
+    }
   },
 };
