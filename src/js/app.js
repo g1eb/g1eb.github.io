@@ -4,7 +4,6 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
 var camera, light, scene, renderer;
 var frames, frameSettings, selectedFrame;
-var lensFlare;
 var raycaster, mouse;
 var idleTimeoutId, idleIntervalId;
 var mouseDownTimeoutId, touchMoveTimeoutId;
@@ -36,8 +35,8 @@ function init () {
   gui.init();
   events.init();
   skybox.init();
+  flare.init();
 
-  initFlare();
   initFrames();
   initCamera();
   initIdleAnimation();
@@ -73,61 +72,6 @@ function updateCamera (settings) {
   camera.rotation.y = settings.rotationY;
   camera.rotation.z = settings.rotationZ;
   camera.updateProjectionMatrix();
-  render();
-}
-
-function initFlare () {
-  var textureLoader = new THREE.TextureLoader();
-  var textureFlare0 = textureLoader.load( "src/textures/lensflare0.png" );
-  var textureFlare2 = textureLoader.load( "src/textures/lensflare2.png" );
-  var textureFlare3 = textureLoader.load( "src/textures/lensflare3.png" );
-
-  var flareColor = new THREE.Color( 0xffffff );
-  flareColor.setHSL( 0.55, 0.9, 0.5 + 0.5 );
-  lensFlare = new THREE.LensFlare( textureFlare0, 700, 0.0, THREE.AdditiveBlending, flareColor );
-
-  lensFlare.add( textureFlare2, 512, 0.0, THREE.AdditiveBlending );
-  lensFlare.add( textureFlare2, 512, 0.0, THREE.AdditiveBlending );
-  lensFlare.add( textureFlare2, 512, 0.0, THREE.AdditiveBlending );
-
-  lensFlare.add( textureFlare3, 60, 0.6, THREE.AdditiveBlending );
-  lensFlare.add( textureFlare3, 70, 0.7, THREE.AdditiveBlending );
-  lensFlare.add( textureFlare3, 120, 0.9, THREE.AdditiveBlending );
-  lensFlare.add( textureFlare3, 70, 1.0, THREE.AdditiveBlending );
-
-  lensFlare.customUpdateCallback = lensFlareUpdateCallback;
-  lensFlare.position.x = -1000000;
-  lensFlare.position.y = 500000;
-  lensFlare.position.z = -1000000;
-
-  scene.add( lensFlare );
-  render();
-}
-
-function lensFlareUpdateCallback( object ) {
-  var flare;
-  var f, fl = object.lensFlares.length;
-  var vecX = -object.positionScreen.x * 2;
-  var vecY = -object.positionScreen.y * 2;
-
-  for( f = 0; f < fl; f++ ) {
-    flare = object.lensFlares[ f ];
-
-    flare.x = object.positionScreen.x + vecX * flare.distance;
-    flare.y = object.positionScreen.y + vecY * flare.distance;
-
-    flare.rotation = 0;
-  }
-
-  object.lensFlares[ 2 ].y += 0.025;
-  object.lensFlares[ 3 ].rotation = object.positionScreen.x * 0.5 + THREE.Math.degToRad( 45 );
-}
-
-function updateFlare (settings) {
-  lensFlare.position.x = settings.positionX;
-  lensFlare.position.y = settings.positionY;
-  lensFlare.position.z = settings.positionZ;
-  lensFlare.visible = settings.visible;
   render();
 }
 

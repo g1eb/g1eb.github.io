@@ -76,7 +76,7 @@ var gui = {
   },
 
   updateFlare: function () {
-    updateFlare(gui.flareSettings);
+    flare.update(gui.flareSettings);
   },
 
   updateFrames: function () {
