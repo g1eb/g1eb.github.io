@@ -54,11 +54,11 @@ var frames = {
 
     var hsf = 1.75;
     var vsf = hsf * 1900;
-    var hfov = camera.fov / 180 * Math.PI;
+    var hfov = app.camera.fov / 180 * Math.PI;
     var vfov = hfov / window.innerWidth * window.innerHeight;
     var xoffset = event.clientX - window.innerWidth / 2;
     var yoffset = event.clientY - window.innerHeight / 2;
-    var angleY = camera.rotation.y - hsf * xoffset / (window.innerWidth * hfov);
+    var angleY = app.camera.rotation.y - hsf * xoffset / (window.innerWidth * hfov);
     var angleX = -1 * vsf * yoffset / (window.innerHeight * vfov);
 
     frame = new THREE.Mesh(frameGeometry, frameMaterial);
@@ -89,11 +89,11 @@ var frames = {
     frameText.position.copy(frame.position);
     frameText.rotation.copy(frame.rotation);
 
-    scene.add(frame);
-    scene.add(frameText);
+    app.scene.add(frame);
+    app.scene.add(frameText);
     frames.list.push(frame);
 
-    render();
+    app.render();
   },
 
   open: function (frame) {
@@ -107,10 +107,10 @@ var frames = {
 
   select: function (event) {
     var mouse = new THREE.Vector2();
-    mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
-    mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+    mouse.x = ( event.clientX / app.renderer.domElement.clientWidth ) * 2 - 1;
+    mouse.y = - ( event.clientY / app.renderer.domElement.clientHeight ) * 2 + 1;
 
-    frames.raycaster.setFromCamera( mouse, camera );
+    frames.raycaster.setFromCamera( mouse, app.camera );
     var intersects = frames.raycaster.intersectObjects(frames.list);
 
     frames.reset();
@@ -134,7 +134,7 @@ var frames = {
   highlight: function (frame) {
     frame.material.transparent = frames.settings.transparent;
     frame.material.opacity = frames.settings.activeOpacity;
-    render();
+    app.render();
   },
 
   reset: function () {
@@ -142,7 +142,7 @@ var frames = {
       frames.list[i].material.transparent = frames.settings.transparent;
       frames.list[i].material.opacity = frames.settings.opacity;
     }
-    render();
+    app.render();
   },
 
   update: function (settings) {
@@ -150,7 +150,7 @@ var frames = {
       frames.list[i].material.transparent = settings.transparent;
       frames.list[i].material.opacity = settings.opacity;
     }
-    render();
+    app.render();
   },
 
 };

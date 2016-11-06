@@ -1,41 +1,46 @@
 'use strict';
 
-if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+var app = {
 
-var camera, light, scene, renderer;
+  scene: undefined,
+  camera: undefined,
+  renderer: undefined,
 
-init();
+  init: function () {
+    if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
-function init () {
+    app.renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
+    app.renderer.setPixelRatio( window.devicePixelRatio );
+    app.renderer.setSize( window.innerWidth, window.innerHeight );
+    app.renderer.setClearColor( 0x000000, 0 );
+    document.body.appendChild( app.renderer.domElement );
+  
+    app.scene = new THREE.Scene();
+    app.scene.fog = new THREE.Fog( 0xf5f5f5, 1, 25000 );
+  
+    app.camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 5000000 );
+    app.camera.position.y = 100000;
+    app.camera.rotation.y = Math.PI;
+  
+    var light = new THREE.AmbientLight( 0xffffff );
+    app.scene.add(light);
+  
+    dev.init();
+    gui.init();
+    events.init();
+    skybox.init();
+    flare.init();
+    frames.init();
+    animation.init();
+  
+    app.render();
+  },
+  
+  render: function () {
+    app.renderer.render(app.scene, app.camera);
+    dev.updateStats();
+  },
 
-  renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
-  renderer.setPixelRatio( window.devicePixelRatio );
-  renderer.setSize( window.innerWidth, window.innerHeight );
-  renderer.setClearColor( 0x000000, 0 );
-  document.body.appendChild( renderer.domElement );
-
-  scene = new THREE.Scene();
-  scene.fog = new THREE.Fog( 0xf5f5f5, 1, 25000 );
-
-  camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 5000000 );
-  camera.position.y = 100000;
-  camera.rotation.y = Math.PI;
-
-  light = new THREE.AmbientLight( 0xffffff );
-  scene.add(light);
-
-  dev.init();
-  gui.init();
-  events.init();
-  skybox.init();
-  flare.init();
-  frames.init();
-  animation.init();
-
-  render();
-}
-
-function render () {
-  renderer.render(scene, camera);
-  dev.updateStats();
 };
+
+document.addEventListener('DOMContentLoaded', app.init);

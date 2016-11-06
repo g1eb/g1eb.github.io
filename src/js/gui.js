@@ -84,15 +84,14 @@ var gui = {
   },
 
   updateCamera: function () {
-    camera.position.x = gui.cameraSettings.positionX;
-    camera.position.y = gui.cameraSettings.positionY;
-    camera.position.z = gui.cameraSettings.positionZ;
-    camera.rotation.x = gui.cameraSettings.rotationX;
-    camera.rotation.y = gui.cameraSettings.rotationY;
-    camera.rotation.z = gui.cameraSettings.rotationZ;
-    camera.updateProjectionMatrix();
-    render();
-
+    app.camera.position.x = gui.cameraSettings.positionX;
+    app.camera.position.y = gui.cameraSettings.positionY;
+    app.camera.position.z = gui.cameraSettings.positionZ;
+    app.camera.rotation.x = gui.cameraSettings.rotationX;
+    app.camera.rotation.y = gui.cameraSettings.rotationY;
+    app.camera.rotation.z = gui.cameraSettings.rotationZ;
+    app.camera.updateProjectionMatrix();
+    app.render();
   },
 
 };

@@ -28,8 +28,8 @@ var flare = {
     flare.lensFlare.position.y = 500000;
     flare.lensFlare.position.z = -1000000;
 
-    scene.add( flare.lensFlare );
-    render();
+    app.scene.add( flare.lensFlare );
+    app.render();
   },
 
   lensFlareUpdateCallback: function ( object ) {
@@ -56,7 +56,7 @@ var flare = {
     flare.lensFlare.position.y = settings.positionY;
     flare.lensFlare.position.z = settings.positionZ;
     flare.lensFlare.visible = settings.visible;
-    render();
+    app.render();
   },
 
 };

@@ -52,13 +52,13 @@ var skybox = {
       skyBoxMaterial
     );
 
-    scene.add(skybox.mesh);
-    render();
+    app.scene.add(skybox.mesh);
+    app.render();
   },
 
   remove: function () {
     if ( !!skyBox.mesh ) {
-      scene.remove(skybox.mesh);
+      app.scene.remove(skybox.mesh);
     }
   },
 

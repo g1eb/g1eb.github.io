@@ -41,17 +41,17 @@ var animation = {
     var duration = 3000; //ms
     var interval = 100; //ms
 
-    new TWEEN.Tween( camera.position ).to( {
+    new TWEEN.Tween( app.camera.position ).to( {
       y: 50000,
     }, duration ).easing( TWEEN.Easing.Quadratic.Out).start();
 
-    new TWEEN.Tween( camera.rotation ).to( {
+    new TWEEN.Tween( app.camera.rotation ).to( {
       y: 0.5
     }, duration ).easing( TWEEN.Easing.Quadratic.Out).start();
 
     var initCameraInterval = window.setInterval(function () {
       TWEEN.update();
-      render();
+      app.render();
     }, interval);
 
     window.setTimeout(function () {
@@ -95,8 +95,8 @@ var animation = {
 
   startCameraPanAnimation: function () {
     animation.cameraPanIntervalId = window.setInterval(function () {
-      camera.rotation.y -= 0.0015;
-      render();
+      app.camera.rotation.y -= 0.0015;
+      app.render();
     }, 100);
   },
 

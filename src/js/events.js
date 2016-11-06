@@ -50,15 +50,15 @@ var events = {
 
     events.moving = true;
     var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
-    camera.rotation.y += movementX * 0.01;
-    render();
+    app.camera.rotation.y += movementX * 0.01;
+    app.render();
   },
 
   onDocumentMouseWheel: function (event) {
     if ( !menu.isActive() ) {
       animation.reset();
-      camera.rotation.y += event.deltaY * 0.001;
-      render();
+      app.camera.rotation.y += event.deltaY * 0.001;
+      app.render();
     }
   },
 
@@ -95,18 +95,18 @@ var events = {
     events.moving = true;
 
     var touch = event.touches[0];
-    camera.rotation.y += (touch.screenX - events.touchX) * 0.01;
+    app.camera.rotation.y += (touch.screenX - events.touchX) * 0.01;
     events.touchX = touch.screenX;
-    render();
+    app.render();
   },
 
   onKeyDown: function (event) {
     if ( event.keyCode == 37 ) {
-      camera.rotation.y += 0.0125;
+      app.camera.rotation.y += 0.0125;
     } else if ( event.keyCode == 39 ) {
-      camera.rotation.y -= 0.0125;
+      app.camera.rotation.y -= 0.0125;
     }
-    render();
+    app.render();
   },
 
   onKeyUp: function (event) {
@@ -116,10 +116,10 @@ var events = {
   },
 
   onWindowResize: function () {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize( window.innerWidth, window.innerHeight );
-    render();
+    app.camera.aspect = window.innerWidth / window.innerHeight;
+    app.camera.updateProjectionMatrix();
+    app.renderer.setSize( window.innerWidth, window.innerHeight );
+    app.render();
   },
 
 };
