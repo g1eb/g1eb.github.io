@@ -30,9 +30,28 @@ var frames = {
 
   init: function () {
     frames.raycaster = new THREE.Raycaster();
+
+    sync.getFrames();
   },
 
-  add: function (event) {
+  add: function (event, data) {
+    if ( !event && !data ) {
+      return;
+    }
+
+    var title, xpos, ypos, angle;
+    if ( !!event ) {
+      title = 'New Frame';
+      xpos = event.clientX;
+      ypos = event.clientY;
+      angle = app.camera.rotation.y;
+    } else {
+      title = data.title;
+      xpos = data.xpos;
+      ypos = data.ypos;
+      angle = data.angle;
+    }
+
     var frame, frameGeometry, frameMaterial;
     var frameText, frameTextCanvas, frameTextContext, frameTextTexture, frameTextMaterial, frameTextGeometry;
 
@@ -56,9 +75,9 @@ var frames = {
     var vsf = hsf * 1900;
     var hfov = app.camera.fov / 180 * Math.PI;
     var vfov = hfov / window.innerWidth * window.innerHeight;
-    var xoffset = event.clientX - window.innerWidth / 2;
-    var yoffset = event.clientY - window.innerHeight / 2;
-    var angleY = app.camera.rotation.y - hsf * xoffset / (window.innerWidth * hfov);
+    var xoffset = xpos - window.innerWidth / 2;
+    var yoffset = ypos - window.innerHeight / 2;
+    var angleY = angle - hsf * xoffset / (window.innerWidth * hfov);
     var angleX = -1 * vsf * yoffset / (window.innerHeight * vfov);
 
     frame = new THREE.Mesh(frameGeometry, frameMaterial);
@@ -74,7 +93,7 @@ var frames = {
     frameTextContext.font = 'Normal 75px Arial';
     frameTextContext.textAlign = 'left';
     frameTextContext.fillStyle = 'rgba(50, 50, 50, 0.75)';
-    frameTextContext.fillText('Frame ' + (frames.list.length + 1), 100, 150);
+    frameTextContext.fillText(title, 100, 150);
 
     frameTextTexture = new THREE.Texture(frameTextCanvas);
     frameTextTexture.needsUpdate = true;
@@ -92,6 +111,15 @@ var frames = {
     app.scene.add(frame);
     app.scene.add(frameText);
     frames.list.push(frame);
+
+    if ( !data ) {
+      sync.addFrame({
+        title: 'New Frame',
+        xpos: xpos,
+        ypos: ypos,
+        angle: angle,
+      });
+    }
 
     app.render();
   },
