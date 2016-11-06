@@ -2,8 +2,10 @@
 
 var app = {
 
+  dirty: false,
   scene: undefined,
   camera: undefined,
+  controls: undefined,
   renderer: undefined,
 
   init: function () {
@@ -22,6 +24,10 @@ var app = {
     app.camera.position.y = 100000;
     app.camera.rotation.y = Math.PI;
   
+    if ( device.isMobile() ) {
+      app.controls = new THREE.DeviceOrientationControls( app.camera );
+    }
+
     var light = new THREE.AmbientLight( 0xffffff );
     app.scene.add(light);
 
@@ -36,9 +42,22 @@ var app = {
   
     app.render();
   },
-  
+
   render: function () {
-    app.renderer.render(app.scene, app.camera);
+    requestAnimationFrame(app.render);
+
+    // Update device orientation
+    if ( !!app.controls ) {
+      app.controls.update();
+      app.dirty = true;
+    }
+
+    // Render if that is necessary
+    if ( app.dirty ) {
+      app.renderer.render(app.scene, app.camera);
+      app.dirty = false;
+    }
+
     dev.updateStats();
   },
 

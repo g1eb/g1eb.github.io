@@ -91,7 +91,7 @@ var gui = {
     app.camera.rotation.y = gui.cameraSettings.rotationY;
     app.camera.rotation.z = gui.cameraSettings.rotationZ;
     app.camera.updateProjectionMatrix();
-    app.render();
+    app.dirty = true;
   },
 
 };

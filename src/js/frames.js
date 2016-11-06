@@ -110,7 +110,7 @@ var frames = {
       sync.addFrame(data);
     }
 
-    app.render();
+    app.dirty = true;
   },
 
   open: function (frame) {
@@ -151,7 +151,7 @@ var frames = {
   highlight: function (frame) {
     frame.material.transparent = frames.settings.transparent;
     frame.material.opacity = frames.settings.activeOpacity;
-    app.render();
+    app.dirty = true;
   },
 
   reset: function () {
@@ -159,7 +159,7 @@ var frames = {
       frames.list[i].material.transparent = frames.settings.transparent;
       frames.list[i].material.opacity = frames.settings.opacity;
     }
-    app.render();
+    app.dirty = true;
   },
 
   update: function (settings) {
@@ -167,7 +167,7 @@ var frames = {
       frames.list[i].material.transparent = settings.transparent;
       frames.list[i].material.opacity = settings.opacity;
     }
-    app.render();
+    app.dirty = true;
   },
 
 };

@@ -51,14 +51,14 @@ var events = {
     events.moving = true;
     var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
     app.camera.rotation.y += movementX * 0.01;
-    app.render();
+    app.dirty = true;
   },
 
   onDocumentMouseWheel: function (event) {
     if ( !menu.isActive() ) {
       animation.reset();
       app.camera.rotation.y += event.deltaY * 0.001;
-      app.render();
+      app.dirty = true;
     }
   },
 
@@ -97,7 +97,7 @@ var events = {
     var touch = event.touches[0];
     app.camera.rotation.y += (touch.screenX - events.touchX) * 0.01;
     events.touchX = touch.screenX;
-    app.render();
+    app.dirty = true;
   },
 
   onKeyDown: function (event) {
@@ -106,7 +106,7 @@ var events = {
     } else if ( event.keyCode == 39 ) {
       app.camera.rotation.y -= 0.0125;
     }
-    app.render();
+    app.dirty = true;
   },
 
   onKeyUp: function (event) {
@@ -119,7 +119,7 @@ var events = {
     app.camera.aspect = window.innerWidth / window.innerHeight;
     app.camera.updateProjectionMatrix();
     app.renderer.setSize( window.innerWidth, window.innerHeight );
-    app.render();
+    app.dirty = true;
   },
 
 };
