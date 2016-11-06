@@ -33,11 +33,30 @@ var animation = {
   cameraPanIntervalId: undefined,
 
   init: function () {
-    animation.cancelAll();
-    window.clearTimeout(animation.idleTimeoutId);
-    animation.idleTimeoutId = window.setTimeout(function () {
-      animation.start();
-    }, animation.idleTimeoutDuration);
+    animation.initCamera();
+    animation.reset();
+  },
+
+  initCamera: function () {
+    var duration = 3000; //ms
+    var interval = 100; //ms
+
+    new TWEEN.Tween( camera.position ).to( {
+      y: 50000,
+    }, duration ).easing( TWEEN.Easing.Quadratic.Out).start();
+
+    new TWEEN.Tween( camera.rotation ).to( {
+      y: 0.5
+    }, duration ).easing( TWEEN.Easing.Quadratic.Out).start();
+
+    var initCameraInterval = window.setInterval(function () {
+      TWEEN.update();
+      render();
+    }, interval);
+
+    window.setTimeout(function () {
+      window.clearInterval(initCameraInterval);
+    }, duration);
   },
 
   reset: function () {

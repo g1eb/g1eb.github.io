@@ -5,7 +5,6 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 var camera, light, scene, renderer;
 
 init();
-render();
 
 function init () {
 
@@ -19,7 +18,8 @@ function init () {
   scene.fog = new THREE.Fog( 0xf5f5f5, 1, 25000 );
 
   camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 5000000 );
-  camera.position.y = 50000;
+  camera.position.y = 100000;
+  camera.rotation.y = Math.PI;
 
   light = new THREE.AmbientLight( 0xffffff );
   scene.add(light);
@@ -32,29 +32,7 @@ function init () {
   frames.init();
   animation.init();
 
-  initCamera();
-}
-
-function initCamera () {
-  var duration = 3000; //ms
-  var interval = 100; //ms
-
-  new TWEEN.Tween( camera.position ).to( {
-    y: 50000,
-  }, duration ).easing( TWEEN.Easing.Quadratic.Out).start();
-
-  new TWEEN.Tween( camera.rotation ).to( {
-    y: 0.5
-  }, duration ).easing( TWEEN.Easing.Quadratic.Out).start();
-
-  var initCameraInterval = window.setInterval(function () {
-    TWEEN.update();
-    render();
-  }, interval);
-
-  window.setTimeout(function () {
-    window.clearInterval(initCameraInterval);
-  }, duration);
+  render();
 }
 
 function updateCamera (settings) {
