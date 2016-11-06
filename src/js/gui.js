@@ -80,7 +80,7 @@ var gui = {
   },
 
   updateFrames: function () {
-    updateFrames(gui.frameSettings);
+    frames.update(gui.frameSettings);
   },
 
   updateCamera: function () {

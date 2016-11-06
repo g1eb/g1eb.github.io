@@ -32,7 +32,7 @@ var events = {
         }
       } else {
         events.dragThresholdTimeoutId = window.setTimeout(function () {
-          selectFrame(event);
+          frames.select(event);
         }, events.dragThresholdDuration);
       }
     }
@@ -77,7 +77,7 @@ var events = {
       var touch = event.touches[0];
       events.touchX = touch.screenX;
       events.moveThresholdTimeoutId = window.setTimeout(function () {
-        selectFrame(event);
+        frames.select(event);
       }, events.moveThresholdDuration);
     }
   },

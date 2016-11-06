@@ -49,8 +49,7 @@ var animation = {
   },
 
   start: function () {
-    resetFrames();
-    closeSelectedFrame();
+    frames.reset();
     animation.startTextAnimation();
     animation.startCameraPanAnimation();
   },
