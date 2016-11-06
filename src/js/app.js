@@ -2,7 +2,7 @@
 
 if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
-var controls, scene, renderer;
+var scene, renderer;
 var ambientLight;
 var camera, cameraSettings;
 var stats;
