@@ -101,17 +101,18 @@ var events = {
   },
 
   onKeyDown: function (event) {
-  },
-
-  onKeyUp: function (event) {
-    if ( event.keyCode === 27 ) {
-      menu.toggleMenu();
-    } else if ( event.keyCode == 37 ) {
+    if ( event.keyCode == 37 ) {
       camera.rotation.y += 0.0125;
     } else if ( event.keyCode == 39 ) {
       camera.rotation.y -= 0.0125;
     }
     render();
+  },
+
+  onKeyUp: function (event) {
+    if ( event.keyCode === 27 ) {
+      menu.toggleMenu();
+    }
   },
 
   onWindowResize: function () {
