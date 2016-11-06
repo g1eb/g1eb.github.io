@@ -51,7 +51,7 @@ var animation = {
 
     var initCameraInterval = window.setInterval(function () {
       TWEEN.update();
-      app.render();
+      app.dirty = true;
     }, interval);
 
     window.setTimeout(function () {
@@ -96,7 +96,7 @@ var animation = {
   startCameraPanAnimation: function () {
     animation.cameraPanIntervalId = window.setInterval(function () {
       app.camera.rotation.y -= 0.0015;
-      app.render();
+      app.dirty = true;
     }, 100);
   },
 

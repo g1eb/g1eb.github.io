@@ -2,6 +2,7 @@
 
 var app = {
 
+  dirty: false,
   scene: undefined,
   camera: undefined,
   controls: undefined,
@@ -40,13 +41,22 @@ var app = {
   
     app.render();
   },
-  
+
   render: function () {
+    requestAnimationFrame(app.render);
+
+    // Update device orientation
     if ( !!app.controls ) {
-      requestAnimationFrame(app.render);
       app.controls.update();
+      app.dirty = true;
     }
-    app.renderer.render(app.scene, app.camera);
+
+    // Render if that is necessary
+    if ( app.dirty ) {
+      app.renderer.render(app.scene, app.camera);
+      app.dirty = false;
+    }
+
     dev.updateStats();
   },
 

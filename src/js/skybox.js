@@ -53,7 +53,7 @@ var skybox = {
     );
 
     app.scene.add(skybox.mesh);
-    app.render();
+    app.dirty = true;
   },
 
   remove: function () {
