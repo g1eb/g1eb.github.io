@@ -5,7 +5,6 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 var scene, renderer;
 var ambientLight;
 var camera, cameraSettings;
-var stats;
 var guiControls, guiControlsSkyBox, guiControlsFlare, guiControlsFrames, guiControlsCamera;
 var frames, selectedFrame, openFrame, frameSettings;
 var lensFlare, flareSettings;
@@ -52,8 +51,8 @@ function init () {
   raycaster = new THREE.Raycaster();
   mouse = new THREE.Vector2();
 
-  stats = new Stats();
-  document.body.appendChild(stats.dom);
+  dev.init();
+  events.init();
 
   initSkyBox();
   initFlare();
@@ -61,8 +60,6 @@ function init () {
   initCamera();
   initGuiControls();
   initIdleAnimation();
-
-  events.init();
 }
 
 function initCamera () {
@@ -415,5 +412,5 @@ function selectFrame ( event ) {
 
 function render () {
   renderer.render(scene, camera);
-  stats.update();
+  dev.updateStats();
 };
