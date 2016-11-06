@@ -72,7 +72,7 @@ var gui = {
   },
 
   updateSkyBox: function () {
-    loadSkyBox(gui.skyBoxSettings.texture);
+    skybox.load(gui.skyBoxSettings.texture);
   },
 
   updateFlare: function () {
