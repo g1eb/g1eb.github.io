@@ -25,7 +25,7 @@ var events = {
 
     // Toggle menu on long press, close menu when clicked outside
     if ( event.button === 0 ) {
-      initIdleAnimation();
+      animation.reset();
       if ( menu.isActive() ) {
         if ( !menu.isClicked(event) ) {
           menu.closeMenu();
@@ -56,7 +56,7 @@ var events = {
 
   onDocumentMouseWheel: function (event) {
     if ( !menu.isActive() ) {
-      initIdleAnimation();
+      animation.reset();
       camera.rotation.y += event.deltaY * 0.001;
       render();
     }
@@ -68,7 +68,7 @@ var events = {
     document.addEventListener( 'touchmove', events.onDocumentTouchMove, false );
     document.addEventListener( 'touchend', events.onDocumentTouchEnd, false );
 
-    initIdleAnimation();
+    animation.reset();
     if ( menu.isActive() ) {
       if ( !menu.isClicked(event) ) {
         menu.closeMenu();

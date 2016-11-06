@@ -5,8 +5,6 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 var camera, light, scene, renderer;
 var frames, frameSettings, selectedFrame;
 var raycaster, mouse;
-var idleTimeoutId, idleIntervalId;
-var mouseDownTimeoutId, touchMoveTimeoutId;
 
 init();
 render();
@@ -36,10 +34,10 @@ function init () {
   events.init();
   skybox.init();
   flare.init();
+  animation.init();
 
   initFrames();
   initCamera();
-  initIdleAnimation();
 }
 
 function initCamera () {
@@ -178,21 +176,6 @@ function updateFrames (settings) {
     frames[i].material.opacity = settings.opacity;
   }
   render();
-}
-
-function initIdleAnimation () {
-  branding.cancel();
-  window.clearTimeout(idleTimeoutId);
-  window.clearInterval(idleIntervalId);
-  idleTimeoutId = window.setTimeout(function () {
-    resetFrames();
-    closeSelectedFrame();
-    branding.init();
-    idleIntervalId = window.setInterval(function () {
-      camera.rotation.y -= 0.0015;
-      render();
-    }, 100);
-  }, 1000 * 60);
 }
 
 function openSelectedFrame() {
