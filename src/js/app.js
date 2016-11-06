@@ -4,6 +4,7 @@ var app = {
 
   scene: undefined,
   camera: undefined,
+  controls: undefined,
   renderer: undefined,
 
   init: function () {
@@ -22,6 +23,10 @@ var app = {
     app.camera.position.y = 100000;
     app.camera.rotation.y = Math.PI;
   
+    if ( device.isMobile() ) {
+      app.controls = new THREE.DeviceOrientationControls( app.camera );
+    }
+
     var light = new THREE.AmbientLight( 0xffffff );
     app.scene.add(light);
   
@@ -37,6 +42,10 @@ var app = {
   },
   
   render: function () {
+    if ( !!app.controls ) {
+      requestAnimationFrame(app.render);
+      app.controls.update();
+    }
     app.renderer.render(app.scene, app.camera);
     dev.updateStats();
   },
