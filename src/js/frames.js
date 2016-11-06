@@ -39,18 +39,12 @@ var frames = {
       return;
     }
 
-    var title, xpos, ypos, angle;
-    if ( !!event ) {
-      title = 'New Frame';
-      xpos = event.clientX;
-      ypos = event.clientY;
-      angle = app.camera.rotation.y;
-    } else {
-      title = data.title;
-      xpos = data.xpos;
-      ypos = data.ypos;
-      angle = data.angle;
-    }
+    data = data || {
+      title: 'New Frame',
+      xpos: event.clientX,
+      ypos: event.clientY,
+      angle: app.camera.rotation.y,
+    };
 
     var frame, frameGeometry, frameMaterial;
     var frameText, frameTextCanvas, frameTextContext, frameTextTexture, frameTextMaterial, frameTextGeometry;
@@ -75,9 +69,9 @@ var frames = {
     var vsf = hsf * 1900;
     var hfov = app.camera.fov / 180 * Math.PI;
     var vfov = hfov / window.innerWidth * window.innerHeight;
-    var xoffset = xpos - window.innerWidth / 2;
-    var yoffset = ypos - window.innerHeight / 2;
-    var angleY = angle - hsf * xoffset / (window.innerWidth * hfov);
+    var xoffset = data.xpos - window.innerWidth / 2;
+    var yoffset = data.ypos - window.innerHeight / 2;
+    var angleY = data.angle - hsf * xoffset / (window.innerWidth * hfov);
     var angleX = -1 * vsf * yoffset / (window.innerHeight * vfov);
 
     frame = new THREE.Mesh(frameGeometry, frameMaterial);
@@ -93,7 +87,7 @@ var frames = {
     frameTextContext.font = 'Normal 75px Arial';
     frameTextContext.textAlign = 'left';
     frameTextContext.fillStyle = 'rgba(50, 50, 50, 0.75)';
-    frameTextContext.fillText(title, 100, 150);
+    frameTextContext.fillText(data.title, 100, 150);
 
     frameTextTexture = new THREE.Texture(frameTextCanvas);
     frameTextTexture.needsUpdate = true;
@@ -112,13 +106,8 @@ var frames = {
     app.scene.add(frameText);
     frames.list.push(frame);
 
-    if ( !data ) {
-      sync.addFrame({
-        title: 'New Frame',
-        xpos: xpos,
-        ypos: ypos,
-        angle: angle,
-      });
+    if ( !!event ) {
+      sync.addFrame(data);
     }
 
     app.render();
