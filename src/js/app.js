@@ -26,6 +26,9 @@ var app = {
   
     if ( device.isMobile() ) {
       app.controls = new THREE.DeviceOrientationControls( app.camera );
+      device.streamVideo();
+    } else {
+      skybox.init();
     }
 
     var light = new THREE.AmbientLight( 0xffffff );
@@ -34,7 +37,6 @@ var app = {
     dev.init();
     gui.init();
     events.init();
-    skybox.init();
     flare.init();
     frames.init();
     animation.init();
