@@ -28,35 +28,29 @@ var frames = {
 
   raycaster: undefined,
 
+  geometry: undefined,
+  material: undefined,
+
   init: function () {
     frames.raycaster = new THREE.Raycaster();
+
+    frames.getGeometry();
+    frames.getMaterial();
 
     sync.getFrames();
   },
 
-  add: function (event, data) {
-    if ( !event && !data ) {
-      return;
-    }
-
-    data = data || {
-      title: 'New Frame',
-      xpos: event.clientX,
-      ypos: event.clientY,
-      angle: app.camera.rotation.y,
-    };
-
-    var frame, frameGeometry, frameMaterial;
-    var frameText, frameTextCanvas, frameTextContext, frameTextTexture, frameTextMaterial, frameTextGeometry;
-
-    frameGeometry = new THREE.PlaneGeometry(
+  getGeometry: function () {
+    frames.geometry = new THREE.PlaneGeometry(
       frames.settings.width,
       frames.settings.height,
       frames.settings.segments,
       frames.settings.slices
     );
+  },
 
-    frameMaterial = new THREE.MeshPhongMaterial({
+  getMaterial: function () {
+    frames.material = new THREE.MeshPhongMaterial({
       color: frames.settings.ambientColor,
       emissive: frames.settings.diffuseColor,
       side: THREE.DoubleSide,
