@@ -109,10 +109,12 @@ var frames = {
 
   open: function (frame) {
     document.getElementById('frame-edit').style.display = 'flex';
+    events.bindFrameEditButtons();
   },
 
   close: function (frame) {
     document.getElementById('frame-edit').style.display = 'none';
+    events.unbindFrameEditButtons();
     frames.deactivate(frames.active);
   },
 

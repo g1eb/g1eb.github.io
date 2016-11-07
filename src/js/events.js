@@ -126,4 +126,14 @@ var events = {
     app.dirty = true;
   },
 
+  bindFrameEditButtons: function () {
+    document.getElementById('frame-edit-btn--save').addEventListener('click', frames.update, false);
+    document.getElementById('frame-edit-btn--remove').addEventListener('click', frames.remove, false);
+  },
+
+  unbindFrameEditButtons: function () {
+    document.getElementById('frame-edit-btn--save').removeEventListener('click', frames.update, false);
+    document.getElementById('frame-edit-btn--remove').removeEventListener('click', frames.remove, false);
+  },
+
 };
