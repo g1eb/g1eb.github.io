@@ -119,6 +119,7 @@ var frames = {
 
   close: function (frame) {
     document.getElementById('frame-edit').style.display = 'none';
+    frames.deactivate(frames.active);
   },
 
   closeAll: function () {
@@ -133,20 +134,17 @@ var frames = {
       frames.raycaster.setFromCamera( mouse, app.camera );
       var intersects = frames.raycaster.intersectObjects(frames.list);
 
-      frames.reset();
-
       if ( !!intersects.length ) {
         if ( intersects[0].object === frames.active ) {
-          frames.active = undefined;
           frames.close();
         } else {
+          frames.deactivate(frames.active);
           frames.active = intersects[0].object;
-          frames.highlight(frames.active);
+          frames.activate(frames.active);
           frames.open(frames.active);
         }
       } else {
         if ( !!frames.active ) {
-          frames.active = undefined;
           frames.close();
         } else {
           frames.add(event);
@@ -155,10 +153,19 @@ var frames = {
     }
   },
 
-  highlight: function (frame) {
+  activate: function (frame) {
     frame.material.transparent = frames.settings.transparent;
     frame.material.opacity = frames.settings.activeOpacity;
     app.dirty = true;
+  },
+
+  deactivate: function (frame) {
+    if ( !!frame ) {
+      frame.material.transparent = frames.settings.transparent;
+      frame.material.opacity = frames.settings.opacity;
+      frames.active = undefined;
+      app.dirty = true;
+    }
   },
 
   reset: function () {
