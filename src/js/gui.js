@@ -62,7 +62,11 @@ var gui = {
   },
 
   updateFrames: function () {
-    frames.update(gui.frameSettings);
+    for ( var i = 0; i < frames.list.length; i++ ) {
+      frames.list[i].material.transparent = gui.frameSettings.transparent;
+      frames.list[i].material.opacity = gui.frameSettings.opacity;
+    }
+    app.dirty = true;
   },
 
   updateCamera: function () {

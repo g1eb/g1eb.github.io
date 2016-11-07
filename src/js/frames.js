@@ -176,12 +176,4 @@ var frames = {
     app.dirty = true;
   },
 
-  update: function (settings) {
-    for ( var i = 0; i < frames.list.length; i++ ) {
-      frames.list[i].material.transparent = settings.transparent;
-      frames.list[i].material.opacity = settings.opacity;
-    }
-    app.dirty = true;
-  },
-
 };
