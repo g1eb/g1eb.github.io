@@ -24,6 +24,8 @@ var animation = {
     'gainsboro', 'lightgray', 'silver', 'darkgray', 'gray', 'dimgray', 'lightslategray', 'slategray', 'darkslategray', 'black',
   ],
 
+  container: undefined,
+
   idleTimeoutId: undefined,
 
   idleTimeoutDuration: 1000 * 60,
@@ -33,8 +35,15 @@ var animation = {
   cameraPanIntervalId: undefined,
 
   init: function () {
+    animation.initContainer();
     animation.initCamera();
     animation.reset();
+  },
+
+  initContainer: function () {
+    animation.container = document.createElement('div');
+    animation.container.className = 'animation-container';
+    document.body.appendChild(animation.container);
   },
 
   initCamera: function () {
@@ -74,11 +83,10 @@ var animation = {
   },
 
   startTextAnimation: function () {
-    var brandingContainer = document.getElementById('branding');
     animation.textAnimationIntervalId = window.setInterval(function () {
       for ( var i = 0; i < Math.floor(Math.random() * 5); i++ ) {
         var element = document.createElement('span');
-        brandingContainer.appendChild(element);
+        animation.container.appendChild(element);
         var character = animation.chars[Math.floor(Math.random() * animation.chars.length)];
         var duration = Math.floor(Math.random() * 15);
         var offset = Math.floor(Math.random() * (30 - duration * 2)) + 3;
