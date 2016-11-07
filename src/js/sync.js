@@ -14,12 +14,13 @@ var sync = {
   },
 
   getThemes: function () {
-    return firebase.database().ref('/themes/').once('value').then(function(snapshot) {
+    firebase.database().ref('/themes/').once('value').then(function(snapshot) {
     });
   },
 
   addTheme: function (title, color) {
     var themeData = {
+      created_at: new Date(),
       title: title,
       color: color,
       locked: false,
@@ -30,21 +31,24 @@ var sync = {
     var updates = {};
     updates['/themes/' + newThemeKey] = themeData;
   
-    return firebase.database().ref().update(updates);
+    firebase.database().ref().update(updates);
+    return newThemeKey;
   },
 
   getFrames: function () {
-    return firebase.database().ref('/frames/').once('value').then(function(snapshot) {
+    firebase.database().ref('/frames/').once('value').then(function(snapshot) {
       var data = snapshot.val();
+      if ( !data ) { return; }
       var ids = Object.keys(data);
       for ( var i = 0; i < ids.length; i++ ) {
-        frames.add(null, data[ids[i]]);
+        frames.add(null, ids[i], data[ids[i]]);
       }
     });
   },
 
   addFrame: function (frame) {
     var frameData = {
+      created_at: new Date(),
       title: frame.title,
       xpos: frame.xpos,
       ypos: frame.ypos,
@@ -52,7 +56,7 @@ var sync = {
     };
   
     var newFrameKey = firebase.database().ref().child('frames').push().key;
-  
+
     var updates = {};
     updates['/frames/' + newFrameKey] = frameData;
   
