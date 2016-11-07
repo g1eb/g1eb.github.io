@@ -37,7 +37,6 @@ var app = {
     dev.init();
     gui.init();
     events.init();
-    flare.init();
     frames.init();
     animation.init();
   
