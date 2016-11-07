@@ -56,7 +56,8 @@ var sync = {
     var updates = {};
     updates['/frames/' + newFrameKey] = frameData;
   
-    return firebase.database().ref().update(updates);
+    firebase.database().ref().update(updates);
+    return newFrameKey;
   },
 
 

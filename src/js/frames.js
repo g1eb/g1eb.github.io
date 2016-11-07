@@ -58,6 +58,19 @@ var frames = {
       transparent: frames.settings.transparent,
       opacity: frames.settings.opacity,
     });
+  },
+
+  add: function (event, key, data) {
+    if ( !event && !data ) {
+      return;
+    }
+
+    data = data || {
+      title: 'New Frame',
+      xpos: event.clientX,
+      ypos: event.clientY,
+      angle: app.camera.rotation.y,
+    };
 
     var hsf = 1.75;
     var vsf = hsf * 1900;
@@ -96,12 +109,14 @@ var frames = {
     frameText.position.copy(frame.position);
     frameText.rotation.copy(frame.rotation);
 
+    frame.key = key;
+    frame.text = frameText;
     app.scene.add(frame);
-    app.scene.add(frameText);
+    app.scene.add(frame.text);
     frames.list.push(frame);
 
     if ( !!event ) {
-      sync.addFrame(data);
+      frame.key = sync.addFrame(data);
     }
 
     app.dirty = true;
