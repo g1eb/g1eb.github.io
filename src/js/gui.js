@@ -21,14 +21,6 @@ var gui = {
     }
   },
 
-  flareControls: undefined,
-  flareSettings: {
-    visible: true,
-    positionX: -1000000,
-    positionY: 500000,
-    positionZ: -1000000,
-  },
-
   frameControls: undefined,
   frameSettings: {
     transparent: true,
@@ -52,12 +44,6 @@ var gui = {
     gui.skyBoxControls = gui.controls.addFolder('SkyBox');
     gui.skyBoxControls.add(gui.skyBoxSettings, 'texture', gui.skyBoxSettings.textures).onChange(gui.updateSkyBox);
 
-    gui.flareControls = gui.controls.addFolder('Lensflare');
-    gui.flareControls.add(gui.flareSettings, 'visible').onChange( gui.updateFlare );
-    gui.flareControls.add(gui.flareSettings, 'positionX', -1000000, 1000000).onChange( gui.updateFlare );
-    gui.flareControls.add(gui.flareSettings, 'positionY', -1000000, 1000000).onChange( gui.updateFlare );
-    gui.flareControls.add(gui.flareSettings, 'positionZ', -1000000, 1000000).onChange( gui.updateFlare );
-
     gui.frameControls = gui.controls.addFolder('Frames');
     gui.frameControls.add(gui.frameSettings, 'transparent').onChange(gui.updateFrames);
     gui.frameControls.add(gui.frameSettings, 'opacity', 0, 1).onChange(gui.updateFrames);
@@ -73,10 +59,6 @@ var gui = {
 
   updateSkyBox: function () {
     skybox.load(gui.skyBoxSettings.texture);
-  },
-
-  updateFlare: function () {
-    flare.update(gui.flareSettings);
   },
 
   updateFrames: function () {
