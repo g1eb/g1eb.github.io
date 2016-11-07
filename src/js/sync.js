@@ -60,5 +60,8 @@ var sync = {
     return newFrameKey;
   },
 
+  removeFrame: function (key) {
+    firebase.database().ref().child('frames').child(key).remove();
+  },
 
 };

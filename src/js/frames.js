@@ -133,7 +133,12 @@ var frames = {
     frames.deactivate(frames.active);
   },
 
-  closeAll: function () {
+  remove: function () {
+    sync.removeFrame(frames.active.key);
+    app.scene.remove(frames.active.text);
+    app.scene.remove(frames.active);
+    frames.list.splice(1, frames.list.indexOf(frames.active));
+    frames.close();
   },
 
   select: function (event) {
@@ -149,7 +154,7 @@ var frames = {
         if ( intersects[0].object === frames.active ) {
           frames.close();
         } else {
-          frames.deactivate(frames.active);
+          frames.close();
           frames.active = intersects[0].object;
           frames.activate(frames.active);
           frames.open(frames.active);
