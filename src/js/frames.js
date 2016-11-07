@@ -68,31 +68,31 @@ var frames = {
     var angleY = data.angle - hsf * xoffset / (window.innerWidth * hfov);
     var angleX = -1 * vsf * yoffset / (window.innerHeight * vfov);
 
-    frame = new THREE.Mesh(frameGeometry, frameMaterial);
+    var frame = new THREE.Mesh(frames.geometry, frames.material);
     frame.position.x = frames.settings.distance * Math.cos(Math.PI / 2 * 3 - angleY);
     frame.position.y = frames.settings.positionY + angleX;
     frame.position.z = frames.settings.distance * Math.sin(Math.PI / 2 * 3 - angleY);
     frame.rotation.y = angleY;
 
-    frameTextCanvas = document.createElement('canvas');
+    var frameTextCanvas = document.createElement('canvas');
     frameTextCanvas.width = frames.settings.width;
     frameTextCanvas.height = frames.settings.height;
-    frameTextContext = frameTextCanvas.getContext('2d');
+    var frameTextContext = frameTextCanvas.getContext('2d');
     frameTextContext.font = 'Normal 75px Arial';
     frameTextContext.textAlign = 'left';
     frameTextContext.fillStyle = 'rgba(50, 50, 50, 0.75)';
     frameTextContext.fillText(data.title, 100, 150);
 
-    frameTextTexture = new THREE.Texture(frameTextCanvas);
+    var frameTextTexture = new THREE.Texture(frameTextCanvas);
     frameTextTexture.needsUpdate = true;
-    frameTextMaterial = new THREE.MeshBasicMaterial({
+    var frameTextMaterial = new THREE.MeshBasicMaterial({
       map: frameTextTexture,
       side: THREE.DoubleSide,
     });
     frameTextMaterial.transparent = true;
     frameTextMaterial.opacity = 1;
-    frameTextGeometry = new THREE.PlaneGeometry( frames.settings.width, frames.settings.height );
-    frameText = new THREE.Mesh( frameGeometry, frameTextMaterial );
+    var frameTextGeometry = new THREE.PlaneGeometry(frames.settings.width, frames.settings.height);
+    var frameText = new THREE.Mesh(frames.geometry, frameTextMaterial);
     frameText.position.copy(frame.position);
     frameText.rotation.copy(frame.rotation);
 
