@@ -114,9 +114,11 @@ var frames = {
   },
 
   open: function (frame) {
+    document.getElementById('frame-edit').style.display = 'flex';
   },
 
   close: function (frame) {
+    document.getElementById('frame-edit').style.display = 'none';
   },
 
   closeAll: function () {
@@ -127,23 +129,28 @@ var frames = {
     mouse.x = ( event.clientX / app.renderer.domElement.clientWidth ) * 2 - 1;
     mouse.y = - ( event.clientY / app.renderer.domElement.clientHeight ) * 2 + 1;
 
-    frames.raycaster.setFromCamera( mouse, app.camera );
-    var intersects = frames.raycaster.intersectObjects(frames.list);
+    if ( !document.getElementById('frame-edit').contains(event.target) ) {
+      frames.raycaster.setFromCamera( mouse, app.camera );
+      var intersects = frames.raycaster.intersectObjects(frames.list);
 
-    frames.reset();
-    if ( !!intersects.length ) {
-      if ( intersects[0].object === frames.active ) {
-        frames.active = undefined;
+      frames.reset();
+
+      if ( !!intersects.length ) {
+        if ( intersects[0].object === frames.active ) {
+          frames.active = undefined;
+          frames.close();
+        } else {
+          frames.active = intersects[0].object;
+          frames.highlight(frames.active);
+          frames.open(frames.active);
+        }
       } else {
-        frames.active = intersects[0].object;
-        frames.highlight(frames.active);
-        frames.open(frames.active);
-      }
-    } else {
-      if ( !!frames.active ) {
-        frames.active = undefined;
-      } else {
-        frames.add(event);
+        if ( !!frames.active ) {
+          frames.active = undefined;
+          frames.close();
+        } else {
+          frames.add(event);
+        }
       }
     }
   },
