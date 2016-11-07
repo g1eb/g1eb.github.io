@@ -29,7 +29,8 @@
   bottom: 10vh;
   z-index: 1000;
   margin: 25px;
-  width: 45vw;
+  width: 35vw;
+  min-width: 500px;
   height: auto;
   padding: 25px;
   background-color: whitesmoke;
@@ -91,7 +92,8 @@
   position: fixed;
   left: 0;
   bottom: 10vh;
-  width: 45vw;
+  width: 35vw;
+  min-width: 500px;
   margin: 0 25px;
   z-index: 1000;
 }
@@ -108,7 +110,7 @@
   box-sizing: border-box;
   border-radius: 0;
   border: none;
-  background: whitesmoke;
+  background-color: whitesmoke;
 }
 .frame-edit .frame-edit-buttons .frame-edit-btn--save {
   top: 0;
