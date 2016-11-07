@@ -12,3 +12,14 @@
   transition: 1s opacity;
   pointer-events: none;
 }
+
+.branding {
+  width: auto;
+  height: 50px;
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  opacity: 0.5;
+  z-index: 0;
+  pointer-events: none;
+}
