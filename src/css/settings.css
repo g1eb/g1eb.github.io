@@ -40,6 +40,10 @@
   overflow: auto;
 }
 
+.settings .settings-container .settings--title {
+  text-align: left;
+}
+
 .settings .settings-container .settings--input {
   position: relative;
   display: block;
