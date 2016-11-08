@@ -116,6 +116,10 @@ var events = {
       } else {
         menu.toggleMenu();
       }
+    } else if ( event.keyCode === 13 ) {
+      if ( !!frames.active ) {
+        frames.update();
+      }
     }
   },
 
