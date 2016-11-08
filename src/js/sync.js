@@ -25,12 +25,12 @@ var sync = {
       color: color,
       locked: false,
     };
-  
+
     var newThemeKey = firebase.database().ref().child('themes').push().key;
-  
+
     var updates = {};
     updates['/themes/' + newThemeKey] = themeData;
-  
+
     firebase.database().ref().update(updates);
     return newThemeKey;
   },
@@ -54,15 +54,32 @@ var sync = {
       ypos: frame.ypos,
       angle: frame.angle,
     };
-  
+
     var newFrameKey = firebase.database().ref().child('frames').push().key;
 
     var updates = {};
     updates['/frames/' + newFrameKey] = frameData;
-  
+
     firebase.database().ref().update(updates);
     return newFrameKey;
   },
+
+  updateFrame: function (frame) {
+    firebase.database().ref().child('frames').child(frame.key).update({
+      updated_at: new Date(),
+      title: frame.data.title,
+      c1: frame.data.c1,
+      c2: frame.data.c2,
+      c3: frame.data.c3,
+      c4: frame.data.c4,
+      c5: frame.data.c5,
+      c6: frame.data.c6,
+      c7: frame.data.c7,
+      c8: frame.data.c8,
+      c9: frame.data.c9,
+      c10: frame.data.c10,
+    });
+   },
 
   removeFrame: function (key) {
     firebase.database().ref().child('frames').child(key).remove();

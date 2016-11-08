@@ -142,6 +142,15 @@ var frames = {
     frames.deactivate(frames.active);
   },
 
+  update: function () {
+    frames.active.data.title = document.getElementById('frame-edit--title').value;
+    for ( var j = 0; j < 10; j++ ) {
+      frames.active.data['c'+(j+1)] = document.getElementById('frame-edit--c'+(j+1)).value || '';
+    }
+    sync.updateFrame(frames.active);
+    frames.close();
+  },
+
   remove: function () {
     sync.removeFrame(frames.active.key);
     app.scene.remove(frames.active.text);
