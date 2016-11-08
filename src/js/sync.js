@@ -36,13 +36,18 @@ var sync = {
   },
 
   getFrames: function () {
-    firebase.database().ref('/frames/').once('value').then(function(snapshot) {
-      var data = snapshot.val();
-      if ( !data ) { return; }
-      var ids = Object.keys(data);
-      for ( var i = 0; i < ids.length; i++ ) {
-        frames.add(null, ids[i], data[ids[i]]);
-      }
+    var framesRef = firebase.database().ref().child('frames');
+    framesRef.on('child_added', function(snapshot) {
+      frames.add(snapshot.key, snapshot.val());
+      console.log('child added callback');
+    });
+    framesRef.on('child_changed', function(snapshot) {
+      frames.update(snapshot.key, snapshot.val());
+      console.log('child updated callback');
+    });
+    framesRef.on('child_removed', function(snapshot) {
+      frames.remove(snapshot.key);
+      console.log('child removed callback');
     });
   },
 
