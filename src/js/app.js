@@ -40,6 +40,7 @@ var app = {
     sync.init();
     frames.init();
     animation.init();
+    settings.init();
   
     app.render();
   },
