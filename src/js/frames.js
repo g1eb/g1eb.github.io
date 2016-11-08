@@ -134,6 +134,18 @@ var frames = {
     frames.deactivate(frames.active);
   },
 
+  update: function (key, data) {
+    for ( var i = 0; i < frames.list.length; i++ ) {
+      if ( frames.list[i].key === key ) {
+        frames.list[i].data.title = data.title;
+        for ( var j = 0; j < 10; j++ ) {
+          frames.list[i].data['c'+(j+1)] = data['c'+(j+1)];
+        }
+        frames.drawText(frames.list[i]);
+      }
+    }
+  },
+
   updateActive: function () {
     frames.active.data.title = document.getElementById('frame-edit--title').value;
     for ( var j = 0; j < 10; j++ ) {
@@ -142,6 +154,17 @@ var frames = {
     sync.updateFrame(frames.active);
     frames.drawText(frames.active);
     frames.close();
+  },
+
+  remove: function (key) {
+    for ( var i = 0; i < frames.list.length; i++ ) {
+      if ( frames.list[i].key === key ) {
+        app.scene.remove(frames.list[i].text);
+        app.scene.remove(frames.list[i]);
+        frames.list.splice(1, i);
+        app.dirty = true;
+      }
+    }
   },
 
   removeActive: function () {
