@@ -35,8 +35,9 @@ var app = {
     events.init();
     sync.init();
     frames.init();
-    animation.init();
     settings.init();
+    events.init();
+    animation.init();
   
     app.render();
   },
