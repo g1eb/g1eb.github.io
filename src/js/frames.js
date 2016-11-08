@@ -60,18 +60,7 @@ var frames = {
     });
   },
 
-  add: function (event, key, data) {
-    if ( !event && !data ) {
-      return;
-    }
-
-    data = data || {
-      title: 'New Frame',
-      xpos: event.clientX,
-      ypos: event.clientY,
-      angle: app.camera.rotation.y,
-    };
-
+  add: function (key, data) {
     var hsf = 1.75;
     var vsf = hsf * 1900;
     var hfov = app.camera.fov / 180 * Math.PI;
@@ -92,12 +81,6 @@ var frames = {
     app.scene.add(frame);
     frames.drawText(frame);
     frames.list.push(frame);
-
-    if ( !!event ) {
-      frame.key = sync.addFrame(data);
-    }
-
-    app.dirty = true;
   },
 
   drawText: function (frame) {
@@ -191,7 +174,12 @@ var frames = {
         if ( !!frames.active ) {
           frames.close();
         } else {
-          frames.add(event);
+          sync.addFrame({
+            title: 'New Frame',
+            xpos: event.clientX,
+            ypos: event.clientY,
+            angle: app.camera.rotation.y,
+          });
         }
       }
     }
