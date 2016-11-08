@@ -41,10 +41,7 @@ var settings = {
   },
 
   setBackground: function () {
-    if ( device.isMobile() ) {
-      app.controls = new THREE.DeviceOrientationControls( app.camera );
-      device.streamVideo();
-    } else {
+    if ( !device.isMobile() ) {
       skybox.load(settings.data.background);
     }
   },
