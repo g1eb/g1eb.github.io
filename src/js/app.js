@@ -34,8 +34,6 @@ var app = {
     var light = new THREE.AmbientLight( 0xffffff );
     app.scene.add(light);
 
-    dev.init();
-    gui.init();
     events.init();
     sync.init();
     frames.init();
