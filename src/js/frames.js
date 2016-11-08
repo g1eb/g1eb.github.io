@@ -91,10 +91,14 @@ var frames = {
     frameTextCanvas.width = frames.settings.width;
     frameTextCanvas.height = frames.settings.height;
     var frameTextContext = frameTextCanvas.getContext('2d');
-    frameTextContext.font = 'Normal 75px Arial';
+    frameTextContext.font = 'Normal 50px Arial';
     frameTextContext.textAlign = 'left';
     frameTextContext.fillStyle = 'rgba(50, 50, 50, 0.75)';
-    frameTextContext.fillText(data.title, 100, 150);
+    frameTextContext.fillText(data.title, 100, 125);
+
+    for ( var j = 0; j < 10; j++ ) {
+      frameTextContext.fillText(data['c'+(j+1)] || '', 100, (275 + 75*j));
+    }
 
     var frameTextTexture = new THREE.Texture(frameTextCanvas);
     frameTextTexture.needsUpdate = true;
