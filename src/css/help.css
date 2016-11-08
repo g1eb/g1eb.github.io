@@ -1,0 +1,30 @@
+.help{
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  color: #555;
+  background: rgba(255, 255, 255, 0.5);
+  display: none;
+  justify-content: center;
+  font-family: 'Helvetica', sans-serif;
+  text-shadow: 0 0 1px white;
+  font-size: 18px;
+  cursor: default;
+  user-select: none;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 500;
+}
+
+.help-container {
+  min-width: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
