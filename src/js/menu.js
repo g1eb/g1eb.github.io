@@ -3,6 +3,7 @@
 var menu = {
 
   helpActive: false,
+  settingsActive: false,
 
   toggleMenu: function () {
     if ( !!menu.isActive() ) {
@@ -30,6 +31,14 @@ var menu = {
   },
 
   openSettings: function () {
+    document.getElementById('settings').style.display = 'flex';
+    menu.settingsActive = true;
+    menu.closeMenu();
+  },
+
+  closeSettings: function () {
+    menu.settingsActive = false;
+    document.getElementById('settings').style.display = 'none';
   },
 
   openHelp: function () {

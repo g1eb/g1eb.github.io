@@ -115,6 +115,8 @@ var events = {
         frames.close();
       } else if ( !!menu.helpActive ) {
         menu.closeHelp();
+      } else if ( !!menu.settingsActive ) {
+        menu.closeSettings();
       } else {
         menu.toggleMenu();
       }

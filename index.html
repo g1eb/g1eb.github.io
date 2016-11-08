@@ -9,6 +9,7 @@
   <meta name="theme-color" content="#111111">
   <link rel="shortcut icon" type="text/css" href="src/images/icon.png?">
   <link rel="stylesheet" type="text/css" href="src/css/animation.css">
+  <link rel="stylesheet" type="text/css" href="src/css/settings.css">
   <link rel="stylesheet" type="text/css" href="src/css/frames.css">
   <link rel="stylesheet" type="text/css" href="src/css/help.css">
   <link rel="stylesheet" type="text/css" href="src/css/misc.css">
@@ -70,6 +71,24 @@
       <br/>
       <br/>
       <h3>Press ESC to close this help section.</h2>
+    </div>
+  </div>
+
+  <div id="settings" class="settings">
+    <div class="settings-container">
+      <div class="settings--input">
+        <input id="settings--color" type="text" autocomplete="off" tabindex="1" required />
+        <label for="settings--color">Theme color</label>
+      </div>
+      <div class="settings--input">
+        <input id="settings--branding" type="text" autocomplete="off" tabindex="1" required />
+        <label for="settings--branding">Branding image (url)</label>
+      </div>
+    </div>
+    <div class="settings-buttons">
+      <button id="settings-btn--save" class="settings-btn--save" type="button" tabindex="12">
+        <span>Save</span>
+      </button>
     </div>
   </div>
 
