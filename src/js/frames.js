@@ -90,7 +90,7 @@ var frames = {
     frame.key = key;
     frame.data = data;
     app.scene.add(frame);
-    frame.text = frames.drawText(frame);
+    frames.drawText(frame);
     frames.list.push(frame);
 
     if ( !!event ) {
@@ -131,10 +131,9 @@ var frames = {
     frameText.position.copy(frame.position);
     frameText.rotation.copy(frame.rotation);
 
+    frame.text = frameText;
     app.scene.add(frameText);
     app.dirty = true;
-
-    return frameText;
   },
 
   open: function (frame) {
