@@ -119,11 +119,15 @@ var frames = {
     app.dirty = true;
   },
 
-  open: function (frame) {
-    document.getElementById('frame-edit--title').value = frames.active.data.title;
+  prefillInputs: function (data) {
+    document.getElementById('frame-edit--title').value = data.title;
     for ( var j = 0; j < 10; j++ ) {
-      document.getElementById('frame-edit--c'+(j+1)).value = frames.active.data['c'+(j+1)] || '';
+      document.getElementById('frame-edit--c'+(j+1)).value = data['c'+(j+1)] || '';
     }
+  },
+
+  open: function (frame) {
+    frames.prefillInputs(frames.active.data);
     document.getElementById('frame-edit').style.display = 'flex';
     events.bindFrameEditButtons();
   },
@@ -143,6 +147,11 @@ var frames = {
         }
         frames.drawText(frames.list[i]);
       }
+    }
+
+    if ( !!frames.active && frames.active.key === key ) {
+      frames.active.data = data;
+      frames.prefillInputs(frames.active.data);
     }
   },
 
