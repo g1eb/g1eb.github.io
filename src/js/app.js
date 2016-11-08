@@ -34,11 +34,11 @@ var app = {
 
     dev.init();
     gui.init();
-    events.init();
     sync.init();
     frames.init();
-    animation.init();
     settings.init();
+    events.init();
+    animation.init();
   
     app.render();
   },
