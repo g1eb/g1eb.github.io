@@ -39,15 +39,12 @@ var sync = {
     var framesRef = firebase.database().ref().child('frames');
     framesRef.on('child_added', function(snapshot) {
       frames.add(snapshot.key, snapshot.val());
-      console.log('child added callback');
     });
     framesRef.on('child_changed', function(snapshot) {
       frames.update(snapshot.key, snapshot.val());
-      console.log('child updated callback');
     });
     framesRef.on('child_removed', function(snapshot) {
       frames.remove(snapshot.key);
-      console.log('child removed callback');
     });
   },
 
