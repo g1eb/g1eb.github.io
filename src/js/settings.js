@@ -26,6 +26,7 @@ var settings = {
     settings.data.background = document.getElementById('settings--background').value;
     settings.data.branding = document.getElementById('settings--branding').value;
     sync.updateSettings(settings.data);
+    settings.setBackground();
     settings.setBranding();
     settings.close();
   },
@@ -39,7 +40,16 @@ var settings = {
     return document.getElementById('settings').contains(event.target);
   },
 
-  setBranding: function (event) {
+  setBackground: function () {
+    if ( device.isMobile() ) {
+      app.controls = new THREE.DeviceOrientationControls( app.camera );
+      device.streamVideo();
+    } else {
+      skybox.load(settings.data.background);
+    }
+  },
+
+  setBranding: function () {
     document.getElementById('branding').src = settings.data.branding || 'src/images/icon.png';
   },
 

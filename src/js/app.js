@@ -24,13 +24,6 @@ var app = {
     app.camera.position.y = 100000;
     app.camera.rotation.y = Math.PI;
   
-    if ( device.isMobile() ) {
-      app.controls = new THREE.DeviceOrientationControls( app.camera );
-      device.streamVideo();
-    } else {
-      skybox.init();
-    }
-
     var light = new THREE.AmbientLight( 0xffffff );
     app.scene.add(light);
 
