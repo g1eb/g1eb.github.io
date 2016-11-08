@@ -20,7 +20,7 @@ var frames = {
     rotationX: 0,
     rotationY: 0,
     rotationZ: 0,
-    distance: 5000,
+    distance: 3000,
     variance: 1000,
   },
 
