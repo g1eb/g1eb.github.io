@@ -118,7 +118,7 @@ var events = {
       }
     } else if ( event.keyCode === 13 ) {
       if ( !!frames.active ) {
-        frames.update();
+        frames.updateActive();
       }
     }
   },
@@ -131,13 +131,13 @@ var events = {
   },
 
   bindFrameEditButtons: function () {
-    document.getElementById('frame-edit-btn--save').addEventListener('click', frames.update, false);
-    document.getElementById('frame-edit-btn--remove').addEventListener('click', frames.remove, false);
+    document.getElementById('frame-edit-btn--save').addEventListener('click', frames.updateActive, false);
+    document.getElementById('frame-edit-btn--remove').addEventListener('click', frames.removeActive, false);
   },
 
   unbindFrameEditButtons: function () {
-    document.getElementById('frame-edit-btn--save').removeEventListener('click', frames.update, false);
-    document.getElementById('frame-edit-btn--remove').removeEventListener('click', frames.remove, false);
+    document.getElementById('frame-edit-btn--save').removeEventListener('click', frames.updateActive, false);
+    document.getElementById('frame-edit-btn--remove').removeEventListener('click', frames.removeActive, false);
   },
 
 };

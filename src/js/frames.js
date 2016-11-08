@@ -151,7 +151,7 @@ var frames = {
     frames.deactivate(frames.active);
   },
 
-  update: function () {
+  updateActive: function () {
     frames.active.data.title = document.getElementById('frame-edit--title').value;
     for ( var j = 0; j < 10; j++ ) {
       frames.active.data['c'+(j+1)] = document.getElementById('frame-edit--c'+(j+1)).value || '';
@@ -161,7 +161,7 @@ var frames = {
     frames.close();
   },
 
-  remove: function () {
+  removeActive: function () {
     sync.removeFrame(frames.active.key);
     app.scene.remove(frames.active.text);
     app.scene.remove(frames.active);
