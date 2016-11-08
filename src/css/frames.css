@@ -98,7 +98,7 @@
   z-index: 1000;
 }
 .frame-edit .frame-edit-buttons .frame-edit-btn--save,
-.frame-edit .frame-edit-buttons .frame-edit-btn--remove {
+.frame-edit .frame-edit-buttons .frame-edit-btn--delete {
   position: absolute;
   cursor: pointer;
   outline: none;
@@ -116,15 +116,15 @@
   top: 0;
   right: 0;
 }
-.frame-edit .frame-edit-buttons .frame-edit-btn--remove {
+.frame-edit .frame-edit-buttons .frame-edit-btn--delete {
   top: 0;
   left: 0;
 }
 .frame-edit .frame-edit-buttons .frame-edit-btn--save:active,
 .frame-edit .frame-edit-buttons .frame-edit-btn--save:focus,
 .frame-edit .frame-edit-buttons .frame-edit-btn--save:hover,
-.frame-edit .frame-edit-buttons .frame-edit-btn--remove:active,
-.frame-edit .frame-edit-buttons .frame-edit-btn--remove:focus,
-.frame-edit .frame-edit-buttons .frame-edit-btn--remove:hover {
+.frame-edit .frame-edit-buttons .frame-edit-btn--delete:active,
+.frame-edit .frame-edit-buttons .frame-edit-btn--delete:focus,
+.frame-edit .frame-edit-buttons .frame-edit-btn--delete:hover {
   opacity: 0.75;
 }

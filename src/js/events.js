@@ -132,12 +132,12 @@ var events = {
 
   bindFrameEditButtons: function () {
     document.getElementById('frame-edit-btn--save').addEventListener('click', frames.updateActive, false);
-    document.getElementById('frame-edit-btn--remove').addEventListener('click', frames.removeActive, false);
+    document.getElementById('frame-edit-btn--delete').addEventListener('click', frames.removeActive, false);
   },
 
   unbindFrameEditButtons: function () {
     document.getElementById('frame-edit-btn--save').removeEventListener('click', frames.updateActive, false);
-    document.getElementById('frame-edit-btn--remove').removeEventListener('click', frames.removeActive, false);
+    document.getElementById('frame-edit-btn--delete').removeEventListener('click', frames.removeActive, false);
   },
 
 };
