@@ -20,24 +20,10 @@ var device = {
     video.className = 'background-video';
     document.body.appendChild(video);
 
-    if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+    var constraints = { audio: false, video: { optional: [{ facingMode: 'environment' }] } };
+    if ( navigator.mediaDevices && navigator.mediaDevices.getUserMedia ) {
+      navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
         video.src = URL.createObjectURL(stream);
-        video.play();
-      });
-    } else if ( navigator.getUserMedia ) { // Standard
-      navigator.getUserMedia({ video: true }, function(stream) {
-        video.src = stream;
-        video.play();
-      });
-    } else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
-      navigator.webkitGetUserMedia({ video: true }, function(stream){
-        video.src = window.webkitURL.createObjectURL(stream);
-        video.play();
-      });
-    } else if(navigator.mozGetUserMedia) { // Mozilla-prefixed
-      navigator.mozGetUserMedia({ video: true }, function(stream){
-        video.src = window.URL.createObjectURL(stream);
         video.play();
       });
     }
