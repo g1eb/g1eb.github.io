@@ -87,6 +87,24 @@ var frames = {
     frame.position.z = frames.settings.distance * Math.sin(Math.PI / 2 * 3 - angleY);
     frame.rotation.y = angleY;
 
+    frame.key = key;
+    frame.data = data;
+    app.scene.add(frame);
+    frame.text = frames.drawText(frame);
+    frames.list.push(frame);
+
+    if ( !!event ) {
+      frame.key = sync.addFrame(data);
+    }
+
+    app.dirty = true;
+  },
+
+  drawText: function (frame) {
+    if ( !!frame.text ) {
+      app.scene.remove(frame.text);
+    }
+
     var frameTextCanvas = document.createElement('canvas');
     frameTextCanvas.width = frames.settings.width;
     frameTextCanvas.height = frames.settings.height;
@@ -94,10 +112,10 @@ var frames = {
     frameTextContext.font = 'Normal 50px Arial';
     frameTextContext.textAlign = 'left';
     frameTextContext.fillStyle = 'rgba(50, 50, 50, 0.75)';
-    frameTextContext.fillText(data.title, 100, 125);
+    frameTextContext.fillText(frame.data.title, 100, 125);
 
     for ( var j = 0; j < 10; j++ ) {
-      frameTextContext.fillText(data['c'+(j+1)] || '', 100, (275 + 75*j));
+      frameTextContext.fillText(frame.data['c'+(j+1)] || '', 100, (275 + 75*j));
     }
 
     var frameTextTexture = new THREE.Texture(frameTextCanvas);
@@ -113,18 +131,10 @@ var frames = {
     frameText.position.copy(frame.position);
     frameText.rotation.copy(frame.rotation);
 
-    frame.key = key;
-    frame.data = data;
-    frame.text = frameText;
-    app.scene.add(frame);
-    app.scene.add(frame.text);
-    frames.list.push(frame);
-
-    if ( !!event ) {
-      frame.key = sync.addFrame(data);
-    }
-
+    app.scene.add(frameText);
     app.dirty = true;
+
+    return frameText;
   },
 
   open: function (frame) {
@@ -148,6 +158,7 @@ var frames = {
       frames.active.data['c'+(j+1)] = document.getElementById('frame-edit--c'+(j+1)).value || '';
     }
     sync.updateFrame(frames.active);
+    frames.drawText(frames.active);
     frames.close();
   },
 
