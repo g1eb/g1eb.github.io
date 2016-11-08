@@ -2,13 +2,10 @@
 
 var settings = {
 
+  data: {},
+
   init: function () {
-
-    dev.stats = new Stats();
-    document.body.appendChild(dev.stats.dom);
-  },
-
-  update: function () {
+    sync.getSettings();
   },
 
   isActive: function () {
@@ -17,8 +14,19 @@ var settings = {
 
   open: function () {
     document.getElementById('settings').style.display = 'flex';
+    document.getElementById('settings--color').value = settings.data.color || '';
+    document.getElementById('settings--background').value = settings.data.background || '';
+    document.getElementById('settings--branding').value = settings.data.branding || '';
     events.bindSettingsButtons();
     menu.closeMenu();
+  },
+
+  update: function () {
+    settings.data.color = document.getElementById('settings--color').value;
+    settings.data.background = document.getElementById('settings--background').value;
+    settings.data.branding = document.getElementById('settings--branding').value;
+    sync.updateSettings(settings.data);
+    settings.close();
   },
 
   close: function () {

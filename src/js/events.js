@@ -160,4 +160,12 @@ var events = {
     document.getElementById('settings-btn--help').removeEventListener('click', menu.openHelp, false);
   },
 
+  bindSettingsButtons: function () {
+    document.getElementById('settings-btn--save').addEventListener('click', settings.update, false);
+  },
+
+  unbindSettingsButtons: function () {
+    document.getElementById('settings-btn--save').removeEventListener('click', frames.update, false);
+  },
+
 };
