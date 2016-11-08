@@ -3,7 +3,6 @@
 var menu = {
 
   helpActive: false,
-  settingsActive: false,
 
   toggleMenu: function () {
     if ( !!menu.isActive() ) {
@@ -25,20 +24,6 @@ var menu = {
   closeMenu: function () {
     document.getElementById('menu').style.display = 'none';
     events.unbindMenuButtons();
-  },
-
-  openThemes: function () {
-  },
-
-  openSettings: function () {
-    document.getElementById('settings').style.display = 'flex';
-    menu.settingsActive = true;
-    menu.closeMenu();
-  },
-
-  closeSettings: function () {
-    menu.settingsActive = false;
-    document.getElementById('settings').style.display = 'none';
   },
 
   openHelp: function () {
