@@ -13,6 +13,24 @@ var sync = {
     firebase.initializeApp(firebaseConfig);
   },
 
+  getSettings: function () {
+    var settingsRef = firebase.database().ref().child('settings');
+    settingsRef.once('value').then(function(snapshot) {
+      settings.data = snapshot.val();
+      settings.setBackground();
+      settings.setBranding();
+    });
+  },
+
+  updateSettings: function (data) {
+    var settingsRef = firebase.database().ref().child('settings');
+    settingsRef.update({
+      color: data.color,
+      background: data.background,
+      branding: data.branding,
+    });
+  },
+
   getThemes: function () {
     firebase.database().ref('/themes/').once('value').then(function(snapshot) {
     });
@@ -81,7 +99,7 @@ var sync = {
       c9: frame.data.c9,
       c10: frame.data.c10,
     });
-   },
+  },
 
   removeFrame: function (key) {
     firebase.database().ref().child('frames').child(key).remove();

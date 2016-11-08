@@ -1,0 +1,119 @@
+/**
+ * Settings view styles
+ */
+.settings {
+  position: relative;
+  display: none;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  color: #333;
+  font-size: 14px;
+  font-family: sans-serif;
+  text-decoration: none;
+  text-align: center;
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+
+.settings .settings-container {
+  position: fixed;
+  top: 10vh;
+  left: 0;
+  bottom: 50vh;
+  z-index: 1000;
+  margin: 25px;
+  width: 35vw;
+  min-width: 500px;
+  height: auto;
+  padding: 25px;
+  background-color: whitesmoke;
+  opacity: 0.5;
+  border-radius: 0;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+.settings .settings-container .settings--title {
+  text-align: left;
+}
+
+.settings .settings-container .settings--input {
+  position: relative;
+  display: block;
+  height: 50px;
+  padding: 25px 0 10px 0;
+}
+.settings .settings-container .settings--input label {
+  position: absolute;
+  cursor: pointer;
+  top: 25%;
+  left: 0;
+  color: #555;
+  font-size: 2em;
+  will-change: font-size;
+  transition: all 100ms ease-out;
+}
+.settings .settings-container .settings--input input {
+  width: 100%;
+  outline: none;
+  font-size: 2em;
+  color: #333;
+  background-color: transparent;
+  border-width: 0 0 1px 0;
+  border-color: #777;
+  border-radius: 0;
+  border-style: solid;
+}
+.settings .settings-container .settings--input input:focus {
+  border-color: #777;
+}
+.settings .settings-container .settings--input.active label,
+.settings .settings-container .settings--input input:focus ~ label,
+.settings .settings-container .settings--input input:valid ~ label {
+  font-size: 1em;
+  top: 5%;
+}
+
+
+/**
+ * Settings edit action buttons
+ */
+.settings .settings-buttons {
+  position: fixed;
+  left: 0;
+  bottom: 50vh;
+  width: 35vw;
+  min-width: 500px;
+  margin: 0 25px;
+  z-index: 1000;
+}
+.settings .settings-buttons .settings-btn--save {
+  position: absolute;
+  cursor: pointer;
+  outline: none;
+  padding: 5px 25px;
+  height: auto;
+  opacity: 0.5;
+  font-size: 2em;
+  line-height: 1.5em;
+  box-sizing: border-box;
+  border-radius: 0;
+  border: none;
+  background-color: whitesmoke;
+}
+.settings .settings-buttons .settings-btn--save {
+  top: 0;
+  right: 0;
+}
+.settings .settings-buttons .settings-btn--save:active,
+.settings .settings-buttons .settings-btn--save:focus,
+.settings .settings-buttons .settings-btn--save:hover {
+  opacity: 0.75;
+}

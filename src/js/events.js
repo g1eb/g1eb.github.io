@@ -30,6 +30,10 @@ var events = {
         if ( !menu.isClicked(event) ) {
           menu.closeMenu();
         }
+      } else if ( settings.isActive() ) {
+        if ( !settings.isClicked(event) ) {
+          settings.close();
+        }
       } else {
         events.dragThresholdTimeoutId = window.setTimeout(function () {
           frames.select(event);
@@ -113,6 +117,10 @@ var events = {
     if ( event.keyCode === 27 ) {
       if ( !!frames.active ) {
         frames.close();
+      } else if ( !!menu.helpActive ) {
+        menu.closeHelp();
+      } else if ( settings.isActive() ) {
+        settings.close();
       } else {
         menu.toggleMenu();
       }
@@ -138,6 +146,26 @@ var events = {
   unbindFrameEditButtons: function () {
     document.getElementById('frame-edit-btn--save').removeEventListener('click', frames.updateActive, false);
     document.getElementById('frame-edit-btn--delete').removeEventListener('click', frames.removeActive, false);
+  },
+
+  bindMenuButtons: function () {
+    document.getElementById('settings-btn--themes').addEventListener('click', menu.openThemes, false);
+    document.getElementById('settings-btn--settings').addEventListener('click', settings.open, false);
+    document.getElementById('settings-btn--help').addEventListener('click', menu.openHelp, false);
+  },
+
+  unbindMenuButtons: function () {
+    document.getElementById('settings-btn--themes').removeEventListener('click', menu.openThemes, false);
+    document.getElementById('settings-btn--settings').removeEventListener('click', settings.open, false);
+    document.getElementById('settings-btn--help').removeEventListener('click', menu.openHelp, false);
+  },
+
+  bindSettingsButtons: function () {
+    document.getElementById('settings-btn--save').addEventListener('click', settings.update, false);
+  },
+
+  unbindSettingsButtons: function () {
+    document.getElementById('settings-btn--save').removeEventListener('click', frames.update, false);
   },
 
 };

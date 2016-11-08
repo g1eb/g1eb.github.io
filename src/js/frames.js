@@ -20,7 +20,7 @@ var frames = {
     rotationX: 0,
     rotationY: 0,
     rotationZ: 0,
-    distance: 5000,
+    distance: 3000,
     variance: 1000,
   },
 
@@ -120,7 +120,7 @@ var frames = {
   },
 
   open: function (frame) {
-    frames.active.title = document.getElementById('frame-edit--title').value = frames.active.data.title;
+    document.getElementById('frame-edit--title').value = frames.active.data.title;
     for ( var j = 0; j < 10; j++ ) {
       document.getElementById('frame-edit--c'+(j+1)).value = frames.active.data['c'+(j+1)] || '';
     }
@@ -149,7 +149,7 @@ var frames = {
   updateActive: function () {
     frames.active.data.title = document.getElementById('frame-edit--title').value;
     for ( var j = 0; j < 10; j++ ) {
-      frames.active.data['c'+(j+1)] = document.getElementById('frame-edit--c'+(j+1)).value || '';
+      frames.active.data['c'+(j+1)] = document.getElementById('frame-edit--c'+(j+1)).value;
     }
     sync.updateFrame(frames.active);
     frames.drawText(frames.active);
