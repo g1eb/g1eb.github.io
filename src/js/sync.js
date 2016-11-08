@@ -97,7 +97,7 @@ var sync = {
       c9: frame.data.c9,
       c10: frame.data.c10,
     });
-   },
+  },
 
   removeFrame: function (key) {
     firebase.database().ref().child('frames').child(key).remove();
