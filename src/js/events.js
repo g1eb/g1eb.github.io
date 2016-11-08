@@ -113,6 +113,8 @@ var events = {
     if ( event.keyCode === 27 ) {
       if ( !!frames.active ) {
         frames.close();
+      } else if ( !!menu.helpActive ) {
+        menu.closeHelp();
       } else {
         menu.toggleMenu();
       }
