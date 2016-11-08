@@ -17,6 +17,7 @@ var sync = {
     var settingsRef = firebase.database().ref().child('settings');
     settingsRef.once('value').then(function(snapshot) {
       settings.data = snapshot.val();
+      settings.setBranding();
     });
   },
 
