@@ -114,6 +114,7 @@ var frames = {
     frameText.rotation.copy(frame.rotation);
 
     frame.key = key;
+    frame.data = data;
     frame.text = frameText;
     app.scene.add(frame);
     app.scene.add(frame.text);
@@ -127,6 +128,10 @@ var frames = {
   },
 
   open: function (frame) {
+    frames.active.title = document.getElementById('frame-edit--title').value = frames.active.data.title;
+    for ( var j = 0; j < 10; j++ ) {
+      document.getElementById('frame-edit--c'+(j+1)).value = frames.active.data['c'+(j+1)] || '';
+    }
     document.getElementById('frame-edit').style.display = 'flex';
     events.bindFrameEditButtons();
   },
