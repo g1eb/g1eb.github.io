@@ -18,10 +18,18 @@ var menu = {
 
   openMenu: function () {
     document.getElementById('menu').style.display = 'flex';
+    events.bindMenuButtons();
   },
 
   closeMenu: function () {
     document.getElementById('menu').style.display = 'none';
+    events.unbindMenuButtons();
+  },
+
+  openThemes: function () {
+  },
+
+  openSettings: function () {
   },
 
   openHelp: function () {

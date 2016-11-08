@@ -142,4 +142,16 @@ var events = {
     document.getElementById('frame-edit-btn--delete').removeEventListener('click', frames.removeActive, false);
   },
 
+  bindMenuButtons: function () {
+    document.getElementById('settings-btn--themes').addEventListener('click', menu.openThemes, false);
+    document.getElementById('settings-btn--settings').addEventListener('click', menu.openSettings, false);
+    document.getElementById('settings-btn--help').addEventListener('click', menu.openHelp, false);
+  },
+
+  unbindMenuButtons: function () {
+    document.getElementById('settings-btn--themes').removeEventListener('click', menu.openThemes, false);
+    document.getElementById('settings-btn--settings').removeEventListener('click', menu.openSettings, false);
+    document.getElementById('settings-btn--help').removeEventListener('click', menu.openHelp, false);
+  },
+
 };
