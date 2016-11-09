@@ -25,19 +25,27 @@
 .frame-edit .frame-edit-container {
   position: fixed;
   top: 10vh;
-  left: 0;
+  left: 5vw;
   bottom: 10vh;
   z-index: 1000;
-  margin: 25px;
-  width: 40vw;
-  min-width: 400px;
+  width: 35vw;
+  min-width: 500px;
   height: auto;
+  margin: 0;
   padding: 25px;
   background-color: whitesmoke;
   opacity: 0.75;
   border-radius: 0;
   box-sizing: border-box;
   overflow: auto;
+}
+@media only screen and (max-device-width: 767px) {
+  .frame-edit .frame-edit-container {
+    min-width: 90vw;
+    top: 5vh;
+    right: 5vw;
+    bottom: 15vh;
+  }
 }
 
 .frame-edit .frame-edit-container .frame-edit--title,
@@ -90,12 +98,19 @@
  */
 .frame-edit .frame-edit-buttons {
   position: fixed;
-  left: 0;
+  left: 5vw;
   bottom: 10vh;
   width: 35vw;
   min-width: 500px;
-  margin: 0 25px;
+  margin: 0;
   z-index: 1000;
+}
+@media only screen and (max-device-width: 767px) {
+  .frame-edit .frame-edit-buttons {
+    min-width: 90vw;
+    right: 5vw;
+    bottom: 15vh;
+  }
 }
 .frame-edit .frame-edit-buttons .frame-edit-btn--save,
 .frame-edit .frame-edit-buttons .frame-edit-btn--delete {
@@ -113,11 +128,11 @@
   background-color: whitesmoke;
 }
 .frame-edit .frame-edit-buttons .frame-edit-btn--save {
-  top: 0;
+  top: 25px;
   right: 0;
 }
 .frame-edit .frame-edit-buttons .frame-edit-btn--delete {
-  top: 0;
+  top: 25px;
   left: 0;
 }
 .frame-edit .frame-edit-buttons .frame-edit-btn--save:active,
