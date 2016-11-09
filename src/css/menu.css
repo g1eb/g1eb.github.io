@@ -5,8 +5,9 @@
   display: none;
   margin: 0;
   padding: 0;
-  color: #555;
-  font-size: 14px;
+  color: #333;
+  font-size: 1.5em;
+  line-height: 2em;
   font-family: sans-serif;
   text-decoration: none;
   text-align: center;
