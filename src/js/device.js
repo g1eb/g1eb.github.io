@@ -15,17 +15,52 @@ var device = {
   },
 
   streamVideo: function () {
-    var video = document.createElement('video');
-    video.setAttribute('autoplay', true);
-    video.className = 'background-video';
-    document.body.appendChild(video);
+    var videoElem = document.createElement('video');
+    videoElem.setAttribute('autoplay', true);
+    videoElem.className = 'background-video';
+    document.body.appendChild(videoElem);
 
-    var constraints = { audio: false, video: { optional: [{ facingMode: 'environment' }] } };
-    if ( navigator.mediaDevices && navigator.mediaDevices.getUserMedia ) {
-      navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
-        video.src = URL.createObjectURL(stream);
-        video.play();
-      });
+    navigator.getMedia = ( navigator.getUserMedia ||
+                         navigator.webkitGetUserMedia ||
+                         navigator.mozGetUserMedia ||
+                         navigator.msGetUserMedia);
+
+    var onSuccess = function onSuccess(stream) {
+      if (navigator.mozGetUserMedia) {
+        videoElem.mozSrcObject = stream;
+      } else {
+        var vendorURL = window.URL || window.webkitURL;
+        videoElem.src = vendorURL.createObjectURL(stream);
+      }
+      videoElem.play();
+    };
+
+    var onFailure = function onFailure(err) {
+      if (console && console.log) {
+        console.log('Device camera err: ', err);
+      }
+    };
+
+    if ( typeof MediaStreamTrack !== 'undefined' ) {
+      if ( typeof MediaStreamTrack.getSources !== 'undefined' ) {
+        MediaStreamTrack.getSources(function (sources) {
+          for (var i = 0; i < sources.length; ++i) {
+            if ( sources[i].kind === 'video' && sources[i].facing === 'environment' ) {
+              var constraints = { video: {optional: [{sourceId: sources[i].id}]}, audio: false };
+              navigator.getMedia(constraints, onSuccess, onFailure);
+            }
+          }
+        });
+      } else if ( navigator.mediaDevices && navigator.mediaDevices.getUserMedia ) {
+        var constraints = { audio: false, video: { optional: [{ facingMode: 'environment' }] } };
+        navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
+          video.src = URL.createObjectURL(stream);
+          video.play();
+        });
+      } else {
+        var constraints = { video: true, audio: false };
+        navigator.getMedia(constraints, onSuccess, onFailure);
+      }
     }
   },
 
