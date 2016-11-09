@@ -26,7 +26,6 @@ var settings = {
     settings.data.background = document.getElementById('settings--background').value;
     settings.data.branding = document.getElementById('settings--branding').value;
     sync.updateSettings(settings.data);
-    settings.setBackground();
     settings.setBranding();
     settings.close();
   },

@@ -30,6 +30,8 @@ var app = {
     if ( device.isMobile() ) {
       app.controls = new THREE.DeviceOrientationControls( app.camera );
       device.streamVideo();
+    } else {
+      skybox.load();
     }
 
     dev.init();
