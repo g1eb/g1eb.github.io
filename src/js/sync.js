@@ -68,10 +68,11 @@ var sync = {
   addFrame: function (frame) {
     var frameData = {
       created_at: new Date(),
-      title: frame.title,
+      title: 'New Frame',
       xpos: frame.xpos,
       ypos: frame.ypos,
-      angle: frame.angle,
+      zpos: frame.zpos,
+      yrot: frame.yrot,
     };
 
     var newFrameKey = firebase.database().ref().child('frames').push().key;
