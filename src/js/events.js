@@ -52,14 +52,16 @@ var events = {
   onDocumentMouseMove: function (event) {
     window.clearTimeout(events.dragThresholdTimeoutId);
 
-    events.moving = true;
-    var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
-    app.camera.rotation.y += movementX * 0.01;
-    app.dirty = true;
+    if ( !menu.isActive() && !settings.isActive() && !help.isActive() && !frames.active ) {
+      events.moving = true;
+      var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
+      app.camera.rotation.y += movementX * 0.01;
+      app.dirty = true;
+    }
   },
 
   onDocumentMouseWheel: function (event) {
-    if ( !menu.isActive() ) {
+    if ( !menu.isActive() && !settings.isActive() && !help.isActive() && !frames.active ) {
       animation.reset();
       app.camera.rotation.y += event.deltaY * 0.001;
       app.dirty = true;
