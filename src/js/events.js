@@ -117,8 +117,8 @@ var events = {
     if ( event.keyCode === 27 ) {
       if ( !!frames.active ) {
         frames.close();
-      } else if ( !!menu.helpActive ) {
-        menu.closeHelp();
+      } else if ( help.isActive() ) {
+        help.close();
       } else if ( settings.isActive() ) {
         settings.close();
       } else {
@@ -151,13 +151,13 @@ var events = {
   bindMenuButtons: function () {
     document.getElementById('settings-btn--themes').addEventListener('click', menu.openThemes, false);
     document.getElementById('settings-btn--settings').addEventListener('click', settings.open, false);
-    document.getElementById('settings-btn--help').addEventListener('click', menu.openHelp, false);
+    document.getElementById('settings-btn--help').addEventListener('click', help.open, false);
   },
 
   unbindMenuButtons: function () {
     document.getElementById('settings-btn--themes').removeEventListener('click', menu.openThemes, false);
     document.getElementById('settings-btn--settings').removeEventListener('click', settings.open, false);
-    document.getElementById('settings-btn--help').removeEventListener('click', menu.openHelp, false);
+    document.getElementById('settings-btn--help').removeEventListener('click', help.open, false);
   },
 
   bindSettingsButtons: function () {

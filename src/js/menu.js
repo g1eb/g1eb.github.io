@@ -26,17 +26,6 @@ var menu = {
     events.unbindMenuButtons();
   },
 
-  openHelp: function () {
-    document.getElementById('help').style.display = 'flex';
-    menu.helpActive = true;
-    menu.closeMenu();
-  },
-
-  closeHelp: function () {
-    menu.helpActive = false;
-    document.getElementById('help').style.display = 'none';
-  },
-
   isClicked: function (event) {
     return document.getElementById('menu').contains(event.target);
   },
