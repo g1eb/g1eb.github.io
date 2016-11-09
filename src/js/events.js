@@ -28,7 +28,7 @@ var events = {
       animation.reset();
       if ( menu.isActive() ) {
         if ( !menu.isClicked(event) ) {
-          menu.closeMenu();
+          menu.close();
         }
       } else if ( settings.isActive() ) {
         if ( !settings.isClicked(event) ) {
@@ -52,14 +52,16 @@ var events = {
   onDocumentMouseMove: function (event) {
     window.clearTimeout(events.dragThresholdTimeoutId);
 
-    events.moving = true;
-    var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
-    app.camera.rotation.y += movementX * 0.01;
-    app.dirty = true;
+    if ( !menu.isActive() && !settings.isActive() && !help.isActive() && !frames.active ) {
+      events.moving = true;
+      var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
+      app.camera.rotation.y += movementX * 0.01;
+      app.dirty = true;
+    }
   },
 
   onDocumentMouseWheel: function (event) {
-    if ( !menu.isActive() ) {
+    if ( !menu.isActive() && !settings.isActive() && !help.isActive() && !frames.active ) {
       animation.reset();
       app.camera.rotation.y += event.deltaY * 0.001;
       app.dirty = true;
@@ -75,7 +77,7 @@ var events = {
     animation.reset();
     if ( menu.isActive() ) {
       if ( !menu.isClicked(event) ) {
-        menu.closeMenu();
+        menu.close();
       }
     } else {
       var touch = event.touches[0];
@@ -117,8 +119,8 @@ var events = {
     if ( event.keyCode === 27 ) {
       if ( !!frames.active ) {
         frames.close();
-      } else if ( !!menu.helpActive ) {
-        menu.closeHelp();
+      } else if ( help.isActive() ) {
+        help.close();
       } else if ( settings.isActive() ) {
         settings.close();
       } else {
@@ -151,13 +153,13 @@ var events = {
   bindMenuButtons: function () {
     document.getElementById('settings-btn--themes').addEventListener('click', menu.openThemes, false);
     document.getElementById('settings-btn--settings').addEventListener('click', settings.open, false);
-    document.getElementById('settings-btn--help').addEventListener('click', menu.openHelp, false);
+    document.getElementById('settings-btn--help').addEventListener('click', help.open, false);
   },
 
   unbindMenuButtons: function () {
     document.getElementById('settings-btn--themes').removeEventListener('click', menu.openThemes, false);
     document.getElementById('settings-btn--settings').removeEventListener('click', settings.open, false);
-    document.getElementById('settings-btn--help').removeEventListener('click', menu.openHelp, false);
+    document.getElementById('settings-btn--help').removeEventListener('click', help.open, false);
   },
 
   bindSettingsButtons: function () {

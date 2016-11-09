@@ -18,7 +18,7 @@ var settings = {
     document.getElementById('settings--background').value = settings.data.background || '';
     document.getElementById('settings--branding').value = settings.data.branding || '';
     events.bindSettingsButtons();
-    menu.closeMenu();
+    menu.close();
   },
 
   update: function () {
@@ -26,7 +26,6 @@ var settings = {
     settings.data.background = document.getElementById('settings--background').value;
     settings.data.branding = document.getElementById('settings--branding').value;
     sync.updateSettings(settings.data);
-    settings.setBackground();
     settings.setBranding();
     settings.close();
   },

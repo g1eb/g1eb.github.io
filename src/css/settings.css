@@ -26,7 +26,7 @@
   position: fixed;
   top: 10vh;
   left: 0;
-  bottom: 50vh;
+  bottom: 20vh;
   z-index: 1000;
   margin: 25px;
   width: 35vw;
@@ -34,7 +34,7 @@
   height: auto;
   padding: 25px;
   background-color: whitesmoke;
-  opacity: 0.5;
+  opacity: 0.75;
   border-radius: 0;
   box-sizing: border-box;
   overflow: auto;
@@ -42,6 +42,8 @@
 
 .settings .settings-container .settings--title {
   text-align: left;
+  font-size: 2em;
+  color: #333;
 }
 
 .settings .settings-container .settings--input {
@@ -88,7 +90,7 @@
 .settings .settings-buttons {
   position: fixed;
   left: 0;
-  bottom: 50vh;
+  bottom: 20vh;
   width: 35vw;
   min-width: 500px;
   margin: 0 25px;

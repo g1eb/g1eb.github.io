@@ -4,7 +4,7 @@ var skybox = {
 
   mesh: undefined,
 
-  texture: 'src/textures/skybox_desert.png',
+  texture: 'src/textures/skybox_office.png',
 
   init: function () {
     skybox.load();
