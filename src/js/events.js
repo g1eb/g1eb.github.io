@@ -28,7 +28,7 @@ var events = {
       animation.reset();
       if ( menu.isActive() ) {
         if ( !menu.isClicked(event) ) {
-          menu.closeMenu();
+          menu.close();
         }
       } else if ( settings.isActive() ) {
         if ( !settings.isClicked(event) ) {
@@ -77,7 +77,7 @@ var events = {
     animation.reset();
     if ( menu.isActive() ) {
       if ( !menu.isClicked(event) ) {
-        menu.closeMenu();
+        menu.close();
       }
     } else {
       var touch = event.touches[0];

@@ -6,9 +6,9 @@ var menu = {
 
   toggleMenu: function () {
     if ( !!menu.isActive() ) {
-      menu.closeMenu();
+      menu.close();
     } else {
-      menu.openMenu();
+      menu.open();
     }
   },
 
@@ -16,12 +16,12 @@ var menu = {
     return !!document.getElementById('menu').style.display && document.getElementById('menu').style.display !== 'none';
   },
 
-  openMenu: function () {
+  open: function () {
     document.getElementById('menu').style.display = 'flex';
     events.bindMenuButtons();
   },
 
-  closeMenu: function () {
+  close: function () {
     document.getElementById('menu').style.display = 'none';
     events.unbindMenuButtons();
   },
