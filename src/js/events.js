@@ -30,6 +30,10 @@ var events = {
         if ( !menu.isClicked(event) ) {
           menu.close();
         }
+      } else if ( help.isActive() ) {
+        if ( !help.isClicked(event) ) {
+          help.close();
+        }
       } else if ( settings.isActive() ) {
         if ( !settings.isClicked(event) ) {
           settings.close();

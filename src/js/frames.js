@@ -60,21 +60,30 @@ var frames = {
     });
   },
 
-  add: function (key, data) {
+  calcPosition: function (event) {
     var hsf = 1.75;
-    var vsf = hsf * 1900;
+    var vsf = hsf * 1000;
     var hfov = app.camera.fov / 180 * Math.PI;
     var vfov = hfov / window.innerWidth * window.innerHeight;
-    var xoffset = data.xpos - window.innerWidth / 2;
-    var yoffset = data.ypos - window.innerHeight / 2;
-    var angleY = data.angle - hsf * xoffset / (window.innerWidth * hfov);
+    var xoffset = event.clientX - window.innerWidth / 2;
+    var yoffset = event.clientY - window.innerHeight / 2;
+    var angleY = app.camera.rotation.y - hsf * xoffset / (window.innerWidth * hfov);
     var angleX = -1 * vsf * yoffset / (window.innerHeight * vfov);
 
+    return {
+      xpos: frames.settings.distance * Math.cos(Math.PI / 2 * 3 - angleY),
+      ypos: frames.settings.positionY + angleX,
+      zpos: frames.settings.distance * Math.sin(Math.PI / 2 * 3 - angleY),
+      yrot: angleY,
+    };
+  },
+
+  add: function (key, data) {
     var frame = new THREE.Mesh(frames.geometry, frames.material);
-    frame.position.x = frames.settings.distance * Math.cos(Math.PI / 2 * 3 - angleY);
-    frame.position.y = frames.settings.positionY + angleX;
-    frame.position.z = frames.settings.distance * Math.sin(Math.PI / 2 * 3 - angleY);
-    frame.rotation.y = angleY;
+    frame.position.x = data.xpos;
+    frame.position.y = data.ypos;
+    frame.position.z = data.zpos;
+    frame.rotation.y = data.yrot;
 
     frame.key = key;
     frame.data = data;
@@ -206,12 +215,7 @@ var frames = {
         if ( !!frames.active ) {
           frames.close();
         } else {
-          sync.addFrame({
-            title: 'New Frame',
-            xpos: event.clientX,
-            ypos: event.clientY,
-            angle: app.camera.rotation.y,
-          });
+          sync.addFrame(frames.calcPosition(event));
         }
       }
     }
