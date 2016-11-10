@@ -13,7 +13,6 @@ var frames = {
     diffuseColor: 0xf5f5f5,
     transparent: true,
     opacity: 0.25,
-    activeOpacity: 0.5,
     positionX: 0,
     positionY: 50000,
     positionZ: 0,
@@ -139,12 +138,14 @@ var frames = {
     frames.prefillInputs(frames.active.data);
     document.getElementById('frame-edit').style.display = 'flex';
     events.bindFrameEditButtons();
+    app.dirty = true;
   },
 
   close: function (frame) {
     document.getElementById('frame-edit').style.display = 'none';
     events.unbindFrameEditButtons();
-    frames.deactivate(frames.active);
+    delete frames.active;
+    app.dirty = true;
   },
 
   update: function (key, data) {
@@ -208,7 +209,6 @@ var frames = {
         } else {
           frames.close();
           frames.active = intersects[0].object;
-          frames.activate(frames.active);
           frames.open(frames.active);
         }
       } else {
@@ -218,21 +218,6 @@ var frames = {
           sync.addFrame(frames.calcPosition(event));
         }
       }
-    }
-  },
-
-  activate: function (frame) {
-    frame.material.transparent = frames.settings.transparent;
-    frame.material.opacity = frames.settings.activeOpacity;
-    app.dirty = true;
-  },
-
-  deactivate: function (frame) {
-    if ( !!frame ) {
-      frame.material.transparent = frames.settings.transparent;
-      frame.material.opacity = frames.settings.opacity;
-      frames.active = undefined;
-      app.dirty = true;
     }
   },
 
