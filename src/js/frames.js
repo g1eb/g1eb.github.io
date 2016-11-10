@@ -13,7 +13,6 @@ var frames = {
     diffuseColor: 0xf5f5f5,
     transparent: true,
     opacity: 0.25,
-    activeOpacity: 0.5,
     positionX: 0,
     positionY: 50000,
     positionZ: 0,
@@ -103,7 +102,7 @@ var frames = {
     var frameTextContext = frameTextCanvas.getContext('2d');
     frameTextContext.font = 'Normal 50px Arial';
     frameTextContext.textAlign = 'left';
-    frameTextContext.fillStyle = 'rgba(50, 50, 50, 0.75)';
+    frameTextContext.fillStyle = 'rgba(0, 0, 0, 0.75)';
     frameTextContext.fillText(frame.data.title, 100, 125);
 
     for ( var j = 0; j < 10; j++ ) {
@@ -139,12 +138,14 @@ var frames = {
     frames.prefillInputs(frames.active.data);
     document.getElementById('frame-edit').style.display = 'flex';
     events.bindFrameEditButtons();
+    app.dirty = true;
   },
 
   close: function (frame) {
     document.getElementById('frame-edit').style.display = 'none';
     events.unbindFrameEditButtons();
-    frames.deactivate(frames.active);
+    delete frames.active;
+    app.dirty = true;
   },
 
   update: function (key, data) {
@@ -179,7 +180,7 @@ var frames = {
       if ( frames.list[i].key === key ) {
         app.scene.remove(frames.list[i].text);
         app.scene.remove(frames.list[i]);
-        frames.list.splice(1, i);
+        frames.list.splice(i, 1);
         app.dirty = true;
       }
     }
@@ -187,9 +188,6 @@ var frames = {
 
   removeActive: function () {
     sync.removeFrame(frames.active.key);
-    app.scene.remove(frames.active.text);
-    app.scene.remove(frames.active);
-    frames.list.splice(1, frames.list.indexOf(frames.active));
     frames.close();
   },
 
@@ -208,7 +206,6 @@ var frames = {
         } else {
           frames.close();
           frames.active = intersects[0].object;
-          frames.activate(frames.active);
           frames.open(frames.active);
         }
       } else {
@@ -218,21 +215,6 @@ var frames = {
           sync.addFrame(frames.calcPosition(event));
         }
       }
-    }
-  },
-
-  activate: function (frame) {
-    frame.material.transparent = frames.settings.transparent;
-    frame.material.opacity = frames.settings.activeOpacity;
-    app.dirty = true;
-  },
-
-  deactivate: function (frame) {
-    if ( !!frame ) {
-      frame.material.transparent = frames.settings.transparent;
-      frame.material.opacity = frames.settings.opacity;
-      frames.active = undefined;
-      app.dirty = true;
     }
   },
 
