@@ -191,21 +191,24 @@ var frames = {
     frames.close();
   },
 
-  select: function (event) {
+  clicked: function (event) {
     var mouse = new THREE.Vector2();
     mouse.x = ( event.clientX / app.renderer.domElement.clientWidth ) * 2 - 1;
     mouse.y = - ( event.clientY / app.renderer.domElement.clientHeight ) * 2 + 1;
 
-    if ( !document.getElementById('frame-edit').contains(event.target) ) {
-      frames.raycaster.setFromCamera( mouse, app.camera );
-      var intersects = frames.raycaster.intersectObjects(frames.list);
+    frames.raycaster.setFromCamera( mouse, app.camera );
+    return frames.raycaster.intersectObjects(frames.list)[0];
+  },
 
-      if ( !!intersects.length ) {
-        if ( intersects[0].object === frames.active ) {
+  select: function (event) {
+    if ( !document.getElementById('frame-edit').contains(event.target) ) {
+      var clicked = frames.clicked(event);
+      if ( !!clicked ) {
+        if ( clicked.object === frames.active ) {
           frames.close();
         } else {
           frames.close();
-          frames.active = intersects[0].object;
+          frames.active = clicked.object;
           frames.open(frames.active);
         }
       } else {
