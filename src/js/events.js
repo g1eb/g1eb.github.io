@@ -11,17 +11,17 @@ var events = {
   moveThresholdDuration: 150,
 
   init: function () {
-    document.addEventListener( 'mousedown', events.onDocumentMouseDown, false );
-    document.addEventListener( 'wheel', events.onDocumentMouseWheel, false );
-    document.addEventListener( 'touchstart', events.onDocumentTouchStart, false );
+    document.addEventListener('mousedown', events.onDocumentMouseDown, false);
+    document.addEventListener('wheel', events.onDocumentMouseWheel, false);
+    document.addEventListener('touchstart', events.onDocumentTouchStart, false);
     document.addEventListener('keydown', events.onKeyDown, false);
     document.addEventListener('keyup', events.onKeyUp, false);
-    window.addEventListener( 'resize', events.onWindowResize, false ); 
+    window.addEventListener('resize', events.onWindowResize, false);
   },
 
   onDocumentMouseDown: function (event) {
-    document.addEventListener( 'mousemove', events.onDocumentMouseMove, false );
-    document.addEventListener( 'mouseup', events.onDocumentMouseUp, false );
+    document.addEventListener('mousemove', events.onDocumentMouseMove, false);
+    document.addEventListener('mouseup', events.onDocumentMouseUp, false);
 
     // Toggle menu on long press, close menu when clicked outside
     if ( event.button === 0 ) {

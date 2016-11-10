@@ -180,7 +180,7 @@ var frames = {
       if ( frames.list[i].key === key ) {
         app.scene.remove(frames.list[i].text);
         app.scene.remove(frames.list[i]);
-        frames.list.splice(1, i);
+        frames.list.splice(i, 1);
         app.dirty = true;
       }
     }
@@ -188,9 +188,6 @@ var frames = {
 
   removeActive: function () {
     sync.removeFrame(frames.active.key);
-    app.scene.remove(frames.active.text);
-    app.scene.remove(frames.active);
-    frames.list.splice(1, frames.list.indexOf(frames.active));
     frames.close();
   },
 
