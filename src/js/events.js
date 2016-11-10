@@ -2,8 +2,6 @@
 
 var events = {
 
-  moving: false,
-
   dragThresholdTimeoutId: undefined,
   dragThresholdDuration: 150,
 
@@ -49,15 +47,12 @@ var events = {
   onDocumentMouseUp: function (event) {
     document.removeEventListener( 'mousemove', events.onDocumentMouseMove );
     document.removeEventListener( 'mouseup', events.onDocumentMouseUp );
-
-    events.moving = false;
   },
 
   onDocumentMouseMove: function (event) {
     window.clearTimeout(events.dragThresholdTimeoutId);
 
     if ( !menu.isActive() && !settings.isActive() && !help.isActive() && !frames.active ) {
-      events.moving = true;
       var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
       app.camera.rotation.y += movementX * 0.01;
       app.dirty = true;
@@ -95,14 +90,10 @@ var events = {
   onDocumentTouchEnd: function (event) {
     document.removeEventListener( 'touchmove', events.onDocumentTouchMove );
     document.removeEventListener( 'touchend', events.onDocumentTouchEnd );
-
-    events.moving = false;
   },
 
   onDocumentTouchMove: function (event) {
     window.clearTimeout(events.moveThresholdTimeoutId);
-
-    events.moving = true;
 
     var touch = event.touches[0];
     app.camera.rotation.y += (touch.screenX - events.touchX) * 0.01;
