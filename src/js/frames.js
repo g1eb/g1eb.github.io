@@ -103,7 +103,7 @@ var frames = {
     var frameTextContext = frameTextCanvas.getContext('2d');
     frameTextContext.font = 'Normal 50px Arial';
     frameTextContext.textAlign = 'left';
-    frameTextContext.fillStyle = 'rgba(50, 50, 50, 0.75)';
+    frameTextContext.fillStyle = 'rgba(0, 0, 0, 0.75)';
     frameTextContext.fillText(frame.data.title, 100, 125);
 
     for ( var j = 0; j < 10; j++ ) {
