@@ -52,8 +52,11 @@ var events = {
           settings.close();
         }
       } else {
+        var clickedFrame = events.getClicked(event, frames.list);
         events.dragThresholdTimeoutId = window.setTimeout(function () {
-          frames.select(event);
+          if ( !frames.isClicked(event) ) {
+            frames.select(event, clickedFrame);
+          }
         }, events.dragThresholdDuration);
       }
     }

@@ -187,25 +187,26 @@ var frames = {
     frames.close();
   },
 
-  select: function (event) {
-    if ( !document.getElementById('frame-edit').contains(event.target) ) {
-      var clickedFrame = events.getClicked(event, frames.list);
-      if ( !!clickedFrame ) {
-        if ( clickedFrame === frames.active ) {
-          frames.close();
-        } else {
-          frames.close();
-          frames.active = clickedFrame;
-          frames.open(frames.active);
-        }
+  select: function (event, frame) {
+    if ( !!frame ) {
+      if ( frame === frames.active ) {
+        frames.close();
       } else {
-        if ( !!frames.active ) {
-          frames.close();
-        } else {
-          sync.addFrame(frames.calcPosition(event));
-        }
+        frames.close();
+        frames.active = frame;
+        frames.open(frames.active);
+      }
+    } else {
+      if ( !!frames.active ) {
+        frames.close();
+      } else {
+        sync.addFrame(frames.calcPosition(event));
       }
     }
+  },
+
+  isClicked: function (event) {
+    return document.getElementById('frame-edit').contains(event.target);
   },
 
   reset: function () {
