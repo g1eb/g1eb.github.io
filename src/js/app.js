@@ -34,7 +34,6 @@ var app = {
       skybox.load();
     }
 
-    events.init();
     sync.init();
     frames.init();
     settings.init();

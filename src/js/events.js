@@ -2,7 +2,7 @@
 
 var events = {
 
-  moving: false,
+  raycaster: undefined,
 
   dragThresholdTimeoutId: undefined,
   dragThresholdDuration: 150,
@@ -11,12 +11,25 @@ var events = {
   moveThresholdDuration: 150,
 
   init: function () {
+    events.raycaster = new THREE.Raycaster();
     document.addEventListener('mousedown', events.onDocumentMouseDown, false);
     document.addEventListener('wheel', events.onDocumentMouseWheel, false);
     document.addEventListener('touchstart', events.onDocumentTouchStart, false);
     document.addEventListener('keydown', events.onKeyDown, false);
     document.addEventListener('keyup', events.onKeyUp, false);
     window.addEventListener('resize', events.onWindowResize, false);
+  },
+
+  getClicked: function (event, list) {
+    var mouse = new THREE.Vector2();
+    mouse.x = ( event.clientX / app.renderer.domElement.clientWidth ) * 2 - 1;
+    mouse.y = - ( event.clientY / app.renderer.domElement.clientHeight ) * 2 + 1;
+
+    events.raycaster.setFromCamera( mouse, app.camera );
+    var intersects = events.raycaster.intersectObjects(list);
+    if ( !!intersects.length ) {
+      return intersects[0].object;
+    }
   },
 
   onDocumentMouseDown: function (event) {
@@ -39,27 +52,44 @@ var events = {
           settings.close();
         }
       } else {
+        events.clickedFrame = events.getClicked(event, frames.list);
         events.dragThresholdTimeoutId = window.setTimeout(function () {
-          frames.select(event);
+          if ( !frames.isClicked(event) ) {
+            frames.select(event, events.clickedFrame);
+          }
         }, events.dragThresholdDuration);
       }
     }
   },
 
   onDocumentMouseUp: function (event) {
-    document.removeEventListener( 'mousemove', events.onDocumentMouseMove );
-    document.removeEventListener( 'mouseup', events.onDocumentMouseUp );
+    document.removeEventListener('mousemove', events.onDocumentMouseMove);
+    document.removeEventListener('mouseup', events.onDocumentMouseUp);
 
-    events.moving = false;
+    if ( !!events.clickedFrame ) {
+      sync.updateFramePosition(events.clickedFrame);
+    }
   },
 
   onDocumentMouseMove: function (event) {
     window.clearTimeout(events.dragThresholdTimeoutId);
 
     if ( !menu.isActive() && !settings.isActive() && !help.isActive() && !frames.active ) {
-      events.moving = true;
       var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
-      app.camera.rotation.y += movementX * 0.01;
+      var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
+
+      if ( !!events.clickedFrame ) {
+        var data = frames.calcPosition(event);
+        events.clickedFrame.position.x = data.xpos;
+        events.clickedFrame.position.y = data.ypos;
+        events.clickedFrame.position.z = data.zpos;
+        events.clickedFrame.rotation.y = data.yrot;
+        events.clickedFrame.text.position.copy(events.clickedFrame.position);
+        events.clickedFrame.text.rotation.copy(events.clickedFrame.rotation);
+        sync.updateFramePosition(events.clickedFrame);
+      } else {
+        app.camera.rotation.y += movementX * 0.01;
+      }
       app.dirty = true;
     }
   },
@@ -75,8 +105,8 @@ var events = {
   touchX: undefined,
 
   onDocumentTouchStart: function (event) {
-    document.addEventListener( 'touchmove', events.onDocumentTouchMove, false );
-    document.addEventListener( 'touchend', events.onDocumentTouchEnd, false );
+    document.addEventListener('touchmove', events.onDocumentTouchMove, false);
+    document.addEventListener('touchend', events.onDocumentTouchEnd, false);
 
     animation.reset();
     if ( menu.isActive() ) {
@@ -95,14 +125,10 @@ var events = {
   onDocumentTouchEnd: function (event) {
     document.removeEventListener( 'touchmove', events.onDocumentTouchMove );
     document.removeEventListener( 'touchend', events.onDocumentTouchEnd );
-
-    events.moving = false;
   },
 
   onDocumentTouchMove: function (event) {
     window.clearTimeout(events.moveThresholdTimeoutId);
-
-    events.moving = true;
 
     var touch = event.touches[0];
     app.camera.rotation.y += (touch.screenX - events.touchX) * 0.01;

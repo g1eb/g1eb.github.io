@@ -84,7 +84,7 @@ var sync = {
     return newFrameKey;
   },
 
-  updateFrame: function (frame) {
+  updateFrameText: function (frame) {
     firebase.database().ref().child('frames').child(frame.key).update({
       updated_at: new Date(),
       title: frame.data.title,
@@ -98,6 +98,16 @@ var sync = {
       c8: frame.data.c8,
       c9: frame.data.c9,
       c10: frame.data.c10,
+    });
+  },
+
+  updateFramePosition: function (frame) {
+    firebase.database().ref().child('frames').child(frame.key).update({
+      updated_at: new Date(),
+      xpos: frame.position.x,
+      ypos: frame.position.y,
+      zpos: frame.position.z,
+      yrot: frame.rotation.y,
     });
   },
 

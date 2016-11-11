@@ -25,14 +25,10 @@ var frames = {
 
   active: undefined,
 
-  raycaster: undefined,
-
   geometry: undefined,
   material: undefined,
 
   init: function () {
-    frames.raycaster = new THREE.Raycaster();
-
     frames.getGeometry();
     frames.getMaterial();
 
@@ -151,11 +147,16 @@ var frames = {
   update: function (key, data) {
     for ( var i = 0; i < frames.list.length; i++ ) {
       if ( frames.list[i].key === key ) {
-        frames.list[i].data.title = data.title;
+        var updatedFrame = frames.list[i];
+        updatedFrame.position.x = data.xpos;
+        updatedFrame.position.y = data.ypos;
+        updatedFrame.position.z = data.zpos;
+        updatedFrame.rotation.y = data.yrot;
         for ( var j = 0; j < 10; j++ ) {
-          frames.list[i].data['c'+(j+1)] = data['c'+(j+1)];
+          updatedFrame.data['c'+(j+1)] = data['c'+(j+1)];
         }
-        frames.drawText(frames.list[i]);
+        updatedFrame.data.title = data.title;
+        frames.drawText(updatedFrame);
       }
     }
 
@@ -170,7 +171,7 @@ var frames = {
     for ( var j = 0; j < 10; j++ ) {
       frames.active.data['c'+(j+1)] = document.getElementById('frame-edit--c'+(j+1)).value;
     }
-    sync.updateFrame(frames.active);
+    sync.updateFrameText(frames.active);
     frames.drawText(frames.active);
     frames.close();
   },
@@ -191,31 +192,26 @@ var frames = {
     frames.close();
   },
 
-  select: function (event) {
-    var mouse = new THREE.Vector2();
-    mouse.x = ( event.clientX / app.renderer.domElement.clientWidth ) * 2 - 1;
-    mouse.y = - ( event.clientY / app.renderer.domElement.clientHeight ) * 2 + 1;
-
-    if ( !document.getElementById('frame-edit').contains(event.target) ) {
-      frames.raycaster.setFromCamera( mouse, app.camera );
-      var intersects = frames.raycaster.intersectObjects(frames.list);
-
-      if ( !!intersects.length ) {
-        if ( intersects[0].object === frames.active ) {
-          frames.close();
-        } else {
-          frames.close();
-          frames.active = intersects[0].object;
-          frames.open(frames.active);
-        }
+  select: function (event, frame) {
+    if ( !!frame ) {
+      if ( frame === frames.active ) {
+        frames.close();
       } else {
-        if ( !!frames.active ) {
-          frames.close();
-        } else {
-          sync.addFrame(frames.calcPosition(event));
-        }
+        frames.close();
+        frames.active = frame;
+        frames.open(frames.active);
+      }
+    } else {
+      if ( !!frames.active ) {
+        frames.close();
+      } else {
+        sync.addFrame(frames.calcPosition(event));
       }
     }
+  },
+
+  isClicked: function (event) {
+    return document.getElementById('frame-edit').contains(event.target);
   },
 
   reset: function () {
