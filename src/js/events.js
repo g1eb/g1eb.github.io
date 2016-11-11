@@ -2,6 +2,8 @@
 
 var events = {
 
+  raycaster: undefined,
+
   dragThresholdTimeoutId: undefined,
   dragThresholdDuration: 150,
 
@@ -9,12 +11,25 @@ var events = {
   moveThresholdDuration: 150,
 
   init: function () {
+    events.raycaster = new THREE.Raycaster();
     document.addEventListener('mousedown', events.onDocumentMouseDown, false);
     document.addEventListener('wheel', events.onDocumentMouseWheel, false);
     document.addEventListener('touchstart', events.onDocumentTouchStart, false);
     document.addEventListener('keydown', events.onKeyDown, false);
     document.addEventListener('keyup', events.onKeyUp, false);
     window.addEventListener('resize', events.onWindowResize, false);
+  },
+
+  getClicked: function (event, list) {
+    var mouse = new THREE.Vector2();
+    mouse.x = ( event.clientX / app.renderer.domElement.clientWidth ) * 2 - 1;
+    mouse.y = - ( event.clientY / app.renderer.domElement.clientHeight ) * 2 + 1;
+
+    events.raycaster.setFromCamera( mouse, app.camera );
+    var intersects = events.raycaster.intersectObjects(list);
+    if ( !!intersects.length ) {
+      return intersects[0].object;
+    }
   },
 
   onDocumentMouseDown: function (event) {

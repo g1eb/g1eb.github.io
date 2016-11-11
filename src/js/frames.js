@@ -25,14 +25,10 @@ var frames = {
 
   active: undefined,
 
-  raycaster: undefined,
-
   geometry: undefined,
   material: undefined,
 
   init: function () {
-    frames.raycaster = new THREE.Raycaster();
-
     frames.getGeometry();
     frames.getMaterial();
 
@@ -191,24 +187,15 @@ var frames = {
     frames.close();
   },
 
-  clicked: function (event) {
-    var mouse = new THREE.Vector2();
-    mouse.x = ( event.clientX / app.renderer.domElement.clientWidth ) * 2 - 1;
-    mouse.y = - ( event.clientY / app.renderer.domElement.clientHeight ) * 2 + 1;
-
-    frames.raycaster.setFromCamera( mouse, app.camera );
-    return frames.raycaster.intersectObjects(frames.list)[0];
-  },
-
   select: function (event) {
     if ( !document.getElementById('frame-edit').contains(event.target) ) {
-      var clicked = frames.clicked(event);
-      if ( !!clicked ) {
-        if ( clicked.object === frames.active ) {
+      var clickedFrame = events.getClicked(event, frames.list);
+      if ( !!clickedFrame ) {
+        if ( clickedFrame === frames.active ) {
           frames.close();
         } else {
           frames.close();
-          frames.active = clicked.object;
+          frames.active = clickedFrame;
           frames.open(frames.active);
         }
       } else {
