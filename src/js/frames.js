@@ -166,7 +166,7 @@ var frames = {
     for ( var j = 0; j < 10; j++ ) {
       frames.active.data['c'+(j+1)] = document.getElementById('frame-edit--c'+(j+1)).value;
     }
-    sync.updateFrame(frames.active);
+    sync.updateFrameText(frames.active);
     frames.drawText(frames.active);
     frames.close();
   },
