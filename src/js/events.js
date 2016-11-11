@@ -52,10 +52,10 @@ var events = {
           settings.close();
         }
       } else {
-        var clickedFrame = events.getClicked(event, frames.list);
+        events.clickedFrame = events.getClicked(event, frames.list);
         events.dragThresholdTimeoutId = window.setTimeout(function () {
           if ( !frames.isClicked(event) ) {
-            frames.select(event, clickedFrame);
+            frames.select(event, events.clickedFrame);
           }
         }, events.dragThresholdDuration);
       }
@@ -63,8 +63,12 @@ var events = {
   },
 
   onDocumentMouseUp: function (event) {
-    document.removeEventListener( 'mousemove', events.onDocumentMouseMove );
-    document.removeEventListener( 'mouseup', events.onDocumentMouseUp );
+    document.removeEventListener('mousemove', events.onDocumentMouseMove);
+    document.removeEventListener('mouseup', events.onDocumentMouseUp);
+
+    if ( !!events.clickedFrame ) {
+      sync.updateFramePosition(events.clickedFrame);
+    }
   },
 
   onDocumentMouseMove: function (event) {
@@ -72,7 +76,20 @@ var events = {
 
     if ( !menu.isActive() && !settings.isActive() && !help.isActive() && !frames.active ) {
       var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
-      app.camera.rotation.y += movementX * 0.01;
+      var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
+
+      if ( !!events.clickedFrame ) {
+        var data = frames.calcPosition(event);
+        events.clickedFrame.position.x = data.xpos;
+        events.clickedFrame.position.y = data.ypos;
+        events.clickedFrame.position.z = data.zpos;
+        events.clickedFrame.rotation.y = data.yrot;
+        events.clickedFrame.text.position.copy(events.clickedFrame.position);
+        events.clickedFrame.text.rotation.copy(events.clickedFrame.rotation);
+        sync.updateFramePosition(events.clickedFrame);
+      } else {
+        app.camera.rotation.y += movementX * 0.01;
+      }
       app.dirty = true;
     }
   },
@@ -88,8 +105,8 @@ var events = {
   touchX: undefined,
 
   onDocumentTouchStart: function (event) {
-    document.addEventListener( 'touchmove', events.onDocumentTouchMove, false );
-    document.addEventListener( 'touchend', events.onDocumentTouchEnd, false );
+    document.addEventListener('touchmove', events.onDocumentTouchMove, false);
+    document.addEventListener('touchend', events.onDocumentTouchEnd, false);
 
     animation.reset();
     if ( menu.isActive() ) {

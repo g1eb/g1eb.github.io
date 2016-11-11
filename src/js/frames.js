@@ -147,11 +147,16 @@ var frames = {
   update: function (key, data) {
     for ( var i = 0; i < frames.list.length; i++ ) {
       if ( frames.list[i].key === key ) {
-        frames.list[i].data.title = data.title;
+        var updatedFrame = frames.list[i];
+        updatedFrame.position.x = data.xpos;
+        updatedFrame.position.y = data.ypos;
+        updatedFrame.position.z = data.zpos;
+        updatedFrame.rotation.y = data.yrot;
         for ( var j = 0; j < 10; j++ ) {
-          frames.list[i].data['c'+(j+1)] = data['c'+(j+1)];
+          updatedFrame.data['c'+(j+1)] = data['c'+(j+1)];
         }
-        frames.drawText(frames.list[i]);
+        updatedFrame.data.title = data.title;
+        frames.drawText(updatedFrame);
       }
     }
 
