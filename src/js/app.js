@@ -35,7 +35,6 @@ var app = {
     }
 
     dev.init();
-    gui.init();
     sync.init();
     frames.init();
     settings.init();
