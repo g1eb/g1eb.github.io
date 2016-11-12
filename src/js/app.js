@@ -37,6 +37,7 @@ var app = {
     dev.init();
     sync.init();
     frames.init();
+    sounds.init();
     settings.init();
     events.init();
     animation.init();
