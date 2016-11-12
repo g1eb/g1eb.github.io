@@ -161,7 +161,9 @@ var events = {
         frames.updateActive();
       }
     } else if ( event.keyCode >= 48 && event.keyCode <= 57 ) {
-      sounds.play(event.keyCode);
+      if ( !frames.active ) {
+        sounds.play(event.keyCode);
+      }
     }
   },
 
