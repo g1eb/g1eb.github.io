@@ -58,8 +58,6 @@ var app = {
       app.renderer.render(app.scene, app.camera);
       app.dirty = false;
     }
-
-    dev.updateStats();
   },
 
 };
