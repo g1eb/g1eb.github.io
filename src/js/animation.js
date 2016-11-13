@@ -55,7 +55,7 @@ var animation = {
     }, duration ).easing( TWEEN.Easing.Quadratic.Out).start();
 
     new TWEEN.Tween( app.camera.rotation ).to( {
-      y: 0.5
+      y: Math.PI / 2,
     }, duration ).easing( TWEEN.Easing.Quadratic.Out).start();
 
     var initCameraInterval = window.setInterval(function () {
