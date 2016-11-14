@@ -185,7 +185,7 @@ var events = {
   },
 
   bindMenuButtons: function () {
-    document.getElementById('settings-btn--themes').addEventListener('click', menu.openThemes, false);
+    document.getElementById('settings-btn--themes').addEventListener('click', themes.open, false);
     document.getElementById('settings-btn--settings').addEventListener('click', settings.open, false);
     document.getElementById('settings-btn--help').addEventListener('click', help.open, false);
   },
