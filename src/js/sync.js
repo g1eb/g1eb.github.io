@@ -31,7 +31,15 @@ var sync = {
   },
 
   getThemes: function () {
-    firebase.database().ref('/themes/').once('value').then(function(snapshot) {
+    var framesRef = firebase.database().ref().child('themes');
+    framesRef.on('child_added', function(snapshot) {
+      themes.add(snapshot.key, snapshot.val());
+    });
+    framesRef.on('child_changed', function(snapshot) {
+      themes.update(snapshot.key, snapshot.val());
+    });
+    framesRef.on('child_removed', function(snapshot) {
+      themes.remove(snapshot.key);
     });
   },
 
@@ -41,6 +49,8 @@ var sync = {
       title: title,
       color: color,
       locked: false,
+      lat: 0,
+      lng: 0,
     };
 
     var newThemeKey = firebase.database().ref().child('themes').push().key;
@@ -50,6 +60,20 @@ var sync = {
 
     firebase.database().ref().update(updates);
     return newThemeKey;
+  },
+
+  updateTheme: function (theme) {
+    firebase.database().ref().child('themes').child(themes.key).update({
+      updated_at: new Date(),
+      title: theme.title,
+      color: theme.color,
+      lat: theme.lat,
+      lng: theme.lng,
+    });
+  },
+
+  removeTheme: function (key) {
+    firebase.database().ref().child('themes').child(key).remove();
   },
 
   getFrames: function () {

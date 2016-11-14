@@ -4,6 +4,8 @@ var themes = {
 
 
   init: function () {
+
+    sync.getThemes();
   },
 
   isActive: function () {
