@@ -2,8 +2,6 @@
 
 var menu = {
 
-  helpActive: false,
-
   toggleMenu: function () {
     if ( !!menu.isActive() ) {
       menu.close();
