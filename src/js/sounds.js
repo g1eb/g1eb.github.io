@@ -3,16 +3,16 @@
 var sounds = {
 
   buffers: [
-    'src/sounds/0_kick.mp3',
-    'src/sounds/1_chicken.mp3',
-    'src/sounds/2_click.mp3',
-    'src/sounds/3_gun.mp3',
-    'src/sounds/4_cops.mp3',
-    'src/sounds/5_khaled.mp3',
-    'src/sounds/6_laser.mp3',
-    'src/sounds/7_airhorn.mp3',
-    'src/sounds/8_snare.mp3',
-    'src/sounds/9_clap.mp3',
+    'src/sounds/0_fx.mp3',
+    'src/sounds/1_piano.mp3',
+    'src/sounds/2_piano.mp3',
+    'src/sounds/3_piano.mp3',
+    'src/sounds/4_organ.mp3',
+    'src/sounds/5_synth.mp3',
+    'src/sounds/6_synth.mp3',
+    'src/sounds/7_pad.mp3',
+    'src/sounds/8_beat.mp3',
+    'src/sounds/9_kick.mp3',
   ],
 
   context: undefined,
