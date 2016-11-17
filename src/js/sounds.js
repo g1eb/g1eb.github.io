@@ -12,7 +12,7 @@ var sounds = {
     'src/sounds/6_synth.mp3',
     'src/sounds/7_pad.mp3',
     'src/sounds/8_beat.mp3',
-    'src/sounds/9_kick.mp3',
+    'src/sounds/9_beat.mp3',
   ],
 
   sources: {},
