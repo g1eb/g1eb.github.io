@@ -3,16 +3,16 @@
 var sounds = {
 
   buffers: [
-    'src/sounds/0_fx.mp3',
-    'src/sounds/1_piano.mp3',
-    'src/sounds/2_piano.mp3',
-    'src/sounds/3_piano.mp3',
-    'src/sounds/4_organ.mp3',
-    'src/sounds/5_synth.mp3',
-    'src/sounds/6_synth.mp3',
-    'src/sounds/7_pad.mp3',
-    'src/sounds/8_beat.mp3',
-    'src/sounds/9_beat.mp3',
+    'src/sounds/fx.mp3',
+    'src/sounds/piano1.mp3',
+    'src/sounds/piano2.mp3',
+    'src/sounds/piano3.mp3',
+    'src/sounds/organ.mp3',
+    'src/sounds/synth1.mp3',
+    'src/sounds/synth2.mp3',
+    'src/sounds/pad.mp3',
+    'src/sounds/beat1.mp3',
+    'src/sounds/beat2.mp3',
   ],
 
   sources: {},
