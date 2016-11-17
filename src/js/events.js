@@ -47,6 +47,10 @@ var events = {
         if ( !help.isClicked(event) ) {
           help.close();
         }
+      } else if ( themes.isActive() ) {
+        if ( !themes.isClicked(event) ) {
+          themes.close();
+        }
       } else if ( settings.isActive() ) {
         if ( !settings.isClicked(event) ) {
           settings.close();
@@ -74,7 +78,7 @@ var events = {
   onDocumentMouseMove: function (event) {
     window.clearTimeout(events.dragThresholdTimeoutId);
 
-    if ( !menu.isActive() && !settings.isActive() && !help.isActive() && !frames.active ) {
+    if ( !menu.isActive() && !settings.isActive() && !themes.isActive() && !help.isActive() && !frames.active ) {
       var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
       var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
 
@@ -95,7 +99,7 @@ var events = {
   },
 
   onDocumentMouseWheel: function (event) {
-    if ( !menu.isActive() && !settings.isActive() && !help.isActive() && !frames.active ) {
+    if ( !menu.isActive() && !settings.isActive() && !themes.isActive() && !help.isActive() && !frames.active ) {
       animation.reset();
       app.camera.rotation.y += event.deltaY * 0.001;
       app.dirty = true;
@@ -151,6 +155,8 @@ var events = {
         frames.close();
       } else if ( help.isActive() ) {
         help.close();
+      } else if ( themes.isActive() ) {
+        themes.close();
       } else if ( settings.isActive() ) {
         settings.close();
       } else {

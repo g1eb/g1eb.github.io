@@ -9,7 +9,7 @@ var themes = {
   },
 
   isActive: function () {
-    return !!document.getElementById('themes').style.display && document.getElementById('themes').style.display !== 'themes';
+    return !!document.getElementById('themes').style.display && document.getElementById('themes').style.display !== 'none';
   },
 
   open: function () {
