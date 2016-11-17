@@ -2,6 +2,7 @@
 
 var themes = {
 
+  list: [],
 
   init: function () {
 
@@ -23,6 +24,25 @@ var themes = {
 
   isClicked: function (event) {
     return document.getElementById('themes').contains(event.target);
+  },
+
+  add: function (key, theme) {
+    themes.list.push(theme);
+  },
+
+  update: function (key, data) {
+    for ( var i = 0; i < themes.list.length; i++ ) {
+      if ( themes.list[i].key === key ) {
+        themes.list[i] = data;
+      }
+    }
+  },
+
+  remove: function (key) {
+    for ( var i = 0; i < themes.list.length; i++ ) {
+      if ( themes.list[i].key === key ) {
+      }
+    }
   },
 
 };
