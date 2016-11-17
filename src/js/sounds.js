@@ -3,17 +3,19 @@
 var sounds = {
 
   buffers: [
-    'src/sounds/0_kick.mp3',
-    'src/sounds/1_chicken.mp3',
-    'src/sounds/2_click.mp3',
-    'src/sounds/3_gun.mp3',
-    'src/sounds/4_cops.mp3',
-    'src/sounds/5_khaled.mp3',
-    'src/sounds/6_laser.mp3',
-    'src/sounds/7_airhorn.mp3',
-    'src/sounds/8_snare.mp3',
-    'src/sounds/9_clap.mp3',
+    'src/sounds/fx.mp3',
+    'src/sounds/piano1.mp3',
+    'src/sounds/piano2.mp3',
+    'src/sounds/piano3.mp3',
+    'src/sounds/organ.mp3',
+    'src/sounds/synth1.mp3',
+    'src/sounds/synth2.mp3',
+    'src/sounds/pad.mp3',
+    'src/sounds/beat1.mp3',
+    'src/sounds/beat2.mp3',
   ],
+
+  sources: {},
 
   context: undefined,
 
@@ -23,10 +25,17 @@ var sounds = {
   },
 
   play: function (id) {
-    var source = sounds.context.createBufferSource();
-    source.connect(sounds.context.destination);
-    source.buffer = sounds.buffers[id-48];
-    source.start(0);
+    if ( !!sounds.sources[id] ) {
+      sounds.sources[id].loop = false;
+      delete sounds.sources[id];
+    } else {
+      var source = sounds.context.createBufferSource();
+      source.connect(sounds.context.destination);
+      source.buffer = sounds.buffers[id-48];
+      source.loop = true;
+      source.start(0);
+      sounds.sources[id] = source;
+    }
   },
 
   fetchSoundBuffers: function () {
