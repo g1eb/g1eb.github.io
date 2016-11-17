@@ -15,6 +15,8 @@ var sounds = {
     'src/sounds/9_kick.mp3',
   ],
 
+  sources: {},
+
   context: undefined,
 
   init: function () {
@@ -23,10 +25,17 @@ var sounds = {
   },
 
   play: function (id) {
-    var source = sounds.context.createBufferSource();
-    source.connect(sounds.context.destination);
-    source.buffer = sounds.buffers[id-48];
-    source.start(0);
+    if ( !!sounds.sources[id] ) {
+      sounds.sources[id].loop = false;
+      delete sounds.sources[id];
+    } else {
+      var source = sounds.context.createBufferSource();
+      source.connect(sounds.context.destination);
+      source.buffer = sounds.buffers[id-48];
+      source.loop = true;
+      source.start(0);
+      sounds.sources[id] = source;
+    }
   },
 
   fetchSoundBuffers: function () {
