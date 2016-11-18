@@ -2,7 +2,7 @@
 
 var themes = {
 
-  list: [],
+  all: {},
 
   init: function () {
 
@@ -36,23 +36,17 @@ var themes = {
 
     container.insertBefore(element, container.firstChild);
 
-    themes.list.push(theme);
+    themes.all[key] = theme;
   },
 
   update: function (key, data) {
-    for ( var i = 0; i < themes.list.length; i++ ) {
-      if ( themes.list[i].key === key ) {
-        themes.list[i] = data;
-      }
+    if ( !!themes.all[key] ) {
+      themes.all[key] = data;
     }
   },
 
   remove: function (key) {
-    for ( var i = 0; i < themes.list.length; i++ ) {
-      if ( themes.list[i].key === key ) {
-        themes.list.splice(i, 1);
-      }
-    }
+    delete themes.all[key];
   },
 
 };
