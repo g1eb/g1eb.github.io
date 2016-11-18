@@ -32,7 +32,9 @@ var themes = {
     var element = document.createElement('div');
     element.className = 'theme';
     element.innerHTML = theme.title;
-    element.setAttribute('data-theme-title', theme.title);
+    element.setAttribute('data-title', theme.title);
+    element.setAttribute('data-color', theme.color);
+    element.setAttribute('data-key', key);
 
     container.insertBefore(element, container.firstChild);
 
