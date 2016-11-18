@@ -2,13 +2,12 @@
  * Themes styles
  */
 .themes {
-  position: relative;
   display: none;
-  height: auto;
   margin: 0;
   padding: 0;
   color: #333;
-  font-size: 14px;
+  font-size: 1em;
+  line-height: 2em;
   font-family: sans-serif;
   text-decoration: none;
   text-align: center;
@@ -21,27 +20,80 @@
   -webkit-user-select: none;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
-
 .themes .themes-container {
   position: fixed;
-  top: 10vh;
+  top: 0;
   left: 0;
-  bottom: 20vh;
   z-index: 1000;
-  margin: 25px;
-  width: 35vw;
-  min-width: 500px;
-  height: auto;
-  padding: 25px;
-  background-color: whitesmoke;
-  opacity: 0.5;
-  border-radius: 0;
-  box-sizing: border-box;
-  overflow: auto;
   display: flex;
-  justify-content: space-around;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
 }
-
-.themes .themes-container .theme {
+.themes .themes-container .themes-column {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-start;
+  max-width: 250px;
+  margin: 0 50px;
+  height: 75%;
+  padding-top: 10vh;
+  overflow: scroll;
+}
+.themes .themes-container .themes-column .theme {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  min-height: 50px;
+  min-width: 250px;
+  cursor: pointer;
+  text-align: center;
+  margin: 10px 0;
+  opacity: 0.5;
+  background: whitesmoke;
+  transition: background-color 0.25s ease-out;
+}
+.themes .themes-container .themes-column .theme:hover {
+  opacity: 0.75;
+}
+.themes .themes-container .themes-column .themes-input--add {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  min-height: 50px;
+  min-width: 250px;
+  cursor: pointer;
+  text-align: center;
+  margin: 10px 0;
+  padding: 0;
+  opacity: 0.5;
+  color: #333;
+  font-size: 1em;
+  line-height: 2em;
+  border: none;
+  outline: none;
+  background: whitesmoke;
+}
+.themes .themes-container .themes-column .themes-btn--add {
+  position: absolute;
+  bottom: 0;
+  right: -10px;
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  text-align: center;
+  margin: 10px 0;
+  opacity: 0.5;
+  color: #333;
+  font-size: 1em;
+  line-height: 2em;
+  border: none;
+  outline: none;
+  background: whitesmoke;
+}
+.themes .themes-container .themes-column .themes-btn--add:hover {
+  opacity: 0.75;
 }
