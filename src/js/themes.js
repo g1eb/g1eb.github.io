@@ -36,23 +36,42 @@ var themes = {
 
   select: function (event) {
     var key = event.target.dataset.key;
-    if ( !!key ) {
+    if ( !!key && event.target.className === 'theme-btn--del' ) {
+      sync.removeTheme(key);
+      themes.remove(key);
+    } else {
+      // open selected theme and related frames
     }
   },
 
   add: function (key, theme) {
     var container = document.getElementById('themes-column');
-
     var element = document.createElement('div');
+    element.append(themes.getThemeButton(key, theme.title));
+    element.append(themes.getDelButton(key));
+    element.setAttribute('id', 'theme-'+key);
     element.className = 'theme';
-    element.innerHTML = theme.title;
-    element.setAttribute('data-title', theme.title);
-    element.setAttribute('data-color', theme.color);
-    element.setAttribute('data-key', key);
-
     container.append(element);
 
     themes.all[key] = theme;
+  },
+
+  getThemeButton: function (key, title) {
+    var button = document.createElement('button');
+    button.setAttribute('data-key', key);
+    button.className = 'theme-btn';
+    button.innerHTML = title;
+    button.type = 'button';
+    return button;
+  },
+
+  getDelButton: function (key) {
+    var button = document.createElement('button');
+    button.setAttribute('data-key', key);
+    button.className = 'theme-btn--del';
+    button.innerHTML = '&times;';
+    button.type = 'button';
+    return button;
   },
 
   update: function (key, data) {
@@ -62,6 +81,10 @@ var themes = {
   },
 
   remove: function (key) {
+    var element = document.getElementById('theme-'+key);
+    if ( !!element ) {
+      element.parentNode.removeChild(element);
+    }
     delete themes.all[key];
   },
 
