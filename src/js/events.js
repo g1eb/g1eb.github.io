@@ -197,7 +197,7 @@ var events = {
   },
 
   unbindMenuButtons: function () {
-    document.getElementById('settings-btn--themes').removeEventListener('click', menu.openThemes, false);
+    document.getElementById('settings-btn--themes').removeEventListener('click', themes.open, false);
     document.getElementById('settings-btn--settings').removeEventListener('click', settings.open, false);
     document.getElementById('settings-btn--help').removeEventListener('click', help.open, false);
   },
@@ -207,7 +207,7 @@ var events = {
   },
 
   unbindSettingsButtons: function () {
-    document.getElementById('settings-btn--save').removeEventListener('click', frames.update, false);
+    document.getElementById('settings-btn--save').removeEventListener('click', settings.update, false);
   },
 
 };
