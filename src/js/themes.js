@@ -50,6 +50,7 @@ var themes = {
   remove: function (key) {
     for ( var i = 0; i < themes.list.length; i++ ) {
       if ( themes.list[i].key === key ) {
+        themes.list.splice(i, 1);
       }
     }
   },
