@@ -27,6 +27,15 @@ var themes = {
   },
 
   add: function (key, theme) {
+    var container = document.getElementById('themes-column');
+
+    var element = document.createElement('div');
+    element.className = 'theme';
+    element.innerHTML = theme.title;
+    element.setAttribute('data-theme-title', theme.title);
+
+    container.insertBefore(element, container.firstChild);
+
     themes.list.push(theme);
   },
 
