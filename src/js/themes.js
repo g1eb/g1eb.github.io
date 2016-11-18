@@ -27,6 +27,19 @@ var themes = {
     return document.getElementById('themes').contains(event.target);
   },
 
+  create: function (event) {
+    var title = document.getElementById('themes-input--add').value;
+    if ( !!title ) {
+      sync.addTheme(title, 'red');
+    }
+  },
+
+  select: function (event) {
+    var key = event.target.dataset.key;
+    if ( !!key ) {
+    }
+  },
+
   add: function (key, theme) {
     var container = document.getElementById('themes-column');
 
@@ -37,7 +50,7 @@ var themes = {
     element.setAttribute('data-color', theme.color);
     element.setAttribute('data-key', key);
 
-    container.insertBefore(element, container.firstChild);
+    container.append(element);
 
     themes.all[key] = theme;
   },

@@ -79,7 +79,7 @@
 }
 .themes .themes-container .themes-column .themes-btn--add {
   position: absolute;
-  bottom: 0;
+  top: 10vh;
   right: -10px;
   height: 50px;
   width: 50px;
