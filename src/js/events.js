@@ -202,6 +202,16 @@ var events = {
     document.getElementById('settings-btn--help').removeEventListener('click', help.open, false);
   },
 
+  bindThemesButtons: function () {
+    document.getElementById('themes-column').addEventListener('click', themes.select, false);
+    document.getElementById('themes-btn--add').addEventListener('click', themes.create, false);
+  },
+
+  unbindThemesButtons: function () {
+    document.getElementById('themes-column').removeEventListener('click', themes.select, false);
+    document.getElementById('themes-btn--add').removeEventListener('click', themes.create, false);
+  },
+
   bindSettingsButtons: function () {
     document.getElementById('settings-btn--save').addEventListener('click', settings.update, false);
   },

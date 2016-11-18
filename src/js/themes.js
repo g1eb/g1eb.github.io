@@ -5,7 +5,6 @@ var themes = {
   all: {},
 
   init: function () {
-
     sync.getThemes();
   },
 
@@ -15,11 +14,13 @@ var themes = {
 
   open: function () {
     document.getElementById('themes').style.display = 'flex';
+    events.bindThemesButtons();
     menu.close();
   },
 
   close: function () {
     document.getElementById('themes').style.display = 'none';
+    events.unbindThemesButtons();
   },
 
   isClicked: function (event) {
