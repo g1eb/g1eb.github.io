@@ -28,9 +28,10 @@ var themes = {
   },
 
   create: function (event) {
-    var title = document.getElementById('themes-input--add').value;
-    if ( !!title ) {
-      sync.addTheme(title, 'red');
+    var element = document.getElementById('themes-input--add');
+    if ( !!element.value ) {
+      sync.addTheme(element.value, 'red');
+      element.value = '';
     }
   },
 
