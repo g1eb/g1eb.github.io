@@ -167,6 +167,8 @@ var events = {
         frames.updateActive();
       } else if ( themes.isActive() ) {
         themes.create();
+      } else if ( settings.isActive() ) {
+        settings.update();
       }
     } else if ( event.keyCode >= 48 && event.keyCode <= 57 ) {
       if ( !frames.active && !themes.isActive() ) {
