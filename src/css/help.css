@@ -25,10 +25,10 @@
 .help .help-container {
   position: fixed;
   top: 10vh;
-  left: 0;
+  left: 5vw;
   bottom: 20vh;
   z-index: 1000;
-  margin: 25px;
+  margin: 0;
   width: 35vw;
   min-width: 500px;
   height: auto;
