@@ -4,7 +4,7 @@ var themes = {
 
   all: {},
 
-  height: 10000,
+  height: 5000,
 
   init: function () {
     sync.getThemes();
@@ -93,7 +93,11 @@ var themes = {
   },
 
   switchTo: function (key) {
-    var duration = 1000; //ms
+    if ( !!themes.switchIntervalId ) {
+      return;
+    }
+
+    var duration = 500; //ms
     var interval = 100; //ms
 
     // theme position (based on themes reserved height)
@@ -103,13 +107,13 @@ var themes = {
       y: position,
     }, duration).easing(TWEEN.Easing.Quadratic.Out).start();
 
-    var themeSwitchInterval = window.setInterval(function () {
+    themes.switchIntervalId = window.setInterval(function () {
       TWEEN.update();
       app.dirty = true;
     }, interval);
 
     window.setTimeout(function () {
-      window.clearInterval(themeSwitchInterval);
+      themes.switchIntervalId = window.clearInterval(themes.switchIntervalId);
     }, duration);
   },
 
