@@ -22,7 +22,7 @@
 }
 .themes .themes-container {
   position: fixed;
-  top: 0;
+  top: 10vh;
   left: 0;
   z-index: 1000;
   display: flex;
@@ -38,7 +38,6 @@
   max-width: 250px;
   margin: 0 50px;
   height: 75%;
-  padding-top: 10vh;
 }
 .themes .themes-container .themes-column .theme {
   display: flex;
