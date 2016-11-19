@@ -11,7 +11,7 @@
   font-size: 14px;
   font-family: sans-serif;
   text-decoration: none;
-  text-align: center;
+  text-align: left;
   user-select: none;
   -ms-user-select: none;
   -moz-user-select: none;
@@ -26,7 +26,6 @@
   position: fixed;
   top: 10vh;
   left: 5vw;
-  bottom: 20vh;
   z-index: 1000;
   margin: 0;
   width: 35vw;
@@ -38,7 +37,17 @@
   border-radius: 0;
   box-sizing: border-box;
   overflow: auto;
-  display: flex;
-  justify-content: space-around;
-  flex-direction: column;
+}
+.help .help-container ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.help .help-container ul li {
+  font-size: 1em;
+  line-height: 1.5em;
+}
+.help .help-container ul li span {
+  display: inline-block;
+  min-width: 75px;
 }
