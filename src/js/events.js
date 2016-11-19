@@ -165,9 +165,11 @@ var events = {
     } else if ( event.keyCode === 13 ) {
       if ( !!frames.active ) {
         frames.updateActive();
+      } else if ( themes.isActive() ) {
+        themes.create();
       }
     } else if ( event.keyCode >= 48 && event.keyCode <= 57 ) {
-      if ( !frames.active ) {
+      if ( !frames.active && !themes.isActive() ) {
         sounds.play(event.keyCode);
       }
     }
