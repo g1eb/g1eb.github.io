@@ -14,7 +14,6 @@ var frames = {
     transparent: true,
     opacity: 0.25,
     positionX: 0,
-    positionY: 50000,
     positionZ: 0,
     rotationX: 0,
     rotationY: 0,
@@ -67,7 +66,7 @@ var frames = {
 
     return {
       xpos: frames.settings.distance * Math.cos(Math.PI / 2 * 3 - angleY),
-      ypos: frames.settings.positionY + angleX,
+      ypos: app.camera.position.y + angleX,
       zpos: frames.settings.distance * Math.sin(Math.PI / 2 * 3 - angleY),
       yrot: angleY,
     };

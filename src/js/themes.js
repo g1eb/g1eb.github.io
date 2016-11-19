@@ -37,11 +37,12 @@ var themes = {
 
   select: function (event) {
     var key = event.target.dataset.key;
-    if ( !!key && event.target.className === 'theme-btn--del' ) {
-      sync.removeTheme(key);
-      themes.remove(key);
-    } else {
-      // open selected theme and related frames
+    if ( !!key ) {
+      if ( event.target.className === 'theme-btn--del' ) {
+        sync.removeTheme(key);
+      } else {
+        themes.switchTo(key);
+      }
     }
   },
 
@@ -89,4 +90,26 @@ var themes = {
     delete themes.all[key];
   },
 
+  switchTo: function (key) {
+    var duration = 1000; //ms
+    var interval = 100; //ms
+
+    // theme index + position will be initial camera height
+    var position = 50000 + 10000 * (Object.keys(themes.all).indexOf(key)+1);
+
+    new TWEEN.Tween(app.camera.position).to({
+      y: position,
+    }, duration).easing(TWEEN.Easing.Quadratic.Out).start();
+
+    var themeSwitchInterval = window.setInterval(function () {
+      TWEEN.update();
+      app.dirty = true;
+    }, interval);
+
+    window.setTimeout(function () {
+      window.clearInterval(themeSwitchInterval);
+    }, duration);
+
+
+  },
 };
