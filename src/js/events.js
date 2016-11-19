@@ -141,10 +141,12 @@ var events = {
   },
 
   onKeyDown: function (event) {
-    if ( event.keyCode == 37 ) {
-      app.camera.rotation.y += 0.0125;
-    } else if ( event.keyCode == 39 ) {
-      app.camera.rotation.y -= 0.0125;
+    if ( !frames.active && !settings.isActive() ) {
+      if ( event.keyCode == 37 ) {
+        app.camera.rotation.y += 0.0125;
+      } else if ( event.keyCode == 39 ) {
+        app.camera.rotation.y -= 0.0125;
+      }
     }
     app.dirty = true;
   },
