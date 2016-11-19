@@ -176,6 +176,14 @@ var events = {
       if ( !frames.active && !themes.isActive() ) {
         sounds.play(event.keyCode);
       }
+    } else if ( event.shiftKey && event.keyCode === 191 ) {
+      if ( !frames.active && !settings.isActive() ) {
+        if ( help.isActive() ) {
+          help.close();
+        } else {
+          help.open();
+        }
+      }
     }
   },
 
