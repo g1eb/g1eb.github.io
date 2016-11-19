@@ -4,6 +4,9 @@ var events = {
 
   raycaster: undefined,
 
+  ctrlKeyTimeoutId: undefined,
+  ctrlKeyTimeoutDuration: 1000,
+
   dragThresholdTimeoutId: undefined,
   dragThresholdDuration: 150,
 
@@ -141,6 +144,12 @@ var events = {
   },
 
   onKeyDown: function (event) {
+    if ( event.ctrlKey ) {
+      events.ctrlKeyTimeoutId = window.setTimeout(function () {
+        // open ctrl module
+      }, events.ctrlKeyTimeoutDuration);
+    }
+
     if ( !frames.active && !settings.isActive() ) {
       if ( event.keyCode == 37 ) {
         app.camera.rotation.y += 0.0125;
@@ -152,6 +161,7 @@ var events = {
   },
 
   onKeyUp: function (event) {
+    window.clearTimeout(events.ctrlKeyTimeout);
     if ( event.keyCode === 27 ) {
       if ( !!frames.active ) {
         frames.close();
