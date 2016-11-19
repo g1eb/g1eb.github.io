@@ -53,7 +53,7 @@
   margin: 10px 0;
   opacity: 0.5;
   background: whitesmoke;
-  transition: background-color 0.25s ease-out;
+  transition: opacity 0.25s ease-out;
 }
 .menu .menu-item:hover {
   opacity: 0.75;
