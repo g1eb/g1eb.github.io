@@ -194,6 +194,10 @@ var events = {
           help.open();
         }
       }
+    } else if ( event.keyCode === 38 && !frames.active ) {
+      themes.moveUp();
+    } else if ( event.keyCode === 40 && !frames.active ) {
+      themes.moveDown();
     }
   },
 

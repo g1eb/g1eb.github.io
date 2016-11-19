@@ -92,6 +92,25 @@ var themes = {
     delete themes.all[key];
   },
 
+  moveUp: function () {
+if ( index == 5 ) { debugger};
+    var index = app.camera.position.y / themes.height;
+    if ( index === Object.keys(themes.all).length-1 ) {
+      themes.switchTo(Object.keys(themes.all)[0]);
+    } else {
+      themes.switchTo(Object.keys(themes.all)[index+1]);
+    }
+  },
+
+  moveDown: function () {
+    var index = app.camera.position.y / themes.height;
+    if  ( index === 0 ) {
+      themes.switchTo(Object.keys(themes.all)[Object.keys(themes.all).length-1]);
+    } else {
+      themes.switchTo(Object.keys(themes.all)[index-1]);
+    }
+  },
+
   switchTo: function (key) {
     if ( !!themes.switchIntervalId ) {
       return;
