@@ -45,7 +45,12 @@
 /**
  * Add theme input
  */
-.themes .themes-container .themes-column .themes-input--add {
+.themes .themes-container .themes-form {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.themes .themes-container .themes-form .themes-input--add {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -64,7 +69,7 @@
   outline: none;
   background: whitesmoke;
 }
-.themes .themes-container .themes-column .themes-btn--add {
+.themes .themes-container .themes-form .themes-btn--add {
   position: absolute;
   top: 0;
   right: -60px;
@@ -81,7 +86,7 @@
   background: whitesmoke;
   transition: opacity 0.25s ease-out;
 }
-.themes .themes-container .themes-column .themes-btn--add:hover {
+.themes .themes-container .themes-form .themes-btn--add:hover {
   opacity: 0.75;
 }
 
