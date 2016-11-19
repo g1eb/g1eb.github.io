@@ -126,7 +126,7 @@
   border-radius: 0;
   border: none;
   background-color: whitesmoke;
-  transition: opacity 0.25s ease-out;
+  transition: all 0.25s ease-out;
 }
 .frame-edit .frame-edit-buttons .frame-edit-btn--save {
   top: 10px;
@@ -138,9 +138,12 @@
 }
 .frame-edit .frame-edit-buttons .frame-edit-btn--save:active,
 .frame-edit .frame-edit-buttons .frame-edit-btn--save:focus,
-.frame-edit .frame-edit-buttons .frame-edit-btn--save:hover,
+.frame-edit .frame-edit-buttons .frame-edit-btn--save:hover {
+  opacity: 0.75;
+}
 .frame-edit .frame-edit-buttons .frame-edit-btn--delete:active,
 .frame-edit .frame-edit-buttons .frame-edit-btn--delete:focus,
 .frame-edit .frame-edit-buttons .frame-edit-btn--delete:hover {
   opacity: 0.75;
+  background-color: rgba(255, 54, 46, 0.75);
 }
