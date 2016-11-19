@@ -94,8 +94,8 @@ var themes = {
     var duration = 1000; //ms
     var interval = 100; //ms
 
-    // theme index + position will be initial camera height
-    var position = 50000 + 10000 * (Object.keys(themes.all).indexOf(key)+1);
+    // theme position (each theme get's 10000 height reserved)
+    var position = 10000 * Object.keys(themes.all).indexOf(key);
 
     new TWEEN.Tween(app.camera.position).to({
       y: position,
