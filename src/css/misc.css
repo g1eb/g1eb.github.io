@@ -9,7 +9,7 @@
   z-index: -100;
   transform: translateX(-50%) translateY(-50%);
   will-change: opacity;
-  transition: 1s opacity;
+  transition: opacity 0.25s ease-out;
   pointer-events: none;
 }
 

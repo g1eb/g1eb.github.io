@@ -47,6 +47,10 @@ var events = {
         if ( !help.isClicked(event) ) {
           help.close();
         }
+      } else if ( themes.isActive() ) {
+        if ( !themes.isClicked(event) ) {
+          themes.close();
+        }
       } else if ( settings.isActive() ) {
         if ( !settings.isClicked(event) ) {
           settings.close();
@@ -74,7 +78,7 @@ var events = {
   onDocumentMouseMove: function (event) {
     window.clearTimeout(events.dragThresholdTimeoutId);
 
-    if ( !menu.isActive() && !settings.isActive() && !help.isActive() && !frames.active ) {
+    if ( !menu.isActive() && !settings.isActive() && !themes.isActive() && !help.isActive() && !frames.active ) {
       var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
       var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
 
@@ -95,7 +99,7 @@ var events = {
   },
 
   onDocumentMouseWheel: function (event) {
-    if ( !menu.isActive() && !settings.isActive() && !help.isActive() && !frames.active ) {
+    if ( !menu.isActive() && !settings.isActive() && !themes.isActive() && !help.isActive() && !frames.active ) {
       animation.reset();
       app.camera.rotation.y += event.deltaY * 0.001;
       app.dirty = true;
@@ -151,6 +155,8 @@ var events = {
         frames.close();
       } else if ( help.isActive() ) {
         help.close();
+      } else if ( themes.isActive() ) {
+        themes.close();
       } else if ( settings.isActive() ) {
         settings.close();
       } else {
@@ -159,9 +165,11 @@ var events = {
     } else if ( event.keyCode === 13 ) {
       if ( !!frames.active ) {
         frames.updateActive();
+      } else if ( themes.isActive() ) {
+        themes.create();
       }
     } else if ( event.keyCode >= 48 && event.keyCode <= 57 ) {
-      if ( !frames.active ) {
+      if ( !frames.active && !themes.isActive() ) {
         sounds.play(event.keyCode);
       }
     }
@@ -185,15 +193,25 @@ var events = {
   },
 
   bindMenuButtons: function () {
-    document.getElementById('settings-btn--themes').addEventListener('click', menu.openThemes, false);
+    document.getElementById('settings-btn--themes').addEventListener('click', themes.open, false);
     document.getElementById('settings-btn--settings').addEventListener('click', settings.open, false);
     document.getElementById('settings-btn--help').addEventListener('click', help.open, false);
   },
 
   unbindMenuButtons: function () {
-    document.getElementById('settings-btn--themes').removeEventListener('click', menu.openThemes, false);
+    document.getElementById('settings-btn--themes').removeEventListener('click', themes.open, false);
     document.getElementById('settings-btn--settings').removeEventListener('click', settings.open, false);
     document.getElementById('settings-btn--help').removeEventListener('click', help.open, false);
+  },
+
+  bindThemesButtons: function () {
+    document.getElementById('themes-column').addEventListener('click', themes.select, false);
+    document.getElementById('themes-btn--add').addEventListener('click', themes.create, false);
+  },
+
+  unbindThemesButtons: function () {
+    document.getElementById('themes-column').removeEventListener('click', themes.select, false);
+    document.getElementById('themes-btn--add').removeEventListener('click', themes.create, false);
   },
 
   bindSettingsButtons: function () {
@@ -201,7 +219,7 @@ var events = {
   },
 
   unbindSettingsButtons: function () {
-    document.getElementById('settings-btn--save').removeEventListener('click', frames.update, false);
+    document.getElementById('settings-btn--save').removeEventListener('click', settings.update, false);
   },
 
 };

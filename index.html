@@ -12,6 +12,7 @@
   <link rel="stylesheet" type="text/css" href="src/css/animation.css">
   <link rel="stylesheet" type="text/css" href="src/css/settings.css">
   <link rel="stylesheet" type="text/css" href="src/css/frames.css">
+  <link rel="stylesheet" type="text/css" href="src/css/themes.css">
   <link rel="stylesheet" type="text/css" href="src/css/help.css">
   <link rel="stylesheet" type="text/css" href="src/css/misc.css">
   <link rel="stylesheet" type="text/css" href="src/css/menu.css">
@@ -34,6 +35,7 @@
   <script src="src/js/skybox.js"></script>
   <script src="src/js/settings.js"></script>
   <script src="src/js/frames.js"></script>
+  <script src="src/js/themes.js"></script>
   <script src="src/js/device.js"></script>
   <script src="src/js/sounds.js"></script>
   <script src="src/js/events.js"></script>
@@ -77,6 +79,15 @@
     </div>
   </div>
 
+  <div id="themes" class="themes">
+    <div class="themes-container">
+      <div id="themes-column" class="themes-column">
+        <input id="themes-input--add" class="themes-input--add" type="text" placeholder="new theme" autocomplete="off" tabindex="1"></input>
+        <button id="themes-btn--add" class="themes-btn--add" type="button">+</button>
+      </div>
+    </div>
+  </div>
+
   <div id="settings" class="settings">
     <div class="settings-container">
       <h1 class="settings--title">Settings</h1>
@@ -85,11 +96,11 @@
         <label for="settings--color">Color</label>
       </div>
       <div class="settings--input">
-        <input id="settings--background" type="text" autocomplete="off" tabindex="1" required />
+        <input id="settings--background" type="text" autocomplete="off" tabindex="2" required />
         <label for="settings--background">Background</label>
       </div>
       <div class="settings--input">
-        <input id="settings--branding" type="text" autocomplete="off" tabindex="1" required />
+        <input id="settings--branding" type="text" autocomplete="off" tabindex="3" required />
         <label for="settings--branding">Branding image (url)</label>
       </div>
     </div>

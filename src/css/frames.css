@@ -126,6 +126,7 @@
   border-radius: 0;
   border: none;
   background-color: whitesmoke;
+  transition: opacity 0.25s ease-out;
 }
 .frame-edit .frame-edit-buttons .frame-edit-btn--save {
   top: 10px;

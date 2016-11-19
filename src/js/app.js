@@ -21,7 +21,7 @@ var app = {
     app.scene.fog = new THREE.Fog( 0xf5f5f5, 1, 25000 );
   
     app.camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 5000000 );
-    app.camera.position.y = 0;
+    app.camera.position.y = 100000;
     app.camera.rotation.y = Math.PI;
   
     var light = new THREE.AmbientLight( 0xffffff );
@@ -37,6 +37,7 @@ var app = {
     dev.init();
     sync.init();
     frames.init();
+    themes.init();
     sounds.init();
     settings.init();
     events.init();
