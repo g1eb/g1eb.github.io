@@ -25,6 +25,10 @@ var themes = {
     events.unbindThemesButtons();
   },
 
+  toggle: function () {
+    themes.isActive() ? themes.close() : themes.open();
+  },
+
   isClicked: function (event) {
     return document.getElementById('themes').contains(event.target);
   },

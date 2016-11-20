@@ -190,18 +190,10 @@ var events = {
       }
     } else if ( event.shiftKey && event.keyCode === 191 ) {
       if ( !frames.active && !settings.isActive() ) {
-        if ( help.isActive() ) {
-          help.close();
-        } else {
-          help.open();
-        }
+        help.toggle();
       }
     } else if ( event.keyCode === 84 && !frames.active ) {
-      if ( themes.isActive() ) {
-        themes.close();
-      } else {
-        themes.open();
-      }
+      themes.toggle();
     } else if ( event.keyCode === 38 && !frames.active ) {
       themes.moveUp();
     } else if ( event.keyCode === 40 && !frames.active ) {

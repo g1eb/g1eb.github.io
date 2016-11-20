@@ -18,6 +18,10 @@ var help = {
     document.getElementById('help').style.display = 'none';
   },
 
+  toggle: function () {
+    help.isActive() ? help.close() : help.open();
+  },
+
   isClicked: function (event) {
     return document.getElementById('help').contains(event.target);
   },
