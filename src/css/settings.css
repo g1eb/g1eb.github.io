@@ -65,6 +65,7 @@
   border-color: #777;
   border-radius: 0;
   border-style: solid;
+  box-shadow: none;
 }
 .settings .settings-container .settings--input input:focus {
   border-color: #777;
@@ -79,8 +80,6 @@
   position: absolute;
   left: 0;
   bottom: -50px;
-  cursor: pointer;
-  outline: none;
   padding: 5px 25px;
   height: auto;
   opacity: 0.5;
@@ -89,6 +88,8 @@
   box-sizing: border-box;
   border-radius: 0;
   border: none;
+  outline: none;
+  cursor: pointer;
   background-color: whitesmoke;
   transition: opacity 0.25s ease-out;
 }

@@ -32,7 +32,7 @@
   position: relative;
   padding: 25px;
   width: 100%;
-  height: auto;
+  height: 75vh;
   margin: 0;
   opacity: 0.5;
   overflow: auto;
@@ -76,6 +76,7 @@
   border-color: #777;
   border-radius: 0;
   border-style: solid;
+  box-shadow: none;
 }
 .frame-edit .frame-edit-container .frame-edit--title input:focus,
 .frame-edit .frame-edit-container .frame-edit--content input:focus {
