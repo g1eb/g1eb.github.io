@@ -18,11 +18,16 @@ var themes = {
     document.getElementById('themes').style.display = 'flex';
     events.bindThemesButtons();
     menu.close();
+    help.close();
   },
 
   close: function () {
     document.getElementById('themes').style.display = 'none';
     events.unbindThemesButtons();
+  },
+
+  toggle: function () {
+    themes.isActive() ? themes.close() : themes.open();
   },
 
   isClicked: function (event) {
