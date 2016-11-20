@@ -183,7 +183,9 @@ var events = {
         settings.update();
       }
     } else if ( event.keyCode >= 48 && event.keyCode <= 57 ) {
-      if ( !frames.active && !themes.isActive() ) {
+      if ( themes.isActive() ) {
+        themes.switchTo(Object.keys(themes.all)[event.keyCode-48]);
+      } else if ( !frames.active && !themes.isActive() ) {
         sounds.play(event.keyCode);
       }
     } else if ( event.shiftKey && event.keyCode === 191 ) {
