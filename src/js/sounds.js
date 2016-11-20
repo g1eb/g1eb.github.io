@@ -4,15 +4,15 @@ var sounds = {
 
   buffers: [
     'src/sounds/fx.mp3',
-    'src/sounds/piano1.mp3',
-    'src/sounds/piano2.mp3',
-    'src/sounds/piano3.mp3',
-    'src/sounds/organ.mp3',
-    'src/sounds/synth1.mp3',
-    'src/sounds/synth2.mp3',
-    'src/sounds/pad.mp3',
-    'src/sounds/beat1.mp3',
-    'src/sounds/beat2.mp3',
+    'src/sounds/a.mp3',
+    'src/sounds/b.mp3',
+    'src/sounds/c.mp3',
+    'src/sounds/d.mp3',
+    'src/sounds/e.mp3',
+    'src/sounds/f.mp3',
+    'src/sounds/g.mp3',
+    'src/sounds/snare.mp3',
+    'src/sounds/kick.mp3',
   ],
 
   sources: {},
@@ -25,8 +25,15 @@ var sounds = {
   },
 
   play: function (id) {
-    if ( !!sounds.sources[id] ) {
+    if ( id === 48 ) {
+      for ( var key in sounds.sources ) {
+        sounds.sources[key].loop = false;
+        sounds.removeIndicator(key-48);
+        delete sounds.sources[key];
+      }
+    } else if ( !!sounds.sources[id] ) {
       sounds.sources[id].loop = false;
+      sounds.removeIndicator(id-48);
       delete sounds.sources[id];
     } else {
       var source = sounds.context.createBufferSource();
@@ -35,6 +42,7 @@ var sounds = {
       source.loop = true;
       source.start(0);
       sounds.sources[id] = source;
+      sounds.addIndicator(id-48);
     }
   },
 
@@ -54,6 +62,20 @@ var sounds = {
         request.send();
       })(i);
     }
+  },
+
+  addIndicator: function (id) {
+    var element = document.createElement('div');
+    element.setAttribute('id', 'sound-'+id);
+    element.className = 'sound-indicator';
+    element.innerHTML = id;
+    element.style['top'] = (150 + (id * 25)) + 'px';
+    document.body.appendChild(element);
+  },
+
+  removeIndicator: function (id) {
+    var element = document.getElementById('sound-'+id);
+    element.parentNode.removeChild(element);
   },
 
 };
