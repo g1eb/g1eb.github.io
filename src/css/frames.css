@@ -2,9 +2,15 @@
  * Frame edit view styles
  */
 .frame-edit {
-  position: relative;
+  position: fixed;
   display: none;
+  top: 10vh;
+  left: 5vw;
+  z-index: 1000;
+  width: 35vw;
+  min-width: 500px;
   height: auto;
+  max-height: 75vh;
   margin: 0;
   padding: 0;
   color: #333;
@@ -23,28 +29,22 @@
 }
 
 .frame-edit .frame-edit-container {
-  position: fixed;
-  top: 10vh;
-  left: 5vw;
-  bottom: 10vh;
-  z-index: 1000;
-  width: 35vw;
-  min-width: 500px;
+  position: relative;
+  padding: 25px;
+  width: 100%;
   height: auto;
   margin: 0;
-  padding: 25px;
-  background-color: whitesmoke;
   opacity: 0.5;
+  overflow: auto;
   border-radius: 0;
   box-sizing: border-box;
-  overflow: auto;
+  background-color: whitesmoke;
 }
 @media only screen and (max-device-width: 767px) {
   .frame-edit .frame-edit-container {
     min-width: 90vw;
     top: 5vh;
     right: 5vw;
-    bottom: 15vh;
   }
 }
 
@@ -95,55 +95,39 @@
 /**
  * Frame edit action buttons
  */
-.frame-edit .frame-edit-buttons {
-  position: fixed;
-  left: 5vw;
-  bottom: 10vh;
-  width: 35vw;
-  min-width: 500px;
-  margin: 0;
-  z-index: 1000;
-}
-@media only screen and (max-device-width: 767px) {
-  .frame-edit .frame-edit-buttons {
-    min-width: 90vw;
-    right: 5vw;
-    bottom: 15vh;
-  }
-}
-.frame-edit .frame-edit-buttons .frame-edit-btn--save,
-.frame-edit .frame-edit-buttons .frame-edit-btn--delete {
+.frame-edit .frame-edit-btn--save,
+.frame-edit .frame-edit-btn--delete {
   position: absolute;
-  cursor: pointer;
-  outline: none;
   padding: 5px 25px;
-  height: auto;
   opacity: 0.5;
+  height: auto;
   color: #333;
   font-size: 1em;
   line-height: 2em;
   box-sizing: border-box;
   border-radius: 0;
   border: none;
+  outline: none;
+  cursor: pointer;
   background-color: whitesmoke;
   transition: all 0.25s ease-out;
 }
-.frame-edit .frame-edit-buttons .frame-edit-btn--save {
-  top: 10px;
+.frame-edit .frame-edit-btn--save {
+  bottom: -50px;
   left: 0;
 }
-.frame-edit .frame-edit-buttons .frame-edit-btn--delete {
-  top: 10px;
+.frame-edit .frame-edit-btn--delete {
+  bottom: -50px;
   right: 0;
 }
-.frame-edit .frame-edit-buttons .frame-edit-btn--save:active,
-.frame-edit .frame-edit-buttons .frame-edit-btn--save:focus,
-.frame-edit .frame-edit-buttons .frame-edit-btn--save:hover {
+.frame-edit .frame-edit-btn--save:active,
+.frame-edit .frame-edit-btn--save:focus,
+.frame-edit .frame-edit-btn--save:hover {
   opacity: 0.75;
 }
-.frame-edit .frame-edit-buttons .frame-edit-btn--delete:active,
-.frame-edit .frame-edit-buttons .frame-edit-btn--delete:focus,
-.frame-edit .frame-edit-buttons .frame-edit-btn--delete:hover {
+.frame-edit .frame-edit-btn--delete:active,
+.frame-edit .frame-edit-btn--delete:focus,
+.frame-edit .frame-edit-btn--delete:hover {
   opacity: 0.75;
   background-color: rgba(255, 54, 46, 0.75);
 }
