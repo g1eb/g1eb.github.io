@@ -27,6 +27,7 @@ var sounds = {
   play: function (id) {
     if ( !!sounds.sources[id] ) {
       sounds.sources[id].loop = false;
+      sounds.removeIndicator(id-48);
       delete sounds.sources[id];
     } else {
       var source = sounds.context.createBufferSource();
@@ -35,6 +36,7 @@ var sounds = {
       source.loop = true;
       source.start(0);
       sounds.sources[id] = source;
+      sounds.addIndicator(id-48);
     }
   },
 
@@ -54,6 +56,20 @@ var sounds = {
         request.send();
       })(i);
     }
+  },
+
+  addIndicator: function (id) {
+    var element = document.createElement('div');
+    element.setAttribute('id', 'sound-'+id);
+    element.className = 'sound-indicator';
+    element.innerHTML = id;
+    element.style['top'] = (150 + (id * 25)) + 'px';
+    document.body.appendChild(element);
+  },
+
+  removeIndicator: function (id) {
+    var element = document.getElementById('sound-'+id);
+    element.parentNode.removeChild(element);
   },
 
 };
