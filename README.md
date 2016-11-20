@@ -4,11 +4,11 @@
 
 This virtual space is a general purpose interactive envornment for creating and managing textual data.
 
-Among other things, one can use this tool to:
-- spatially and thematically structure textual data
-- create to-do lists as sticky notes in a virtual environment
-- collaborate creatively in interactive brainstorm sessions
-- view notes in virtual or augmented reality
+Among other things, one can use this tool for:
+- spatially and thematically structuring textual data
+- creating to-do lists as sticky notes in a virtual environment
+- collaborating in creative and interactive brainstorm sessions
+- viewing notes in virtual or augmented reality
 
 [Click here for a live demo](https://rawgit.com/g1eb/g1b-frames/master/)
 
