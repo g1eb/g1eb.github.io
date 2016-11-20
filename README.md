@@ -1,26 +1,24 @@
 # Frames
 
-> **Spacial arrangement of thematically related conceptual data**
+> **Organize thematically related textual data in a virtual space**
 
+This virtual space is a general purpose interactive envornment for creating and managing textual data.
 
-Write and manage textual information in a virtual environment.  
-General purpose is to help memory consolidation and retrieval.  
-Data is displayed around your pov and can be grouped spacially or thematically.  
-Add locations to thematical arrangements to view them in augmented reality at that location.  
+Among other things, one can use this tool to:
+- spatially and thematically structure textual data
+- create to-do lists as sticky notes in a virtual environment
+- collaborate creatively in interactive brainstorm sessions
+- view notes in virtual or augmented reality
 
 [Click here for a live demo](https://rawgit.com/g1eb/g1b-frames/master/)
 
 
-#### Desktop controls:
+#### Controls:
 ```
-- Use numbers to navigate between preset themes.
-- Use arrow keys to navigate between individual frames.
-```
-
-#### Mobile controls:
-```
-- Swipe to move camera around yourself.
-- Move/rotate your phone physically to view content around you.
+- Use mouse or ⇦ ⇨ keys to move camera around
+- Use ⇧ ⇩ keys to switch between themes
+- Press `T` to open themes menu
+- Press `?` to bring up a help section
 ```
 
 ----------------------------------------------------------------
