@@ -30,16 +30,6 @@
   align-items: center;
   justify-content: flex-start;
 }
-.themes .themes-container .themes-column {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: flex-start;
-  max-width: 250px;
-  margin: 0;
-  padding: 0;
-  height: 75%;
-}
 
 
 /**
@@ -94,11 +84,19 @@
 /**
  * List of themes
  */
+.themes .themes-container .themes-column {
+  display: block;
+  width: 310px;
+  height: 75vh;
+  margin-top: 60px;
+  text-align: left;
+  overflow: hidden;
+  overflow-y: auto;
+}
 .themes .themes-container .themes-column .theme {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   position: relative;
+  display: block;
+  width: 250px;
 }
 .themes .themes-container .themes-column .theme .theme-btn {
   min-height: 50px;
