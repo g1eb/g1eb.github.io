@@ -22,8 +22,8 @@
 }
 .menu .menu-container {
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 10vh;
+  left: 5vw;
   z-index: 1000;
   display: flex;
   flex-direction: row;
@@ -36,9 +36,9 @@
   flex-direction: column;
   justify-content: flex-start;
   max-width: 250px;
-  margin: 0 50px;
+  margin: 0;
+  padding: 0;
   height: 75%;
-  padding-top: 10vh;
   overflow: scroll;
 }
 .menu .menu-item {
@@ -53,7 +53,10 @@
   margin: 10px 0;
   opacity: 0.5;
   background: whitesmoke;
-  transition: background-color 0.25s ease-out;
+  transition: opacity 0.25s ease-out;
+}
+.menu .menu-item:first-of-type {
+  margin-top: 0;
 }
 .menu .menu-item:hover {
   opacity: 0.75;

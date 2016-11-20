@@ -51,7 +51,7 @@ var animation = {
     var interval = 100; //ms
 
     new TWEEN.Tween( app.camera.position ).to( {
-      y: 50000,
+      y: 0,
     }, duration ).easing( TWEEN.Easing.Quadratic.Out).start();
 
     new TWEEN.Tween( app.camera.rotation ).to( {

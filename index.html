@@ -12,6 +12,7 @@
   <link rel="stylesheet" type="text/css" href="src/css/animation.css">
   <link rel="stylesheet" type="text/css" href="src/css/settings.css">
   <link rel="stylesheet" type="text/css" href="src/css/frames.css">
+  <link rel="stylesheet" type="text/css" href="src/css/themes.css">
   <link rel="stylesheet" type="text/css" href="src/css/help.css">
   <link rel="stylesheet" type="text/css" href="src/css/misc.css">
   <link rel="stylesheet" type="text/css" href="src/css/menu.css">
@@ -34,6 +35,7 @@
   <script src="src/js/skybox.js"></script>
   <script src="src/js/settings.js"></script>
   <script src="src/js/frames.js"></script>
+  <script src="src/js/themes.js"></script>
   <script src="src/js/device.js"></script>
   <script src="src/js/sounds.js"></script>
   <script src="src/js/events.js"></script>
@@ -62,17 +64,32 @@
 
   <div id="help" class="help">
     <div class="help-container">
-      <h3>This tool is designed to manage spacially related notes</h3>
-      <br/>
-      <br/>
-      <br/>
-      <h3>Click anywhere on the screen to create a new note.</h3>
-      <h3>Select a note to edit it's contents or to remove it.</h3>
-      <h3>Use your mouse or arrow keys to move camera around.</h3>
-      <br/>
-      <br/>
-      <br/>
-      <h3>Press ESC to close this help section.</h2>
+      <h3>Help</h3>
+      <p>This is a general purpose interactive environment to create and manage textual data</p>
+      <ul>
+        <li>it can be used to structure textual data spatially and thematically</li>
+        <li>or to create to-do lists as post-it notes in a virtual environment</li>
+        <li>as well as engage creatively in interactive brainstorm sessions</li>
+      </ul>
+      <h3>Controls</h3>
+      <ul>
+        <li><span>?</span> bring up this help section</li>
+        <li><span>&#8678; &#8680;</span> move camera around</li>
+        <li><span>&#8679; &#8681;</span> switch between themes</li>
+        <li><span>T</span> open themes menu</li>
+        <li><span>1-0</span> play various sounds</li>
+        <li><span>esc</span> close</li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="themes" class="themes">
+    <div class="themes-container">
+      <div class="themes-form">
+        <input id="themes-input--add" class="themes-input--add" type="text" placeholder="new theme" autocomplete="off" tabindex="1"></input>
+        <button id="themes-btn--add" class="themes-btn--add" type="button">+</button>
+      </div>
+      <div id="themes-column" class="themes-column"></div>
     </div>
   </div>
 
@@ -84,19 +101,15 @@
         <label for="settings--color">Color</label>
       </div>
       <div class="settings--input">
-        <input id="settings--background" type="text" autocomplete="off" tabindex="1" required />
+        <input id="settings--background" type="text" autocomplete="off" tabindex="2" required />
         <label for="settings--background">Background</label>
       </div>
       <div class="settings--input">
-        <input id="settings--branding" type="text" autocomplete="off" tabindex="1" required />
+        <input id="settings--branding" type="text" autocomplete="off" tabindex="3" required />
         <label for="settings--branding">Branding image (url)</label>
       </div>
     </div>
-    <div class="settings-buttons">
-      <button id="settings-btn--save" class="settings-btn--save" type="button" tabindex="12">
-        <span>Save</span>
-      </button>
-    </div>
+    <button id="settings-btn--save" class="settings-btn--save" type="button" tabindex="12">Save</button>
   </div>
 
   <div id="frame-edit" class="frame-edit">
@@ -146,14 +159,8 @@
         <label for="frame-edit--c10">10</label>
       </div>
     </div>
-    <div class="frame-edit-buttons">
-      <button id="frame-edit-btn--save" class="frame-edit-btn--save" type="button" tabindex="12">
-        <span>Save</span>
-      </button>
-      <button id="frame-edit-btn--delete" class="frame-edit-btn--delete" type="button" tabindex="13">
-        <span>Delete</span>
-      </button>
-    </div>
+    <button id="frame-edit-btn--save" class="frame-edit-btn--save" type="button" tabindex="12">Save</button>
+    <button id="frame-edit-btn--delete" class="frame-edit-btn--delete" type="button" tabindex="13">Delete</button>
   </div>
 
 </body>
