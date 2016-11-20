@@ -12,6 +12,7 @@ var help = {
   open: function () {
     document.getElementById('help').style.display = 'flex';
     menu.close();
+    themes.close();
   },
 
   close: function () {

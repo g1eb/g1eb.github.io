@@ -18,6 +18,7 @@ var themes = {
     document.getElementById('themes').style.display = 'flex';
     events.bindThemesButtons();
     menu.close();
+    help.close();
   },
 
   close: function () {
