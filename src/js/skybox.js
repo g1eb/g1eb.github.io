@@ -11,6 +11,11 @@ var skybox = {
   },
 
   load: function (texture) {
+    // Add a progress bar for loading indication
+    var progressBar = document.createElement('div');
+    progressBar.className = 'progress-bar';
+    document.body.appendChild(progressBar);
+
     var cubeMap = new THREE.CubeTexture( [] );
     cubeMap.format = THREE.RGBFormat;
 
@@ -34,6 +39,11 @@ var skybox = {
       cubeMap.images[ 4 ] = getSide( 1, 1 ); // pz
       cubeMap.images[ 5 ] = getSide( 3, 1 ); // nz
       cubeMap.needsUpdate = true;
+
+      // Remove progress bar
+      progressBar.parentNode.removeChild(progressBar);
+    }, function (xhr) {
+      progressBar.style.right = (100 - (xhr.loaded / xhr.total * 100)) + 'vw';
     });
 
     var cubeShader = THREE.ShaderLib[ 'cube' ];
