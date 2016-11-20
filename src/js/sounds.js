@@ -25,7 +25,13 @@ var sounds = {
   },
 
   play: function (id) {
-    if ( !!sounds.sources[id] ) {
+    if ( id === 48 ) {
+      for ( var key in sounds.sources ) {
+        sounds.sources[key].loop = false;
+        sounds.removeIndicator(key-48);
+        delete sounds.sources[key];
+      }
+    } else if ( !!sounds.sources[id] ) {
       sounds.sources[id].loop = false;
       sounds.removeIndicator(id-48);
       delete sounds.sources[id];
