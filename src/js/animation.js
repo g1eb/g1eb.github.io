@@ -77,7 +77,6 @@ var animation = {
   },
 
   start: function () {
-    frames.reset();
     animation.startTextAnimation();
     animation.startCameraPanAnimation();
   },
