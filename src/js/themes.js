@@ -19,6 +19,7 @@ var themes = {
     events.bindThemesButtons();
     menu.close();
     help.close();
+    about.close();
   },
 
   close: function () {
