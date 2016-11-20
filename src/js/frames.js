@@ -7,19 +7,9 @@ var frames = {
   settings: {
     width: 1024,
     height: 1024,
-    segments: 1,
-    slices: 1,
     ambientColor: 0xffffff,
     diffuseColor: 0xf5f5f5,
-    transparent: true,
-    opacity: 0.25,
-    positionX: 0,
-    positionZ: 0,
-    rotationX: 0,
-    rotationY: 0,
-    rotationZ: 0,
     distance: 3000,
-    variance: 1000,
   },
 
   active: undefined,
@@ -35,12 +25,7 @@ var frames = {
   },
 
   getGeometry: function () {
-    frames.geometry = new THREE.PlaneGeometry(
-      frames.settings.width,
-      frames.settings.height,
-      frames.settings.segments,
-      frames.settings.slices
-    );
+    frames.geometry = new THREE.PlaneGeometry(frames.settings.width, frames.settings.height, 1, 1);
   },
 
   getMaterial: function () {
@@ -49,8 +34,8 @@ var frames = {
       emissive: frames.settings.diffuseColor,
       side: THREE.DoubleSide,
       shading: THREE.FlatShading,
-      transparent: frames.settings.transparent,
-      opacity: frames.settings.opacity,
+      transparent: true,
+      opacity: 0.25,
     });
   },
 
@@ -211,14 +196,6 @@ var frames = {
 
   isClicked: function (event) {
     return document.getElementById('frame-edit').contains(event.target);
-  },
-
-  reset: function () {
-    for ( var i = 0; i < frames.list.length; i++ ) {
-      frames.list[i].material.transparent = frames.settings.transparent;
-      frames.list[i].material.opacity = frames.settings.opacity;
-    }
-    app.dirty = true;
   },
 
 };
