@@ -47,10 +47,7 @@ var sync = {
     var themeData = {
       created_at: new Date(),
       title: title,
-      color: color,
       locked: false,
-      lat: 0,
-      lng: 0,
     };
 
     var newThemeKey = firebase.database().ref().child('themes').push().key;

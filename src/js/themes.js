@@ -38,7 +38,7 @@ var themes = {
   create: function (event) {
     var element = document.getElementById('themes-input--add');
     if ( !!element.value ) {
-      sync.addTheme(element.value, 'red');
+      sync.addTheme(element.value);
       element.value = '';
     }
   },
