@@ -49,6 +49,7 @@ var groups = {
     if ( !!key ) {
       groups.switchTo(key);
     }
+    groups.close();
   },
 
   add: function (key, group) {
