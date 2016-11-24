@@ -2,17 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Frames</title>
-  <meta name="description" content="Spacial arrangement of thematically related conceptual data">
+  <title>G1B</title>
+  <meta name="description" content="G1B">
   <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width">
   <meta name="theme-color" content="#111111">
   <link rel="shortcut icon" type="text/css" href="src/images/icon.png?">
   <link rel="stylesheet" type="text/css" href="src/css/animation.css">
-  <link rel="stylesheet" type="text/css" href="src/css/settings.css">
-  <link rel="stylesheet" type="text/css" href="src/css/frames.css">
-  <link rel="stylesheet" type="text/css" href="src/css/themes.css">
+  <link rel="stylesheet" type="text/css" href="src/css/notes.css">
+  <link rel="stylesheet" type="text/css" href="src/css/groups.css">
   <link rel="stylesheet" type="text/css" href="src/css/about.css">
   <link rel="stylesheet" type="text/css" href="src/css/help.css">
   <link rel="stylesheet" type="text/css" href="src/css/misc.css">
@@ -32,9 +31,8 @@
 
   <script src="src/js/animation.js"></script>
   <script src="src/js/skybox.js"></script>
-  <script src="src/js/settings.js"></script>
-  <script src="src/js/frames.js"></script>
-  <script src="src/js/themes.js"></script>
+  <script src="src/js/notes.js"></script>
+  <script src="src/js/groups.js"></script>
   <script src="src/js/device.js"></script>
   <script src="src/js/sounds.js"></script>
   <script src="src/js/events.js"></script>
@@ -49,8 +47,8 @@
   <div id="menu" class="menu">
     <div class="menu-container">
       <div class="menu-column">
-        <div id="menu-btn--themes" class="menu-item">
-          <span class="menu-item--title">Themes</span>
+        <div id="menu-btn--groups" class="menu-item">
+          <span class="menu-item--title">Groups</span>
         </div>
         <div id="menu-btn--about" class="menu-item">
           <span class="menu-item--title">About</span>
@@ -82,73 +80,69 @@
       <ul>
         <li><span>?</span> bring up this help section</li>
         <li><span>&#8678; &#8680;</span> move camera around</li>
-        <li><span>&#8679; &#8681;</span> switch between themes</li>
-        <li><span>T</span> open themes menu</li>
+        <li><span>&#8679; &#8681;</span> switch between groups</li>
+        <li><span>T</span> open groups menu</li>
         <li><span>1-0</span> play various sounds</li>
         <li><span>esc</span> close</li>
       </ul>
     </div>
   </div>
 
-  <div id="themes" class="themes">
-    <div class="themes-container">
-      <div class="themes-form">
-        <input id="themes-input--add" class="themes-input--add" type="text" placeholder="new theme" autocomplete="off" tabindex="1"></input>
-        <button id="themes-btn--add" class="themes-btn--add" type="button">+</button>
-      </div>
-      <div id="themes-column" class="themes-column"></div>
+  <div id="groups" class="groups">
+    <div class="groups-container">
+      <div id="groups-column" class="groups-column"></div>
     </div>
   </div>
 
-  <div id="frame-edit" class="frame-edit">
-    <div class="frame-edit-container">
-      <div class="frame-edit--title">
-        <input id="frame-edit--title" type="text" autocomplete="off" tabindex="1" required />
-        <label for="frame-edit--title">Title</label>
+  <div id="note-edit" class="note-edit">
+    <div class="note-edit-container">
+      <div class="note-edit--title">
+        <input id="note-edit--title" type="text" autocomplete="off" tabindex="1" required />
+        <label for="note-edit--title">Title</label>
       </div>
-      <div class="frame-edit--content">
-        <input id="frame-edit--c1" type="text" autocomplete="off" tabindex="2" required />
-        <label for="frame-edit--c1">1</label>
+      <div class="note-edit--content">
+        <input id="note-edit--c1" type="text" autocomplete="off" tabindex="2" required />
+        <label for="note-edit--c1">1</label>
       </div>
-      <div class="frame-edit--content">
-        <input id="frame-edit--c2" type="text" autocomplete="off" tabindex="3" required />
-        <label for="frame-edit--c2">2</label>
+      <div class="note-edit--content">
+        <input id="note-edit--c2" type="text" autocomplete="off" tabindex="3" required />
+        <label for="note-edit--c2">2</label>
       </div>
-      <div class="frame-edit--content">
-        <input id="frame-edit--c3" type="text" autocomplete="off" tabindex="4" required />
-        <label for="frame-edit--c3">3</label>
+      <div class="note-edit--content">
+        <input id="note-edit--c3" type="text" autocomplete="off" tabindex="4" required />
+        <label for="note-edit--c3">3</label>
       </div>
-      <div class="frame-edit--content">
-        <input id="frame-edit--c4" type="text" autocomplete="off" tabindex="5" required />
-        <label for="frame-edit--c4">4</label>
+      <div class="note-edit--content">
+        <input id="note-edit--c4" type="text" autocomplete="off" tabindex="5" required />
+        <label for="note-edit--c4">4</label>
       </div>
-      <div class="frame-edit--content">
-        <input id="frame-edit--c5" type="text" autocomplete="off" tabindex="6" required />
-        <label for="frame-edit--c5">5</label>
+      <div class="note-edit--content">
+        <input id="note-edit--c5" type="text" autocomplete="off" tabindex="6" required />
+        <label for="note-edit--c5">5</label>
       </div>
-      <div class="frame-edit--content">
-        <input id="frame-edit--c6" type="text" autocomplete="off" tabindex="7" required />
-        <label for="frame-edit--c6">6</label>
+      <div class="note-edit--content">
+        <input id="note-edit--c6" type="text" autocomplete="off" tabindex="7" required />
+        <label for="note-edit--c6">6</label>
       </div>
-      <div class="frame-edit--content">
-        <input id="frame-edit--c7" type="text" autocomplete="off" tabindex="8" required />
-        <label for="frame-edit--c7">7</label>
+      <div class="note-edit--content">
+        <input id="note-edit--c7" type="text" autocomplete="off" tabindex="8" required />
+        <label for="note-edit--c7">7</label>
       </div>
-      <div class="frame-edit--content">
-        <input id="frame-edit--c8" type="text" autocomplete="off" tabindex="9" required />
-        <label for="frame-edit--c8">8</label>
+      <div class="note-edit--content">
+        <input id="note-edit--c8" type="text" autocomplete="off" tabindex="9" required />
+        <label for="note-edit--c8">8</label>
       </div>
-      <div class="frame-edit--content">
-        <input id="frame-edit--c9" type="text" autocomplete="off" tabindex="10" required />
-        <label for="frame-edit--c9">9</label>
+      <div class="note-edit--content">
+        <input id="note-edit--c9" type="text" autocomplete="off" tabindex="10" required />
+        <label for="note-edit--c9">9</label>
       </div>
-      <div class="frame-edit--content">
-        <input id="frame-edit--c10" type="text" autocomplete="off" tabindex="11" required />
-        <label for="frame-edit--c10">10</label>
+      <div class="note-edit--content">
+        <input id="note-edit--c10" type="text" autocomplete="off" tabindex="11" required />
+        <label for="note-edit--c10">10</label>
       </div>
     </div>
-    <button id="frame-edit-btn--save" class="frame-edit-btn--save" type="button" tabindex="12">Save</button>
-    <button id="frame-edit-btn--delete" class="frame-edit-btn--delete" type="button" tabindex="13">Delete</button>
+    <button id="note-edit-btn--save" class="note-edit-btn--save" type="button" tabindex="12">Save</button>
+    <button id="note-edit-btn--delete" class="note-edit-btn--delete" type="button" tabindex="13">Delete</button>
   </div>
 
 </body>

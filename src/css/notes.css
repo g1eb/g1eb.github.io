@@ -1,7 +1,7 @@
 /**
- * Frame edit view styles
+ * Note edit view styles
  */
-.frame-edit {
+.note-edit {
   position: fixed;
   display: none;
   top: 10vh;
@@ -28,7 +28,7 @@
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 
-.frame-edit .frame-edit-container {
+.note-edit .note-edit-container {
   position: relative;
   padding: 25px;
   width: 100%;
@@ -41,21 +41,21 @@
   background-color: whitesmoke;
 }
 @media only screen and (max-device-width: 767px) {
-  .frame-edit .frame-edit-container {
+  .note-edit .note-edit-container {
     min-width: 90vw;
     top: 5vh;
     right: 5vw;
   }
 }
 
-.frame-edit .frame-edit-container .frame-edit--title,
-.frame-edit .frame-edit-container .frame-edit--content {
+.note-edit .note-edit-container .note-edit--title,
+.note-edit .note-edit-container .note-edit--content {
   position: relative;
   display: block;
   padding: 25px 0 10px 0;
 }
-.frame-edit .frame-edit-container .frame-edit--title label,
-.frame-edit .frame-edit-container .frame-edit--content label {
+.note-edit .note-edit-container .note-edit--title label,
+.note-edit .note-edit-container .note-edit--content label {
   position: absolute;
   cursor: pointer;
   top: 25%;
@@ -65,8 +65,8 @@
   will-change: font-size;
   transition: all 100ms ease-out;
 }
-.frame-edit .frame-edit-container .frame-edit--title input,
-.frame-edit .frame-edit-container .frame-edit--content input {
+.note-edit .note-edit-container .note-edit--title input,
+.note-edit .note-edit-container .note-edit--content input {
   width: 100%;
   outline: none;
   font-size: 1em;
@@ -78,26 +78,26 @@
   border-style: solid;
   box-shadow: none;
 }
-.frame-edit .frame-edit-container .frame-edit--title input:focus,
-.frame-edit .frame-edit-container .frame-edit--content input:focus {
+.note-edit .note-edit-container .note-edit--title input:focus,
+.note-edit .note-edit-container .note-edit--content input:focus {
   border-color: #777;
 }
-.frame-edit .frame-edit-container .frame-edit--title.active label,
-.frame-edit .frame-edit-container .frame-edit--content.active label,
-.frame-edit .frame-edit-container .frame-edit--title input:focus ~ label,
-.frame-edit .frame-edit-container .frame-edit--title input:valid ~ label,
-.frame-edit .frame-edit-container .frame-edit--content input:focus ~ label,
-.frame-edit .frame-edit-container .frame-edit--content input:valid ~ label {
+.note-edit .note-edit-container .note-edit--title.active label,
+.note-edit .note-edit-container .note-edit--content.active label,
+.note-edit .note-edit-container .note-edit--title input:focus ~ label,
+.note-edit .note-edit-container .note-edit--title input:valid ~ label,
+.note-edit .note-edit-container .note-edit--content input:focus ~ label,
+.note-edit .note-edit-container .note-edit--content input:valid ~ label {
   font-size: 0.75em;
   top: 5%;
 }
 
 
 /**
- * Frame edit action buttons
+ * note edit action buttons
  */
-.frame-edit .frame-edit-btn--save,
-.frame-edit .frame-edit-btn--delete {
+.note-edit .note-edit-btn--save,
+.note-edit .note-edit-btn--delete {
   position: absolute;
   padding: 5px 25px;
   opacity: 0.5;
@@ -113,22 +113,22 @@
   background-color: whitesmoke;
   transition: all 0.25s ease-out;
 }
-.frame-edit .frame-edit-btn--save {
+.note-edit .note-edit-btn--save {
   bottom: -50px;
   left: 0;
 }
-.frame-edit .frame-edit-btn--delete {
+.note-edit .note-edit-btn--delete {
   bottom: -50px;
   right: 0;
 }
-.frame-edit .frame-edit-btn--save:active,
-.frame-edit .frame-edit-btn--save:focus,
-.frame-edit .frame-edit-btn--save:hover {
+.note-edit .note-edit-btn--save:active,
+.note-edit .note-edit-btn--save:focus,
+.note-edit .note-edit-btn--save:hover {
   opacity: 0.75;
 }
-.frame-edit .frame-edit-btn--delete:active,
-.frame-edit .frame-edit-btn--delete:focus,
-.frame-edit .frame-edit-btn--delete:hover {
+.note-edit .note-edit-btn--delete:active,
+.note-edit .note-edit-btn--delete:focus,
+.note-edit .note-edit-btn--delete:hover {
   opacity: 0.75;
   background-color: rgba(255, 54, 46, 0.75);
 }

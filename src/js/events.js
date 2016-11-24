@@ -54,15 +54,15 @@ var events = {
         if ( !help.isClicked(event) ) {
           help.close();
         }
-      } else if ( themes.isActive() ) {
-        if ( !themes.isClicked(event) ) {
-          themes.close();
+      } else if ( groups.isActive() ) {
+        if ( !groups.isClicked(event) ) {
+          groups.close();
         }
       } else {
-        events.clickedFrame = events.getClicked(event, frames.list);
+        events.clickedNote = events.getClicked(event, notes.list);
         events.dragThresholdTimeoutId = window.setTimeout(function () {
-          if ( !frames.isClicked(event) ) {
-            frames.select(event, events.clickedFrame);
+          if ( !notes.isClicked(event) ) {
+            notes.select(event, events.clickedNote);
           }
         }, events.dragThresholdDuration);
       }
@@ -73,27 +73,29 @@ var events = {
     document.removeEventListener('mousemove', events.onDocumentMouseMove);
     document.removeEventListener('mouseup', events.onDocumentMouseUp);
 
-    if ( !!events.clickedFrame ) {
-      sync.updateFramePosition(events.clickedFrame);
+    if ( !!events.clickedNote && !events.clickedNote.data.locked ) {
+      sync.updateNotePosition(events.clickedNote);
     }
   },
 
   onDocumentMouseMove: function (event) {
     window.clearTimeout(events.dragThresholdTimeoutId);
 
-    if ( !menu.isActive() && !themes.isActive() && !about.isActive() && !help.isActive() && !frames.active ) {
+    if ( !menu.isActive() && !groups.isActive() && !about.isActive() && !help.isActive() && !notes.active ) {
       var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
       var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
 
-      if ( !!events.clickedFrame ) {
-        var data = frames.calcPosition(event);
-        events.clickedFrame.position.x = data.xpos;
-        events.clickedFrame.position.y = data.ypos;
-        events.clickedFrame.position.z = data.zpos;
-        events.clickedFrame.rotation.y = data.yrot;
-        events.clickedFrame.text.position.copy(events.clickedFrame.position);
-        events.clickedFrame.text.rotation.copy(events.clickedFrame.rotation);
-        sync.updateFramePosition(events.clickedFrame);
+      if ( !!events.clickedNote ) {
+        if ( !events.clickedNote.data.locked ) {
+          var data = notes.calcPosition(event);
+          events.clickedNote.position.x = data.xpos;
+          events.clickedNote.position.y = data.ypos;
+          events.clickedNote.position.z = data.zpos;
+          events.clickedNote.rotation.y = data.yrot;
+          events.clickedNote.text.position.copy(events.clickedNote.position);
+          events.clickedNote.text.rotation.copy(events.clickedNote.rotation);
+          sync.updateNotePosition(events.clickedNote);
+        }
       } else {
         app.camera.rotation.y += movementX * 0.01;
       }
@@ -102,7 +104,7 @@ var events = {
   },
 
   onDocumentMouseWheel: function (event) {
-    if ( !menu.isActive() && !themes.isActive() && !about.isActive() && !help.isActive() && !frames.active ) {
+    if ( !menu.isActive() && !groups.isActive() && !about.isActive() && !help.isActive() && !notes.active ) {
       animation.reset();
       app.camera.rotation.y += event.deltaY * 0.001;
       app.dirty = true;
@@ -124,7 +126,7 @@ var events = {
       var touch = event.touches[0];
       events.touchX = touch.screenX;
       events.moveThresholdTimeoutId = window.setTimeout(function () {
-        frames.select(event);
+        notes.select(event);
       }, events.moveThresholdDuration);
     }
   },
@@ -150,7 +152,7 @@ var events = {
       }, events.ctrlKeyTimeoutDuration);
     }
 
-    if ( !frames.active ) {
+    if ( !notes.active ) {
       if ( event.keyCode == 37 ) {
         app.camera.rotation.y += 0.0125;
       } else if ( event.keyCode == 39 ) {
@@ -163,39 +165,39 @@ var events = {
   onKeyUp: function (event) {
     window.clearTimeout(events.ctrlKeyTimeout);
     if ( event.keyCode === 27 ) {
-      if ( !!frames.active ) {
-        frames.close();
+      if ( !!notes.active ) {
+        notes.close();
       } else if ( about.isActive() ) {
         about.close();
       } else if ( help.isActive() ) {
         help.close();
-      } else if ( themes.isActive() ) {
-        themes.close();
+      } else if ( groups.isActive() ) {
+        groups.close();
       } else {
         menu.toggleMenu();
       }
     } else if ( event.keyCode === 13 ) {
-      if ( !!frames.active ) {
-        frames.updateActive();
-      } else if ( themes.isActive() ) {
-        themes.create();
+      if ( !!notes.active ) {
+        notes.updateActive();
+      } else if ( groups.isActive() ) {
+        groups.create();
       }
     } else if ( event.keyCode >= 48 && event.keyCode <= 57 ) {
-      if ( themes.isActive() ) {
-        themes.switchTo(Object.keys(themes.all)[event.keyCode-48]);
-      } else if ( !frames.active && !themes.isActive() ) {
+      if ( groups.isActive() ) {
+        groups.switchTo(Object.keys(groups.all)[event.keyCode-48]);
+      } else if ( !notes.active && !groups.isActive() ) {
         sounds.play(event.keyCode);
       }
     } else if ( event.shiftKey && event.keyCode === 191 ) {
-      if ( !frames.active ) {
+      if ( !notes.active ) {
         help.toggle();
       }
-    } else if ( event.keyCode === 84 && !frames.active ) {
-      themes.toggle();
-    } else if ( event.keyCode === 38 && !frames.active ) {
-      themes.moveUp();
-    } else if ( event.keyCode === 40 && !frames.active ) {
-      themes.moveDown();
+    } else if ( event.keyCode === 71 && !notes.active ) {
+      groups.toggle();
+    } else if ( event.keyCode === 38 && !notes.active ) {
+      groups.moveUp();
+    } else if ( event.keyCode === 40 && !notes.active ) {
+      groups.moveDown();
     }
   },
 
@@ -206,36 +208,34 @@ var events = {
     app.dirty = true;
   },
 
-  bindFrameEditButtons: function () {
-    document.getElementById('frame-edit-btn--save').addEventListener('click', frames.updateActive, false);
-    document.getElementById('frame-edit-btn--delete').addEventListener('click', frames.removeActive, false);
+  bindNoteEditButtons: function () {
+    document.getElementById('note-edit-btn--save').addEventListener('click', notes.updateActive, false);
+    document.getElementById('note-edit-btn--delete').addEventListener('click', notes.removeActive, false);
   },
 
-  unbindFrameEditButtons: function () {
-    document.getElementById('frame-edit-btn--save').removeEventListener('click', frames.updateActive, false);
-    document.getElementById('frame-edit-btn--delete').removeEventListener('click', frames.removeActive, false);
+  unbindNoteEditButtons: function () {
+    document.getElementById('note-edit-btn--save').removeEventListener('click', notes.updateActive, false);
+    document.getElementById('note-edit-btn--delete').removeEventListener('click', notes.removeActive, false);
   },
 
   bindMenuButtons: function () {
-    document.getElementById('menu-btn--themes').addEventListener('click', themes.open, false);
+    document.getElementById('menu-btn--groups').addEventListener('click', groups.open, false);
     document.getElementById('menu-btn--about').addEventListener('click', about.open, false);
     document.getElementById('menu-btn--help').addEventListener('click', help.open, false);
   },
 
   unbindMenuButtons: function () {
-    document.getElementById('menu-btn--themes').removeEventListener('click', themes.open, false);
+    document.getElementById('menu-btn--groups').removeEventListener('click', groups.open, false);
     document.getElementById('menu-btn--about').removeEventListener('click', about.open, false);
     document.getElementById('menu-btn--help').removeEventListener('click', help.open, false);
   },
 
-  bindThemesButtons: function () {
-    document.getElementById('themes-column').addEventListener('click', themes.select, false);
-    document.getElementById('themes-btn--add').addEventListener('click', themes.create, false);
+  bindGroupsButtons: function () {
+    document.getElementById('groups-column').addEventListener('click', groups.select, false);
   },
 
-  unbindThemesButtons: function () {
-    document.getElementById('themes-column').removeEventListener('click', themes.select, false);
-    document.getElementById('themes-btn--add').removeEventListener('click', themes.create, false);
+  unbindGroupsButtons: function () {
+    document.getElementById('groups-column').removeEventListener('click', groups.select, false);
   },
 
 };
