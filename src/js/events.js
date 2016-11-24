@@ -232,12 +232,10 @@ var events = {
 
   bindGroupsButtons: function () {
     document.getElementById('groups-column').addEventListener('click', groups.select, false);
-    document.getElementById('groups-btn--add').addEventListener('click', groups.create, false);
   },
 
   unbindGroupsButtons: function () {
     document.getElementById('groups-column').removeEventListener('click', groups.select, false);
-    document.getElementById('groups-btn--add').removeEventListener('click', groups.create, false);
   },
 
 };

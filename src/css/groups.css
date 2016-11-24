@@ -33,69 +33,20 @@
 
 
 /**
- * Add group input
- */
-.groups .groups-container .groups-form {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-.groups .groups-container .groups-form .groups-input--add {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: relative;
-  min-height: 50px;
-  min-width: 250px;
-  cursor: pointer;
-  text-align: center;
-  margin: 0 0 10px 0;
-  padding: 0;
-  opacity: 0.5;
-  color: #333;
-  font-size: 1em;
-  line-height: 2em;
-  border: none;
-  outline: none;
-  background: whitesmoke;
-}
-.groups .groups-container .groups-form .groups-btn--add {
-  position: absolute;
-  top: 0;
-  right: -60px;
-  height: 50px;
-  width: 50px;
-  cursor: pointer;
-  text-align: center;
-  margin: 0 0 10px 0;
-  opacity: 0.5;
-  color: #333;
-  font-size: 1.5em;
-  border: none;
-  outline: none;
-  background: whitesmoke;
-  transition: opacity 0.25s ease-out;
-}
-.groups .groups-container .groups-form .groups-btn--add:hover {
-  opacity: 0.75;
-}
-
-
-/**
  * List of groups
  */
 .groups .groups-container .groups-column {
-  display: block;
-  width: 310px;
-  height: 75vh;
-  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  height: 85vh;
   text-align: left;
   overflow: hidden;
-  overflow-y: auto;
 }
 .groups .groups-container .groups-column .group {
   position: relative;
-  display: block;
+  display: flex;
   width: 250px;
 }
 .groups .groups-container .groups-column .group .group-btn {
@@ -116,31 +67,4 @@
 }
 .groups .groups-container .groups-column .group .group-btn:hover {
   opacity: 0.75;
-}
-.groups .groups-container .groups-column .group .group-btn--del {
-  position: absolute;
-  display: block;
-  width: 50px;
-  height: 50px;
-  right: -30px;
-  top: 0;
-  cursor: pointer;
-  text-align: center;
-  margin: 10px 0;
-  padding: 0;
-  color: #333;
-  opacity: 0;
-  font-size: 1.5em;
-  border: none;
-  outline: none;
-  background-color: whitesmoke;
-  transition: all 0.25s ease-out;
-}
-.groups .groups-container .groups-column .group:hover .group-btn--del {
-  opacity: 0.5;
-  right: -60px;
-}
-.groups .groups-container .groups-column .group .group-btn--del:hover {
-  opacity: 0.75;
-  background-color: rgba(255, 54, 46, 0.75)
 }

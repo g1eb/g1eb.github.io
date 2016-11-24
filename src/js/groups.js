@@ -47,11 +47,7 @@ var groups = {
   select: function (event) {
     var key = event.target.dataset.key;
     if ( !!key ) {
-      if ( event.target.className === 'group-btn--del' ) {
-        sync.removeGroup(key);
-      } else {
-        groups.switchTo(key);
-      }
+      groups.switchTo(key);
     }
   },
 
@@ -59,10 +55,9 @@ var groups = {
     var container = document.getElementById('groups-column');
     var element = document.createElement('div');
     element.append(groups.getGroupButton(key, group.title));
-    element.append(groups.getDelButton(key));
     element.setAttribute('id', 'group-'+key);
     element.className = 'group';
-    container.append(element);
+    container.insertBefore(element, container.childNodes[0]);
 
     groups.all[key] = group;
   },
@@ -72,15 +67,6 @@ var groups = {
     button.setAttribute('data-key', key);
     button.className = 'group-btn';
     button.innerHTML = title;
-    button.type = 'button';
-    return button;
-  },
-
-  getDelButton: function (key) {
-    var button = document.createElement('button');
-    button.setAttribute('data-key', key);
-    button.className = 'group-btn--del';
-    button.innerHTML = '&times;';
     button.type = 'button';
     return button;
   },
