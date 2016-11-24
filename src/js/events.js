@@ -183,11 +183,7 @@ var events = {
         groups.create();
       }
     } else if ( event.keyCode >= 48 && event.keyCode <= 57 ) {
-      if ( groups.isActive() ) {
-        groups.switchTo(Object.keys(groups.all)[event.keyCode-48]);
-      } else if ( !notes.active && !groups.isActive() ) {
-        sounds.play(event.keyCode);
-      }
+      groups.switchTo(Object.keys(groups.all)[event.keyCode-48]);
     } else if ( event.shiftKey && event.keyCode === 191 ) {
       if ( !notes.active ) {
         help.toggle();
