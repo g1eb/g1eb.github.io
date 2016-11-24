@@ -73,7 +73,7 @@ var events = {
     document.removeEventListener('mousemove', events.onDocumentMouseMove);
     document.removeEventListener('mouseup', events.onDocumentMouseUp);
 
-    if ( !!events.clickedNote ) {
+    if ( !!events.clickedNote && !events.clickedNote.data.locked ) {
       sync.updateNotePosition(events.clickedNote);
     }
   },
@@ -86,14 +86,16 @@ var events = {
       var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
 
       if ( !!events.clickedNote ) {
-        var data = notes.calcPosition(event);
-        events.clickedNote.position.x = data.xpos;
-        events.clickedNote.position.y = data.ypos;
-        events.clickedNote.position.z = data.zpos;
-        events.clickedNote.rotation.y = data.yrot;
-        events.clickedNote.text.position.copy(events.clickedNote.position);
-        events.clickedNote.text.rotation.copy(events.clickedNote.rotation);
-        sync.updateNotePosition(events.clickedNote);
+        if ( !events.clickedNote.data.locked ) {
+          var data = notes.calcPosition(event);
+          events.clickedNote.position.x = data.xpos;
+          events.clickedNote.position.y = data.ypos;
+          events.clickedNote.position.z = data.zpos;
+          events.clickedNote.rotation.y = data.yrot;
+          events.clickedNote.text.position.copy(events.clickedNote.position);
+          events.clickedNote.text.rotation.copy(events.clickedNote.rotation);
+          sync.updateNotePosition(events.clickedNote);
+        }
       } else {
         app.camera.rotation.y += movementX * 0.01;
       }
