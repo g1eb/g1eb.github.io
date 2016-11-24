@@ -3,12 +3,12 @@
 var sync = {
 
   init: function () {
-    var firebaseConfig = {
-      apiKey: "AIzaSyA3gqIafZqld758_sYF1aCaaTSxbOsWxIM",
-      authDomain: "frames-5a6a9.firebaseapp.com",
-      databaseURL: "https://frames-5a6a9.firebaseio.com",
-      storageBucket: "frames-5a6a9.appspot.com",
-      messagingSenderId: "890296336721"
+    var config = {
+      apiKey: "AIzaSyDQay2T6KjsxnwmnSTh08TmUS74riTrTwY",
+      authDomain: "g1eb-ec7d8.firebaseapp.com",
+      databaseURL: "https://g1eb-ec7d8.firebaseio.com",
+      storageBucket: "g1eb-ec7d8.appspot.com",
+      messagingSenderId: "1048759821961"
     };
     firebase.initializeApp(firebaseConfig);
   },
