@@ -178,9 +178,7 @@ var notes = {
 
   select: function (event, note) {
     if ( !!note ) {
-      if ( note === notes.active ) {
-        notes.close();
-      } else {
+      if ( !note.data.locked ) {
         notes.close();
         notes.active = note;
         notes.open(notes.active);
