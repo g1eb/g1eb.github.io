@@ -33,7 +33,7 @@ var app = {
 
 
     sync.init();
-    frames.init();
+    notes.init();
     themes.init();
     sounds.init();
     skybox.init();

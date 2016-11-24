@@ -59,10 +59,10 @@ var events = {
           themes.close();
         }
       } else {
-        events.clickedFrame = events.getClicked(event, frames.list);
+        events.clickedNote = events.getClicked(event, notes.list);
         events.dragThresholdTimeoutId = window.setTimeout(function () {
-          if ( !frames.isClicked(event) ) {
-            frames.select(event, events.clickedFrame);
+          if ( !notes.isClicked(event) ) {
+            notes.select(event, events.clickedNote);
           }
         }, events.dragThresholdDuration);
       }
@@ -73,27 +73,27 @@ var events = {
     document.removeEventListener('mousemove', events.onDocumentMouseMove);
     document.removeEventListener('mouseup', events.onDocumentMouseUp);
 
-    if ( !!events.clickedFrame ) {
-      sync.updateFramePosition(events.clickedFrame);
+    if ( !!events.clickedNote ) {
+      sync.updateNotePosition(events.clickedNote);
     }
   },
 
   onDocumentMouseMove: function (event) {
     window.clearTimeout(events.dragThresholdTimeoutId);
 
-    if ( !menu.isActive() && !themes.isActive() && !about.isActive() && !help.isActive() && !frames.active ) {
+    if ( !menu.isActive() && !themes.isActive() && !about.isActive() && !help.isActive() && !notes.active ) {
       var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
       var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
 
-      if ( !!events.clickedFrame ) {
-        var data = frames.calcPosition(event);
-        events.clickedFrame.position.x = data.xpos;
-        events.clickedFrame.position.y = data.ypos;
-        events.clickedFrame.position.z = data.zpos;
-        events.clickedFrame.rotation.y = data.yrot;
-        events.clickedFrame.text.position.copy(events.clickedFrame.position);
-        events.clickedFrame.text.rotation.copy(events.clickedFrame.rotation);
-        sync.updateFramePosition(events.clickedFrame);
+      if ( !!events.clickedNote ) {
+        var data = notes.calcPosition(event);
+        events.clickedNote.position.x = data.xpos;
+        events.clickedNote.position.y = data.ypos;
+        events.clickedNote.position.z = data.zpos;
+        events.clickedNote.rotation.y = data.yrot;
+        events.clickedNote.text.position.copy(events.clickedNote.position);
+        events.clickedNote.text.rotation.copy(events.clickedNote.rotation);
+        sync.updateNotePosition(events.clickedNote);
       } else {
         app.camera.rotation.y += movementX * 0.01;
       }
@@ -102,7 +102,7 @@ var events = {
   },
 
   onDocumentMouseWheel: function (event) {
-    if ( !menu.isActive() && !themes.isActive() && !about.isActive() && !help.isActive() && !frames.active ) {
+    if ( !menu.isActive() && !themes.isActive() && !about.isActive() && !help.isActive() && !notes.active ) {
       animation.reset();
       app.camera.rotation.y += event.deltaY * 0.001;
       app.dirty = true;
@@ -124,7 +124,7 @@ var events = {
       var touch = event.touches[0];
       events.touchX = touch.screenX;
       events.moveThresholdTimeoutId = window.setTimeout(function () {
-        frames.select(event);
+        notes.select(event);
       }, events.moveThresholdDuration);
     }
   },
@@ -150,7 +150,7 @@ var events = {
       }, events.ctrlKeyTimeoutDuration);
     }
 
-    if ( !frames.active ) {
+    if ( !notes.active ) {
       if ( event.keyCode == 37 ) {
         app.camera.rotation.y += 0.0125;
       } else if ( event.keyCode == 39 ) {
@@ -163,8 +163,8 @@ var events = {
   onKeyUp: function (event) {
     window.clearTimeout(events.ctrlKeyTimeout);
     if ( event.keyCode === 27 ) {
-      if ( !!frames.active ) {
-        frames.close();
+      if ( !!notes.active ) {
+        notes.close();
       } else if ( about.isActive() ) {
         about.close();
       } else if ( help.isActive() ) {
@@ -175,26 +175,26 @@ var events = {
         menu.toggleMenu();
       }
     } else if ( event.keyCode === 13 ) {
-      if ( !!frames.active ) {
-        frames.updateActive();
+      if ( !!notes.active ) {
+        notes.updateActive();
       } else if ( themes.isActive() ) {
         themes.create();
       }
     } else if ( event.keyCode >= 48 && event.keyCode <= 57 ) {
       if ( themes.isActive() ) {
         themes.switchTo(Object.keys(themes.all)[event.keyCode-48]);
-      } else if ( !frames.active && !themes.isActive() ) {
+      } else if ( !notes.active && !themes.isActive() ) {
         sounds.play(event.keyCode);
       }
     } else if ( event.shiftKey && event.keyCode === 191 ) {
-      if ( !frames.active ) {
+      if ( !notes.active ) {
         help.toggle();
       }
-    } else if ( event.keyCode === 84 && !frames.active ) {
+    } else if ( event.keyCode === 84 && !notes.active ) {
       themes.toggle();
-    } else if ( event.keyCode === 38 && !frames.active ) {
+    } else if ( event.keyCode === 38 && !notes.active ) {
       themes.moveUp();
-    } else if ( event.keyCode === 40 && !frames.active ) {
+    } else if ( event.keyCode === 40 && !notes.active ) {
       themes.moveDown();
     }
   },
@@ -206,14 +206,14 @@ var events = {
     app.dirty = true;
   },
 
-  bindFrameEditButtons: function () {
-    document.getElementById('frame-edit-btn--save').addEventListener('click', frames.updateActive, false);
-    document.getElementById('frame-edit-btn--delete').addEventListener('click', frames.removeActive, false);
+  bindNoteEditButtons: function () {
+    document.getElementById('note-edit-btn--save').addEventListener('click', notes.updateActive, false);
+    document.getElementById('note-edit-btn--delete').addEventListener('click', notes.removeActive, false);
   },
 
-  unbindFrameEditButtons: function () {
-    document.getElementById('frame-edit-btn--save').removeEventListener('click', frames.updateActive, false);
-    document.getElementById('frame-edit-btn--delete').removeEventListener('click', frames.removeActive, false);
+  unbindNoteEditButtons: function () {
+    document.getElementById('note-edit-btn--save').removeEventListener('click', notes.updateActive, false);
+    document.getElementById('note-edit-btn--delete').removeEventListener('click', notes.removeActive, false);
   },
 
   bindMenuButtons: function () {
