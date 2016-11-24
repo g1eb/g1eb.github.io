@@ -217,15 +217,15 @@ var events = {
   },
 
   bindMenuButtons: function () {
-    document.getElementById('settings-btn--themes').addEventListener('click', themes.open, false);
-    document.getElementById('settings-btn--about').addEventListener('click', about.open, false);
-    document.getElementById('settings-btn--help').addEventListener('click', help.open, false);
+    document.getElementById('menu-btn--themes').addEventListener('click', themes.open, false);
+    document.getElementById('menu-btn--about').addEventListener('click', about.open, false);
+    document.getElementById('menu-btn--help').addEventListener('click', help.open, false);
   },
 
   unbindMenuButtons: function () {
-    document.getElementById('settings-btn--themes').removeEventListener('click', themes.open, false);
-    document.getElementById('settings-btn--about').removeEventListener('click', about.open, false);
-    document.getElementById('settings-btn--help').removeEventListener('click', help.open, false);
+    document.getElementById('menu-btn--themes').removeEventListener('click', themes.open, false);
+    document.getElementById('menu-btn--about').removeEventListener('click', about.open, false);
+    document.getElementById('menu-btn--help').removeEventListener('click', help.open, false);
   },
 
   bindThemesButtons: function () {
