@@ -20,6 +20,7 @@
   bottom: 25px;
   right: 25px;
   z-index: 0;
+  opacity: 0.15;
   pointer-events: none;
 }
 
