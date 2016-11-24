@@ -1,7 +1,7 @@
 /**
- * Themes styles
+ * Groups styles
  */
-.themes {
+.groups {
   display: none;
   margin: 0;
   padding: 0;
@@ -20,7 +20,7 @@
   -webkit-user-select: none;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
-.themes .themes-container {
+.groups .groups-container {
   position: fixed;
   top: 10vh;
   left: 5vw;
@@ -33,14 +33,14 @@
 
 
 /**
- * Add theme input
+ * Add group input
  */
-.themes .themes-container .themes-form {
+.groups .groups-container .groups-form {
   position: absolute;
   top: 0;
   left: 0;
 }
-.themes .themes-container .themes-form .themes-input--add {
+.groups .groups-container .groups-form .groups-input--add {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -59,7 +59,7 @@
   outline: none;
   background: whitesmoke;
 }
-.themes .themes-container .themes-form .themes-btn--add {
+.groups .groups-container .groups-form .groups-btn--add {
   position: absolute;
   top: 0;
   right: -60px;
@@ -76,15 +76,15 @@
   background: whitesmoke;
   transition: opacity 0.25s ease-out;
 }
-.themes .themes-container .themes-form .themes-btn--add:hover {
+.groups .groups-container .groups-form .groups-btn--add:hover {
   opacity: 0.75;
 }
 
 
 /**
- * List of themes
+ * List of groups
  */
-.themes .themes-container .themes-column {
+.groups .groups-container .groups-column {
   display: block;
   width: 310px;
   height: 75vh;
@@ -93,12 +93,12 @@
   overflow: hidden;
   overflow-y: auto;
 }
-.themes .themes-container .themes-column .theme {
+.groups .groups-container .groups-column .group {
   position: relative;
   display: block;
   width: 250px;
 }
-.themes .themes-container .themes-column .theme .theme-btn {
+.groups .groups-container .groups-column .group .group-btn {
   min-height: 50px;
   min-width: 250px;
   cursor: pointer;
@@ -114,10 +114,10 @@
   background: whitesmoke;
   transition: opacity 0.25s ease-out;
 }
-.themes .themes-container .themes-column .theme .theme-btn:hover {
+.groups .groups-container .groups-column .group .group-btn:hover {
   opacity: 0.75;
 }
-.themes .themes-container .themes-column .theme .theme-btn--del {
+.groups .groups-container .groups-column .group .group-btn--del {
   position: absolute;
   display: block;
   width: 50px;
@@ -136,11 +136,11 @@
   background-color: whitesmoke;
   transition: all 0.25s ease-out;
 }
-.themes .themes-container .themes-column .theme:hover .theme-btn--del {
+.groups .groups-container .groups-column .group:hover .group-btn--del {
   opacity: 0.5;
   right: -60px;
 }
-.themes .themes-container .themes-column .theme .theme-btn--del:hover {
+.groups .groups-container .groups-column .group .group-btn--del:hover {
   opacity: 0.75;
   background-color: rgba(255, 54, 46, 0.75)
 }

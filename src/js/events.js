@@ -54,9 +54,9 @@ var events = {
         if ( !help.isClicked(event) ) {
           help.close();
         }
-      } else if ( themes.isActive() ) {
-        if ( !themes.isClicked(event) ) {
-          themes.close();
+      } else if ( groups.isActive() ) {
+        if ( !groups.isClicked(event) ) {
+          groups.close();
         }
       } else {
         events.clickedNote = events.getClicked(event, notes.list);
@@ -81,7 +81,7 @@ var events = {
   onDocumentMouseMove: function (event) {
     window.clearTimeout(events.dragThresholdTimeoutId);
 
-    if ( !menu.isActive() && !themes.isActive() && !about.isActive() && !help.isActive() && !notes.active ) {
+    if ( !menu.isActive() && !groups.isActive() && !about.isActive() && !help.isActive() && !notes.active ) {
       var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
       var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
 
@@ -104,7 +104,7 @@ var events = {
   },
 
   onDocumentMouseWheel: function (event) {
-    if ( !menu.isActive() && !themes.isActive() && !about.isActive() && !help.isActive() && !notes.active ) {
+    if ( !menu.isActive() && !groups.isActive() && !about.isActive() && !help.isActive() && !notes.active ) {
       animation.reset();
       app.camera.rotation.y += event.deltaY * 0.001;
       app.dirty = true;
@@ -171,21 +171,21 @@ var events = {
         about.close();
       } else if ( help.isActive() ) {
         help.close();
-      } else if ( themes.isActive() ) {
-        themes.close();
+      } else if ( groups.isActive() ) {
+        groups.close();
       } else {
         menu.toggleMenu();
       }
     } else if ( event.keyCode === 13 ) {
       if ( !!notes.active ) {
         notes.updateActive();
-      } else if ( themes.isActive() ) {
-        themes.create();
+      } else if ( groups.isActive() ) {
+        groups.create();
       }
     } else if ( event.keyCode >= 48 && event.keyCode <= 57 ) {
-      if ( themes.isActive() ) {
-        themes.switchTo(Object.keys(themes.all)[event.keyCode-48]);
-      } else if ( !notes.active && !themes.isActive() ) {
+      if ( groups.isActive() ) {
+        groups.switchTo(Object.keys(groups.all)[event.keyCode-48]);
+      } else if ( !notes.active && !groups.isActive() ) {
         sounds.play(event.keyCode);
       }
     } else if ( event.shiftKey && event.keyCode === 191 ) {
@@ -193,11 +193,11 @@ var events = {
         help.toggle();
       }
     } else if ( event.keyCode === 84 && !notes.active ) {
-      themes.toggle();
+      groups.toggle();
     } else if ( event.keyCode === 38 && !notes.active ) {
-      themes.moveUp();
+      groups.moveUp();
     } else if ( event.keyCode === 40 && !notes.active ) {
-      themes.moveDown();
+      groups.moveDown();
     }
   },
 
@@ -219,25 +219,25 @@ var events = {
   },
 
   bindMenuButtons: function () {
-    document.getElementById('menu-btn--themes').addEventListener('click', themes.open, false);
+    document.getElementById('menu-btn--groups').addEventListener('click', groups.open, false);
     document.getElementById('menu-btn--about').addEventListener('click', about.open, false);
     document.getElementById('menu-btn--help').addEventListener('click', help.open, false);
   },
 
   unbindMenuButtons: function () {
-    document.getElementById('menu-btn--themes').removeEventListener('click', themes.open, false);
+    document.getElementById('menu-btn--groups').removeEventListener('click', groups.open, false);
     document.getElementById('menu-btn--about').removeEventListener('click', about.open, false);
     document.getElementById('menu-btn--help').removeEventListener('click', help.open, false);
   },
 
-  bindThemesButtons: function () {
-    document.getElementById('themes-column').addEventListener('click', themes.select, false);
-    document.getElementById('themes-btn--add').addEventListener('click', themes.create, false);
+  bindGroupsButtons: function () {
+    document.getElementById('groups-column').addEventListener('click', groups.select, false);
+    document.getElementById('groups-btn--add').addEventListener('click', groups.create, false);
   },
 
-  unbindThemesButtons: function () {
-    document.getElementById('themes-column').removeEventListener('click', themes.select, false);
-    document.getElementById('themes-btn--add').removeEventListener('click', themes.create, false);
+  unbindGroupsButtons: function () {
+    document.getElementById('groups-column').removeEventListener('click', groups.select, false);
+    document.getElementById('groups-btn--add').removeEventListener('click', groups.create, false);
   },
 
 };

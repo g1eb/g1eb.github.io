@@ -11,7 +11,7 @@
   <link rel="shortcut icon" type="text/css" href="src/images/icon.png?">
   <link rel="stylesheet" type="text/css" href="src/css/animation.css">
   <link rel="stylesheet" type="text/css" href="src/css/notes.css">
-  <link rel="stylesheet" type="text/css" href="src/css/themes.css">
+  <link rel="stylesheet" type="text/css" href="src/css/groups.css">
   <link rel="stylesheet" type="text/css" href="src/css/about.css">
   <link rel="stylesheet" type="text/css" href="src/css/help.css">
   <link rel="stylesheet" type="text/css" href="src/css/misc.css">
@@ -32,7 +32,7 @@
   <script src="src/js/animation.js"></script>
   <script src="src/js/skybox.js"></script>
   <script src="src/js/notes.js"></script>
-  <script src="src/js/themes.js"></script>
+  <script src="src/js/groups.js"></script>
   <script src="src/js/device.js"></script>
   <script src="src/js/sounds.js"></script>
   <script src="src/js/events.js"></script>
@@ -47,8 +47,8 @@
   <div id="menu" class="menu">
     <div class="menu-container">
       <div class="menu-column">
-        <div id="menu-btn--themes" class="menu-item">
-          <span class="menu-item--title">Themes</span>
+        <div id="menu-btn--groups" class="menu-item">
+          <span class="menu-item--title">Groups</span>
         </div>
         <div id="menu-btn--about" class="menu-item">
           <span class="menu-item--title">About</span>
@@ -80,21 +80,21 @@
       <ul>
         <li><span>?</span> bring up this help section</li>
         <li><span>&#8678; &#8680;</span> move camera around</li>
-        <li><span>&#8679; &#8681;</span> switch between themes</li>
-        <li><span>T</span> open themes menu</li>
+        <li><span>&#8679; &#8681;</span> switch between groups</li>
+        <li><span>T</span> open groups menu</li>
         <li><span>1-0</span> play various sounds</li>
         <li><span>esc</span> close</li>
       </ul>
     </div>
   </div>
 
-  <div id="themes" class="themes">
-    <div class="themes-container">
-      <div class="themes-form">
-        <input id="themes-input--add" class="themes-input--add" type="text" placeholder="new theme" autocomplete="off" tabindex="1"></input>
-        <button id="themes-btn--add" class="themes-btn--add" type="button">+</button>
+  <div id="groups" class="groups">
+    <div class="groups-container">
+      <div class="groups-form">
+        <input id="groups-input--add" class="groups-input--add" type="text" placeholder="new group" autocomplete="off" tabindex="1"></input>
+        <button id="groups-btn--add" class="groups-btn--add" type="button">+</button>
       </div>
-      <div id="themes-column" class="themes-column"></div>
+      <div id="groups-column" class="groups-column"></div>
     </div>
   </div>
 

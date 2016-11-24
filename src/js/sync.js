@@ -13,46 +13,43 @@ var sync = {
     firebase.initializeApp(firebaseConfig);
   },
 
-  getThemes: function () {
-    var themesRef = firebase.database().ref().child('themes');
-    themesRef.on('child_added', function(snapshot) {
-      themes.add(snapshot.key, snapshot.val());
+  getGroups: function () {
+    var groupsRef = firebase.database().ref().child('groups');
+    groupsRef.on('child_added', function(snapshot) {
+      groups.add(snapshot.key, snapshot.val());
     });
-    themesRef.on('child_changed', function(snapshot) {
-      themes.update(snapshot.key, snapshot.val());
+    groupsRef.on('child_changed', function(snapshot) {
+      groups.update(snapshot.key, snapshot.val());
     });
-    themesRef.on('child_removed', function(snapshot) {
-      themes.remove(snapshot.key);
+    groupsRef.on('child_removed', function(snapshot) {
+      groups.remove(snapshot.key);
     });
   },
 
-  addTheme: function (title, color) {
-    var themeData = {
+  addGroup: function (title) {
+    var groupData = {
       created_at: new Date(),
       title: title,
     };
 
-    var newThemeKey = firebase.database().ref().child('themes').push().key;
+    var newGroupKey = firebase.database().ref().child('groups').push().key;
 
     var updates = {};
-    updates['/themes/' + newThemeKey] = themeData;
+    updates['/groups/' + newGroupKey] = groupData;
 
     firebase.database().ref().update(updates);
-    return newThemeKey;
+    return newGroupKey;
   },
 
-  updateTheme: function (theme) {
-    firebase.database().ref().child('themes').child(themes.key).update({
+  updateGroup: function (group) {
+    firebase.database().ref().child('groups').child(groups.key).update({
       updated_at: new Date(),
-      title: theme.title,
-      color: theme.color,
-      lat: theme.lat,
-      lng: theme.lng,
+      title: group.title,
     });
   },
 
-  removeTheme: function (key) {
-    firebase.database().ref().child('themes').child(key).remove();
+  removeGroup: function (key) {
+    firebase.database().ref().child('groups').child(key).remove();
   },
 
   getNotes: function () {
