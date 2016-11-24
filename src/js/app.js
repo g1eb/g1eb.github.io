@@ -31,13 +31,12 @@ var app = {
       app.controls = new THREE.DeviceOrientationControls( app.camera );
     }
 
-    skybox.load();
 
-    dev.init();
     sync.init();
     frames.init();
     themes.init();
     sounds.init();
+    skybox.init();
     events.init();
     animation.init();
   
@@ -58,8 +57,6 @@ var app = {
       app.renderer.render(app.scene, app.camera);
       app.dirty = false;
     }
-
-    dev.updateStats();
   },
 
 };
