@@ -34,7 +34,6 @@ var app = {
     sync.init();
     notes.init();
     groups.init();
-    sounds.init();
     skybox.init();
     events.init();
     animation.init();

@@ -10,7 +10,7 @@ var sync = {
       storageBucket: "g1eb-ec7d8.appspot.com",
       messagingSenderId: "1048759821961"
     };
-    firebase.initializeApp(firebaseConfig);
+    firebase.initializeApp(config);
   },
 
   getGroups: function () {
