@@ -29,16 +29,13 @@ var app = {
 
     if ( device.isMobile() ) {
       app.controls = new THREE.DeviceOrientationControls( app.camera );
-      device.streamVideo();
-    } else {
-      skybox.load();
     }
 
     sync.init();
     frames.init();
     themes.init();
     sounds.init();
-    settings.init();
+    skybox.init();
     events.init();
     animation.init();
   

@@ -25,10 +25,10 @@
 <body>
   <script src="https://www.gstatic.com/firebasejs/3.5.3/firebase.js"></script>
 
-  <script src="lib/three.min.js"></script>
-  <script src="lib/Detector.js"></script>
-  <script src="lib/DeviceOrientationControls.js"></script>
-  <script src="lib/tween.min.js"></script>
+  <script src="https://cdn.rawgit.com/mrdoob/three.js/r82/build/three.min.js"></script>
+  <script src="https://cdn.rawgit.com/mrdoob/three.js/r82/examples/js/Detector.js"></script>
+  <script src="https://cdn.rawgit.com/mrdoob/three.js/r82/examples/js/controls/DeviceOrientationControls.js"></script>
+  <script src="https://cdn.rawgit.com/mrdoob/three.js/r82/examples/js/libs/tween.min.js"></script>
 
   <script src="src/js/animation.js"></script>
   <script src="src/js/skybox.js"></script>
@@ -49,16 +49,13 @@
   <div id="menu" class="menu">
     <div class="menu-container">
       <div class="menu-column">
-        <div id="settings-btn--themes" class="menu-item">
+        <div id="menu-btn--themes" class="menu-item">
           <span class="menu-item--title">Themes</span>
         </div>
-        <div id="settings-btn--settings" class="menu-item">
-          <span class="menu-item--title">Settings</span>
-        </div>
-        <div id="settings-btn--about" class="menu-item">
+        <div id="menu-btn--about" class="menu-item">
           <span class="menu-item--title">About</span>
         </div>
-        <div id="settings-btn--help" class="menu-item">
+        <div id="menu-btn--help" class="menu-item">
           <span class="menu-item--title">Help</span>
         </div>
       </div>
@@ -101,25 +98,6 @@
       </div>
       <div id="themes-column" class="themes-column"></div>
     </div>
-  </div>
-
-  <div id="settings" class="settings">
-    <div class="settings-container">
-      <h1 class="settings--title">Settings</h1>
-      <div class="settings--input">
-        <input id="settings--color" type="text" autocomplete="off" tabindex="1" required />
-        <label for="settings--color">Color</label>
-      </div>
-      <div class="settings--input">
-        <input id="settings--background" type="text" autocomplete="off" tabindex="2" required />
-        <label for="settings--background">Background</label>
-      </div>
-      <div class="settings--input">
-        <input id="settings--branding" type="text" autocomplete="off" tabindex="3" required />
-        <label for="settings--branding">Branding image (url)</label>
-      </div>
-    </div>
-    <button id="settings-btn--save" class="settings-btn--save" type="button" tabindex="12">Save</button>
   </div>
 
   <div id="frame-edit" class="frame-edit">
