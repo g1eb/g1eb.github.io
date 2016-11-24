@@ -14,14 +14,14 @@ var sync = {
   },
 
   getThemes: function () {
-    var framesRef = firebase.database().ref().child('themes');
-    framesRef.on('child_added', function(snapshot) {
+    var themesRef = firebase.database().ref().child('themes');
+    themesRef.on('child_added', function(snapshot) {
       themes.add(snapshot.key, snapshot.val());
     });
-    framesRef.on('child_changed', function(snapshot) {
+    themesRef.on('child_changed', function(snapshot) {
       themes.update(snapshot.key, snapshot.val());
     });
-    framesRef.on('child_removed', function(snapshot) {
+    themesRef.on('child_removed', function(snapshot) {
       themes.remove(snapshot.key);
     });
   },
