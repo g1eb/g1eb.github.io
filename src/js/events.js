@@ -192,7 +192,7 @@ var events = {
       if ( !notes.active ) {
         help.toggle();
       }
-    } else if ( event.keyCode === 84 && !notes.active ) {
+    } else if ( event.keyCode === 71 && !notes.active ) {
       groups.toggle();
     } else if ( event.keyCode === 38 && !notes.active ) {
       groups.moveUp();
