@@ -38,7 +38,6 @@ var app = {
     frames.init();
     themes.init();
     sounds.init();
-    settings.init();
     events.init();
     animation.init();
   

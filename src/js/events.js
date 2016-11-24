@@ -58,10 +58,6 @@ var events = {
         if ( !themes.isClicked(event) ) {
           themes.close();
         }
-      } else if ( settings.isActive() ) {
-        if ( !settings.isClicked(event) ) {
-          settings.close();
-        }
       } else {
         events.clickedFrame = events.getClicked(event, frames.list);
         events.dragThresholdTimeoutId = window.setTimeout(function () {
@@ -85,7 +81,7 @@ var events = {
   onDocumentMouseMove: function (event) {
     window.clearTimeout(events.dragThresholdTimeoutId);
 
-    if ( !menu.isActive() && !settings.isActive() && !themes.isActive() && !about.isActive() && !help.isActive() && !frames.active ) {
+    if ( !menu.isActive() && !themes.isActive() && !about.isActive() && !help.isActive() && !frames.active ) {
       var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
       var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
 
@@ -106,7 +102,7 @@ var events = {
   },
 
   onDocumentMouseWheel: function (event) {
-    if ( !menu.isActive() && !settings.isActive() && !themes.isActive() && !about.isActive() && !help.isActive() && !frames.active ) {
+    if ( !menu.isActive() && !themes.isActive() && !about.isActive() && !help.isActive() && !frames.active ) {
       animation.reset();
       app.camera.rotation.y += event.deltaY * 0.001;
       app.dirty = true;
@@ -154,7 +150,7 @@ var events = {
       }, events.ctrlKeyTimeoutDuration);
     }
 
-    if ( !frames.active && !settings.isActive() ) {
+    if ( !frames.active ) {
       if ( event.keyCode == 37 ) {
         app.camera.rotation.y += 0.0125;
       } else if ( event.keyCode == 39 ) {
@@ -175,8 +171,6 @@ var events = {
         help.close();
       } else if ( themes.isActive() ) {
         themes.close();
-      } else if ( settings.isActive() ) {
-        settings.close();
       } else {
         menu.toggleMenu();
       }
@@ -185,8 +179,6 @@ var events = {
         frames.updateActive();
       } else if ( themes.isActive() ) {
         themes.create();
-      } else if ( settings.isActive() ) {
-        settings.update();
       }
     } else if ( event.keyCode >= 48 && event.keyCode <= 57 ) {
       if ( themes.isActive() ) {
@@ -195,7 +187,7 @@ var events = {
         sounds.play(event.keyCode);
       }
     } else if ( event.shiftKey && event.keyCode === 191 ) {
-      if ( !frames.active && !settings.isActive() ) {
+      if ( !frames.active ) {
         help.toggle();
       }
     } else if ( event.keyCode === 84 && !frames.active ) {
@@ -226,14 +218,12 @@ var events = {
 
   bindMenuButtons: function () {
     document.getElementById('settings-btn--themes').addEventListener('click', themes.open, false);
-    document.getElementById('settings-btn--settings').addEventListener('click', settings.open, false);
     document.getElementById('settings-btn--about').addEventListener('click', about.open, false);
     document.getElementById('settings-btn--help').addEventListener('click', help.open, false);
   },
 
   unbindMenuButtons: function () {
     document.getElementById('settings-btn--themes').removeEventListener('click', themes.open, false);
-    document.getElementById('settings-btn--settings').removeEventListener('click', settings.open, false);
     document.getElementById('settings-btn--about').removeEventListener('click', about.open, false);
     document.getElementById('settings-btn--help').removeEventListener('click', help.open, false);
   },
@@ -246,14 +236,6 @@ var events = {
   unbindThemesButtons: function () {
     document.getElementById('themes-column').removeEventListener('click', themes.select, false);
     document.getElementById('themes-btn--add').removeEventListener('click', themes.create, false);
-  },
-
-  bindSettingsButtons: function () {
-    document.getElementById('settings-btn--save').addEventListener('click', settings.update, false);
-  },
-
-  unbindSettingsButtons: function () {
-    document.getElementById('settings-btn--save').removeEventListener('click', settings.update, false);
   },
 
 };

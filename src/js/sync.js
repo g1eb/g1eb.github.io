@@ -13,23 +13,6 @@ var sync = {
     firebase.initializeApp(firebaseConfig);
   },
 
-  getSettings: function () {
-    var settingsRef = firebase.database().ref().child('settings');
-    settingsRef.once('value').then(function(snapshot) {
-      settings.data = snapshot.val();
-      settings.setBranding();
-    });
-  },
-
-  updateSettings: function (data) {
-    var settingsRef = firebase.database().ref().child('settings');
-    settingsRef.update({
-      color: data.color,
-      background: data.background,
-      branding: data.branding,
-    });
-  },
-
   getThemes: function () {
     var framesRef = firebase.database().ref().child('themes');
     framesRef.on('child_added', function(snapshot) {
