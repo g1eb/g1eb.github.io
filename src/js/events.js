@@ -146,20 +146,12 @@ var events = {
   },
 
   onKeyDown: function (event) {
+    animation.reset();
     if ( event.ctrlKey ) {
       events.ctrlKeyTimeoutId = window.setTimeout(function () {
         // open ctrl module
       }, events.ctrlKeyTimeoutDuration);
     }
-
-    if ( !notes.active ) {
-      if ( event.keyCode == 37 ) {
-        app.camera.rotation.y += 0.0125;
-      } else if ( event.keyCode == 39 ) {
-        app.camera.rotation.y -= 0.0125;
-      }
-    }
-    app.dirty = true;
   },
 
   onKeyUp: function (event) {
