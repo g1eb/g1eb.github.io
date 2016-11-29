@@ -196,4 +196,34 @@ var notes = {
     return document.getElementById('note-edit').contains(event.target);
   },
 
+  getGroup: function () {
+    var arr = [];
+    for ( var i = 0; i < notes.list.length; i++ ) {
+      var note = notes.list[i];
+      if ( note.position.y < app.camera.position.y + groups.height / 2 &&
+        note.position.y > app.camera.position.y - groups.height / 2 ) {
+        arr.push(note);
+      }
+    }
+    return arr.sort(function(a, b) { return a.rotation.y < b.rotation.y;})
+  },
+
+  getClosest: function (group) {
+    return group.reduce(function (prev, curr) {
+      return (Math.abs(curr.rotation.y - app.camera.rotation.y) < Math.abs(prev.rotation.y - app.camera.rotation.y) ? curr : prev);
+    });
+  },
+
+  getPrev: function () {
+    var group = notes.getGroup();
+    var closest = group.indexOf(notes.getClosest(group));
+    return group[closest == 0 ? group.length-1 : closest-1];
+  },
+
+  getNext: function () {
+    var group = notes.getGroup();
+    var closest = group.indexOf(notes.getClosest(group));
+    return group[closest == group.length-1 ? 0 : closest+1];
+  },
+
 };
