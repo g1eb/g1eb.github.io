@@ -226,4 +226,45 @@ var notes = {
     return group[closest == group.length-1 ? 0 : closest+1];
   },
 
+  getRotation: function (note) {
+    var note_rotation = note.rotation.y;
+    var camera_rotation = app.camera.rotation.y;
+
+    if (camera_rotation > 0 && note_rotation < 0 &&
+        Math.abs(camera_rotation - note_rotation) > Math.PI) {
+      note_rotation = note_rotation + Math.PI * 2;
+    } else if (camera_rotation <= 0 && note_rotation > 0 &&
+        Math.abs(camera_rotation - note_rotation) > Math.PI) {
+      note_rotation = note_rotation - Math.PI * 2;
+    }
+
+    return note_rotation;
+  },
+
+  switchTo: function (note) {
+    if ( !!notes.switchIntervalId ) {
+      return;
+    }
+
+    console.log(app.camera.rotation.y, rotation)
+    var duration = 500; //ms
+    var interval = 100; //ms
+
+    new TWEEN.Tween(app.camera.rotation).to({
+      y: notes.getRotation(note),
+    }, duration).easing(TWEEN.Easing.Quadratic.Out).start();
+
+    notes.switchIntervalId = window.setInterval(function () {
+      TWEEN.update();
+      app.dirty = true;
+    }, interval);
+
+    window.setTimeout(function (note) {
+      notes.switchIntervalId = window.clearInterval(notes.switchIntervalId);
+
+      // reset camera rotation to original note rotation
+      app.camera.rotation.y = note.rotation.y;
+    }, duration, note);
+  },
+
 };
