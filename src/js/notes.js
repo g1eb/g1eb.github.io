@@ -246,7 +246,6 @@ var notes = {
       return;
     }
 
-    console.log(app.camera.rotation.y, rotation)
     var duration = 500; //ms
     var interval = 100; //ms
 
