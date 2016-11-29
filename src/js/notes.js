@@ -196,4 +196,74 @@ var notes = {
     return document.getElementById('note-edit').contains(event.target);
   },
 
+  getGroup: function () {
+    var arr = [];
+    for ( var i = 0; i < notes.list.length; i++ ) {
+      var note = notes.list[i];
+      if ( note.position.y < app.camera.position.y + groups.height / 2 &&
+        note.position.y > app.camera.position.y - groups.height / 2 ) {
+        arr.push(note);
+      }
+    }
+    return arr.sort(function(a, b) { return a.rotation.y < b.rotation.y;})
+  },
+
+  getClosest: function (group) {
+    return group.reduce(function (prev, curr) {
+      return (Math.abs(curr.rotation.y - app.camera.rotation.y) < Math.abs(prev.rotation.y - app.camera.rotation.y) ? curr : prev);
+    });
+  },
+
+  getPrev: function () {
+    var group = notes.getGroup();
+    var closest = group.indexOf(notes.getClosest(group));
+    return group[closest == 0 ? group.length-1 : closest-1];
+  },
+
+  getNext: function () {
+    var group = notes.getGroup();
+    var closest = group.indexOf(notes.getClosest(group));
+    return group[closest == group.length-1 ? 0 : closest+1];
+  },
+
+  getRotation: function (note) {
+    var note_rotation = note.rotation.y;
+    var camera_rotation = app.camera.rotation.y;
+
+    if (camera_rotation > 0 && note_rotation < 0 &&
+        Math.abs(camera_rotation - note_rotation) > Math.PI) {
+      note_rotation = note_rotation + Math.PI * 2;
+    } else if (camera_rotation <= 0 && note_rotation > 0 &&
+        Math.abs(camera_rotation - note_rotation) > Math.PI) {
+      note_rotation = note_rotation - Math.PI * 2;
+    }
+
+    return note_rotation;
+  },
+
+  switchTo: function (note) {
+    if ( !!notes.switchIntervalId ) {
+      return;
+    }
+
+    var duration = 500; //ms
+    var interval = 100; //ms
+
+    new TWEEN.Tween(app.camera.rotation).to({
+      y: notes.getRotation(note),
+    }, duration).easing(TWEEN.Easing.Quadratic.Out).start();
+
+    notes.switchIntervalId = window.setInterval(function () {
+      TWEEN.update();
+      app.dirty = true;
+    }, interval);
+
+    window.setTimeout(function (note) {
+      notes.switchIntervalId = window.clearInterval(notes.switchIntervalId);
+
+      // reset camera rotation to original note rotation
+      app.camera.rotation.y = note.rotation.y;
+    }, duration, note);
+  },
+
 };

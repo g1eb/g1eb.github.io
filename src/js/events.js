@@ -146,20 +146,12 @@ var events = {
   },
 
   onKeyDown: function (event) {
+    animation.reset();
     if ( event.ctrlKey ) {
       events.ctrlKeyTimeoutId = window.setTimeout(function () {
         // open ctrl module
       }, events.ctrlKeyTimeoutDuration);
     }
-
-    if ( !notes.active ) {
-      if ( event.keyCode == 37 ) {
-        app.camera.rotation.y += 0.0125;
-      } else if ( event.keyCode == 39 ) {
-        app.camera.rotation.y -= 0.0125;
-      }
-    }
-    app.dirty = true;
   },
 
   onKeyUp: function (event) {
@@ -190,8 +182,12 @@ var events = {
       }
     } else if ( event.keyCode === 71 && !notes.active ) {
       groups.toggle();
+    } else if ( event.keyCode === 37 && !notes.active ) {
+      notes.switchTo(notes.getPrev());
     } else if ( event.keyCode === 38 && !notes.active ) {
       groups.moveUp();
+    } else if ( event.keyCode === 39 && !notes.active ) {
+      notes.switchTo(notes.getNext());
     } else if ( event.keyCode === 40 && !notes.active ) {
       groups.moveDown();
     }
