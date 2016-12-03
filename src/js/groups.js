@@ -110,7 +110,7 @@ if ( index == 5 ) { debugger};
       return;
     }
 
-    var duration = 500; //ms
+    var duration = 300; //ms
     var interval = 100; //ms
 
     // group position (based on groups reserved height)
