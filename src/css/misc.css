@@ -1,3 +1,7 @@
+body {
+  background: #111111;
+}
+
 .background-video {
   position: fixed;
   top: 50%;
@@ -31,5 +35,5 @@
   right: 0;
   height: 1vh;
   opacity: 0.75;
-  background: #333;
+  background: whitesmoke;
 }
