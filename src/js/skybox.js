@@ -42,6 +42,7 @@ var skybox = {
 
       // Remove progress bar
       progressBar.parentNode.removeChild(progressBar);
+      app.dirty = true;
     }, function (xhr) {
       progressBar.style.right = (100 - (xhr.loaded / xhr.total * 100)) + 'vw';
     });
@@ -63,7 +64,6 @@ var skybox = {
     );
 
     app.scene.add(skybox.mesh);
-    app.dirty = true;
   },
 
   remove: function () {
