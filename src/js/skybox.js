@@ -9,10 +9,7 @@ var skybox = {
   },
 
   load: function () {
-    // Add a progress bar
-    var progressBar = document.createElement('div');
-    progressBar.className = 'progress-bar';
-    document.body.appendChild(progressBar);
+    progressBar.init();
 
     var loader = new THREE.ImageLoader();
     loader.load(skybox.texture, function ( image ) {
@@ -45,12 +42,11 @@ var skybox = {
       );
       skyboxMesh.applyMatrix(new THREE.Matrix4().makeScale(1, 1, -1));
       app.scene.add(skyboxMesh);
-
-      // Remove progress bar
-      progressBar.parentNode.removeChild(progressBar);
       app.dirty = true;
+
+      progressBar.remove();
     }, function (xhr) {
-      progressBar.style.right = (100 - (xhr.loaded / xhr.total * 100)) + 'vw';
+      progressBar.set((100 - (xhr.loaded / xhr.total * 100)) + 'vw');
     });
 
   },
