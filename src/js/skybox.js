@@ -14,24 +14,30 @@ var skybox = {
     progressBar.className = 'progress-bar';
     document.body.appendChild(progressBar);
 
-    var materials = [];
     var loader = new THREE.ImageLoader();
     loader.load(skybox.texture, function ( image ) {
 
+      var size = 1024;
       var canvas, context, texture;
-      var size = image.height;
-
-      for ( var i = 0; i < 6; i++ ) {
-        canvas = document.createElement( 'canvas' );
-        context = canvas.getContext( '2d' );
+      var getSide = function (x, y) {
+        canvas = document.createElement('canvas');
+        context = canvas.getContext('2d');
         canvas.height = size;
         canvas.width = size;
-        context.drawImage(image, size*i, 0, size, size, 0, 0, size, size);
+        context.drawImage(image, x*size, y*size, size, size, 0, 0, size, size);
         texture = new THREE.Texture();
         texture.image = canvas;
         texture.needsUpdate = true;
-        materials.push(new THREE.MeshBasicMaterial({map: texture}));
+        return new THREE.MeshBasicMaterial({map: texture});
       }
+
+      var materials = [];
+      materials.push(getSide(2, 1)); // posx
+      materials.push(getSide(0, 1)); // negx
+      materials.push(getSide(1, 0)); // posy
+      materials.push(getSide(1, 2)); // negy
+      materials.push(getSide(1, 1)); // posz
+      materials.push(getSide(3, 1)); // negz
 
       var skyboxMesh = new THREE.Mesh(
         new THREE.BoxGeometry(size*1000, size*1000, size*1000),
