@@ -87,7 +87,6 @@ var groups = {
   },
 
   moveUp: function () {
-if ( index == 5 ) { debugger};
     var index = app.camera.position.y / groups.height;
     if ( index === Object.keys(groups.all).length-1 ) {
       groups.switchTo(Object.keys(groups.all)[0]);
