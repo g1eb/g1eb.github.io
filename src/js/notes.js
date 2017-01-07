@@ -246,7 +246,7 @@ var notes = {
       return;
     }
 
-    var duration = 300; //ms
+    var duration = 500; //ms
     var interval = 100; //ms
 
     new TWEEN.Tween(app.camera.rotation).to({
