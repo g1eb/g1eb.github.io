@@ -16,13 +16,13 @@ var app = {
     app.renderer.setSize( window.innerWidth, window.innerHeight );
     app.renderer.setClearColor( 0x000000, 0 );
     document.body.appendChild( app.renderer.domElement );
-  
+
     app.scene = new THREE.Scene();
-  
+
     app.camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 5000000 );
     app.camera.position.y = 100000;
     app.camera.rotation.y = 0;
-  
+
     var light = new THREE.AmbientLight( 0xffffff );
     app.scene.add(light);
 
@@ -36,7 +36,7 @@ var app = {
     skybox.init();
     events.init();
     animation.init();
-  
+
     app.render();
   },
 
