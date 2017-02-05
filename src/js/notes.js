@@ -47,6 +47,7 @@ var notes = {
     var xoffset = event.clientX - window.innerWidth / 2;
     var yoffset = event.clientY - window.innerHeight / 2;
     var angleY = app.camera.rotation.y - hsf * xoffset / (window.innerWidth * hfov);
+    angleY = angleY - (Math.floor(angleY / (2 * Math.PI)) * 2 * Math.PI);
     var angleX = -1 * vsf * yoffset / (window.innerHeight * vfov);
 
     return {
