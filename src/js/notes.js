@@ -227,21 +227,6 @@ var notes = {
     return group[closest == group.length-1 ? 0 : closest+1];
   },
 
-  getRotation: function (note) {
-    var note_rotation = note.rotation.y;
-    var camera_rotation = app.camera.rotation.y;
-
-    if (camera_rotation > 0 && note_rotation < 0 &&
-        Math.abs(camera_rotation - note_rotation) > Math.PI) {
-      note_rotation = note_rotation + Math.PI * 2;
-    } else if (camera_rotation <= 0 && note_rotation > 0 &&
-        Math.abs(camera_rotation - note_rotation) > Math.PI) {
-      note_rotation = note_rotation - Math.PI * 2;
-    }
-
-    return note_rotation;
-  },
-
   switchTo: function (note) {
     if ( !!notes.switchIntervalId ) {
       return;
@@ -251,7 +236,7 @@ var notes = {
     var interval = 100; //ms
 
     new TWEEN.Tween(app.camera.rotation).to({
-      y: notes.getRotation(note),
+      y: note.rotation.y,
     }, duration).easing(TWEEN.Easing.Quadratic.Out).start();
 
     notes.switchIntervalId = window.setInterval(function () {
