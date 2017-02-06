@@ -151,9 +151,9 @@ var events = {
       events.ctrlKeyTimeoutId = window.setTimeout(function () {
         // open ctrl module
       }, events.ctrlKeyTimeoutDuration);
-    } else if ( event.keyCode === 37 && !notes.active ) {
+    } else if ( ( event.keyCode === 37 || event.keyCode === 72 ) && !notes.active ) {
       app.camera.rotation.y += 0.05;
-    } else if ( event.keyCode === 39 && !notes.active ) {
+    } else if ( ( event.keyCode === 39 || event.keyCode === 76 ) && !notes.active ) {
       app.camera.rotation.y -= 0.05;
     }
     app.dirty = true;
@@ -187,9 +187,9 @@ var events = {
       }
     } else if ( event.keyCode === 71 && !notes.active ) {
       groups.toggle();
-    } else if ( event.keyCode === 38 && !notes.active ) {
+    } else if ( ( event.keyCode === 38 || event.keyCode === 75 ) && !notes.active ) {
       groups.moveUp();
-    } else if ( event.keyCode === 40 && !notes.active ) {
+    } else if ( ( event.keyCode === 40 || event.keyCode === 74 ) && !notes.active ) {
       groups.moveDown();
     } else if ( event.keyCode === 78 && !notes.active ) {
       notes.switchTo(notes.getNext());
