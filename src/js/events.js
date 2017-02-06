@@ -191,6 +191,10 @@ var events = {
       groups.moveUp();
     } else if ( event.keyCode === 40 && !notes.active ) {
       groups.moveDown();
+    } else if ( event.keyCode === 78 && !notes.active ) {
+      notes.switchTo(notes.getNext());
+    } else if ( event.keyCode === 80 && !notes.active ) {
+      notes.switchTo(notes.getPrev());
     }
   },
 
