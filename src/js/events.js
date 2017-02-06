@@ -151,7 +151,12 @@ var events = {
       events.ctrlKeyTimeoutId = window.setTimeout(function () {
         // open ctrl module
       }, events.ctrlKeyTimeoutDuration);
+    } else if ( event.keyCode === 37 && !notes.active ) {
+      app.camera.rotation.y += 0.05;
+    } else if ( event.keyCode === 39 && !notes.active ) {
+      app.camera.rotation.y -= 0.05;
     }
+    app.dirty = true;
   },
 
   onKeyUp: function (event) {
