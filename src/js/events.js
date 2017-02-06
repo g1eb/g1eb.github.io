@@ -187,12 +187,8 @@ var events = {
       }
     } else if ( event.keyCode === 71 && !notes.active ) {
       groups.toggle();
-    } else if ( event.keyCode === 37 && !notes.active ) {
-      notes.switchTo(notes.getPrev());
     } else if ( event.keyCode === 38 && !notes.active ) {
       groups.moveUp();
-    } else if ( event.keyCode === 39 && !notes.active ) {
-      notes.switchTo(notes.getNext());
     } else if ( event.keyCode === 40 && !notes.active ) {
       groups.moveDown();
     }
